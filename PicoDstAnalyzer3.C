@@ -13,6 +13,10 @@
  *
  * Updated to Calculate v2
  * \date Dec 23, 2019
+ *
+ * Tweak to analyze BES-II FXT 3GeV, 7.2GeV and more
+ * \author Ding Chen
+ * \date Feb 19, 2020
  */
 
 // This is needed for calling standalone classes (not needed on RACF)
@@ -1125,7 +1129,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
     // bool b_bad_zvtx  = ((d_zvtx < 210.0) || (d_zvtx > 212.0));
     // Insert systematic check cuts
     // bool b_bad_zvtx   = (cutID == 1) ? TMath::Abs(d_zvtx - 211.0)>(0.8 + 0.04*variationID) : ((d_zvtx < 210.0) || (d_zvtx > 212.0));
-    bool b_bad_zvtx   =  ((d_zvtx < 210.0) || (d_zvtx > 212.0));
+    bool b_bad_zvtx   =  ((d_zvtx < 202.0) || (d_zvtx > 199.0)); //FXT 4.5GeV 2016
+    // bool b_bad_zvtx   =  ((d_zvtx < 210.0) || (d_zvtx > 212.0)); //FXT 4.5GeV 2016 
+
 
     //======================== END Z-VTX Selection =============================
 
