@@ -1116,7 +1116,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
     // loop for the trigger ids and see if any == 1
     for(unsigned int i=0; i < triggerIDs.size(); i++)
       {
-        if(triggerIDs[i] == 1) b_bad_trig = false;
+        if(triggerIDs[i] == 620802) b_bad_trig = false; // hlt_fixedTargetGood 3GeV
       }
 
     //=========================== End Trigger Slection =========================
@@ -1130,7 +1130,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
     // Insert systematic check cuts
     // bool b_bad_zvtx   = (cutID == 1) ? TMath::Abs(d_zvtx - 211.0)>(0.8 + 0.04*variationID) : ((d_zvtx < 210.0) || (d_zvtx > 212.0));
     bool b_bad_zvtx   =  ((d_zvtx < 202.0) || (d_zvtx > 199.0)); //FXT 4.5GeV 2016
-    // bool b_bad_zvtx   =  ((d_zvtx < 210.0) || (d_zvtx > 212.0)); //FXT 4.5GeV 2016 
+    // bool b_bad_zvtx   =  ((d_zvtx < 210.0) || (d_zvtx > 212.0)); //FXT 4.5GeV 2016
 
 
     //======================== END Z-VTX Selection =============================
