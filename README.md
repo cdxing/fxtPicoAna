@@ -13,7 +13,7 @@ git clone https://github.com/cdxing/fxtPicoAna.git
 stardev
 kinit
 aklog
-cvs co /StRoot/StPicoEvent
+cvs co StRoot/StPicoEvent
 ```
 
 # 3. Compilation and Execution
