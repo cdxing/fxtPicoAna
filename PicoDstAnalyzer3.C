@@ -1129,7 +1129,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
     // bool b_bad_zvtx  = ((d_zvtx < 210.0) || (d_zvtx > 212.0));
     // Insert systematic check cuts
     // bool b_bad_zvtx   = (cutID == 1) ? TMath::Abs(d_zvtx - 211.0)>(0.8 + 0.04*variationID) : ((d_zvtx < 210.0) || (d_zvtx > 212.0));
-    bool b_bad_zvtx   =  ((d_zvtx < 202.0) || (d_zvtx > 199.0)); //FXT 4.5GeV 2016
+    bool b_bad_zvtx   =  ((d_zvtx < 199.0) || (d_zvtx > 202.0)); //FXT 4.5GeV 2016
     // bool b_bad_zvtx   =  ((d_zvtx < 210.0) || (d_zvtx > 212.0)); //FXT 4.5GeV 2016
 
 
