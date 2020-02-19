@@ -1,0 +1,7 @@
+*.o
+*.root
+*.so
+*.pcm
+*_Dict.cxx
+*.dat
+*.txt
