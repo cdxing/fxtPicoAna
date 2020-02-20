@@ -1168,6 +1168,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
         if(!picoTrack) continue;
 
         hist_ratio->Fill(((double)picoTrack->nHitsFit() / (double)picoTrack->nHitsPoss()));
+        hist_nHits->Fill((double)picoTrack->nHitsFit());
         hist_ndEdx->Fill(picoTrack->nHitsDedx());
         hist_DCA->Fill(picoTrack->gDCA(primaryVertex_X,primaryVertex_Y,primaryVertex_Z));
         //============== === Track Level Cuts ==============
@@ -3394,6 +3395,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
   hist_trackmult_kaonMinus->Write();
 
   hist_ratio->Write();
+  hist_nHits->Write();
   hist_ndEdx->Write();
   hist_DCA->Write();
 
