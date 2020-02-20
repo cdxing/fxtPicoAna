@@ -2,7 +2,7 @@
 Codes for FXT picoDst Analysis
 
 # 1. Setup/ Sourcing
-Login to BNL RACF computer and get the souce code:
+Login to BNL RACF computer and get the source code:
 ```
 git clone https://github.com/cdxing/fxtPicoAna.git
 
