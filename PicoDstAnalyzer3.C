@@ -159,8 +159,8 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   // if(cutID == 21) std::cout<< "cutID == 21: Phi flow - DCA cut for flow " << std::endl; //variationID: {0, 1, 2, 3, 4}
 
   // Set particle masses
-  Double_t Mass_Pion     = 0.139568;
-  Double_t Mass_Kaon     = 0.493646;
+  Double_t Mass_Pion     = 0.13957061;
+  Double_t Mass_Kaon     = 0.493677;
   Double_t Mass_Proton   = 0.938272;
   // Set rapidity/pseudorapidity range
   Int_t rapidityBins = 15; Double_t rapidityLow = -2.9/*-3.0*/; Double_t rapidityHigh = 0.1/*0.0*/;
@@ -1106,6 +1106,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
     hist_VyVx->Fill(primaryVertex_X,primaryVertex_Y);
 
     double  d_zvtx  = -9999.0;
+    double  d_xvtx  = -9999.0;
+    double  d_yvtx  = -9999.0;
+
     std::vector <unsigned int> triggerIDs;
 
     //============================ Trigger Selection ===========================
@@ -1126,10 +1129,15 @@ cout<<KaonPlusEfficiencyTable<<endl;
     //=========================== Z-VTX Selection ==============================
     TVector3 v3D_vtx  = event->primaryVertex();
     d_zvtx = pVtx.z();
+    d_xvtx = pVtx.x();
+    d_yvtx = pVtx.y();
     // bool b_bad_zvtx  = ((d_zvtx < 210.0) || (d_zvtx > 212.0));
     // Insert systematic check cuts
     // bool b_bad_zvtx   = (cutID == 1) ? TMath::Abs(d_zvtx - 211.0)>(0.8 + 0.04*variationID) : ((d_zvtx < 210.0) || (d_zvtx > 212.0));
-    bool b_bad_zvtx   =  ((d_zvtx < 199.0) || (d_zvtx > 202.0)); //FXT 4.5GeV 2016
+    bool b_bad_zvtx   =  ((d_zvtx < 199.0) || (d_zvtx > 202.0)); //FXT_3p85_2018
+    bool b_bad_xvtx   =  ((d_xvtx < -2.0) || (d_xvtx > 1.0)); //FXT_3p85_2018, same as Kosuke
+    bool b_bad_yvtx   =  ((d_yvtx < -3.0) || (d_yvtx > 0.5)); //FXT_3p85_2018, same as Kosuke
+
     // bool b_bad_zvtx   =  ((d_zvtx < 210.0) || (d_zvtx > 212.0)); //FXT 4.5GeV 2016
 
 
