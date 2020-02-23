@@ -3088,7 +3088,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
     vector<StPicoTrack *> v_pri_tracks0 = v_pri_tracks_pl;
     vector<StPicoTrack *> v_pri_tracks1 = v_pri_tracks_mi;
 
-    for(int i = 0; i < v_pri_tracks0.size();i++)
+    for(unsigned int i = 0; i < v_pri_tracks0.size();i++)
     {
       StPicoTrack * picoTrack0 = v_pri_tracks0[i];
       if(!picoTrack0) continue;
@@ -3149,7 +3149,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
           d_M0 = d_K_m;
         }
 
-      for(int j = 0; j < v_pri_tracks1.size(); j++)
+      for(unsigned int j = 0; j < v_pri_tracks1.size(); j++)
       {
         StPicoTrack * picoTrack1 = v_pri_tracks1[j];
 
