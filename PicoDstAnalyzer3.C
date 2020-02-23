@@ -271,9 +271,13 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   h_trk_vs_cut->GetXaxis()->SetTitle("Track level cuts");
   h_trk_vs_cut->GetYaxis()->SetTitle("# of tracks");
 
-  TH1D *hist_runId = new TH1D("hist_runId","Event runId",11,-0.5,10.5);
+  TH1D *hist_runId = new TH1D("hist_runId","Event runId",4001,-0.5,4000.5);
   hist_runId->GetXaxis()->SetTitle("RunId");
   hist_runId->GetYaxis()->SetTitle("# of events");
+
+  TH1D *hist_triggerID = new TH1D("hist_triggerID","Event TriggerId",801,-0.5,800.5);
+  hist_triggerID->GetXaxis()->SetTitle("TriggerID");
+  hist_triggerID->GetYaxis()->SetTitle("# of events");
 
   TH1D *hist_Vz = new TH1D("hist_Vz","V_{Z} [cm]",6000,-300.0,300.0);
   hist_Vz->GetXaxis()->SetTitle("V_{Z} [cm]");
@@ -1094,7 +1098,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
     Int_t runId = event->runId();
     // std::cout << "runId = " << runId << std::endl;
 
-    Double_t Day = (Double_t)runId - 16140032.0;//- 20160023.0;
+    Double_t Day = (Double_t)runId - 19151028.0;//- 20160023.0;
     hist_runId->Fill(Day);
 
     Double_t primaryVertex_X = (Double_t)event->primaryVertex().X();
@@ -1114,6 +1118,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
     //============================ Trigger Selection ===========================
     triggerIDs.clear();
     triggerIDs       = event->triggerIds();
+    Double_t d_trigger = (Double_t)triggerIDs - 620050.0;
+    hist_triggerID->Fill(d_trigger);
     bool b_bad_trig = true;
 
     // loop for the trigger ids and see if any == 1
@@ -1135,15 +1141,16 @@ cout<<KaonPlusEfficiencyTable<<endl;
     // Insert systematic check cuts
     // bool b_bad_zvtx   = (cutID == 1) ? TMath::Abs(d_zvtx - 211.0)>(0.8 + 0.04*variationID) : ((d_zvtx < 210.0) || (d_zvtx > 212.0));
     bool b_bad_zvtx   =  ((d_zvtx < 199.0) || (d_zvtx > 202.0)); //FXT_3p85_2018
-    bool b_bad_xvtx   =  ((d_xvtx < -2.0) || (d_xvtx > 1.0)); //FXT_3p85_2018, same as Kosuke
-    bool b_bad_yvtx   =  ((d_yvtx < -3.0) || (d_yvtx > 0.5)); //FXT_3p85_2018, same as Kosuke
+    bool b_bad_xvtx   =  ((d_xvtx < -1.5) || (d_xvtx > 0.3)); //FXT_3p85_2018, same as Yang offline
+    bool b_bad_yvtx   =  ((d_yvtx < -3.0) || (d_yvtx > -1.0)); //FXT_3p85_2018, same as Yang offline
+    bool b_bad_rvtx   =  primaryVertex_perp > 3.0;
 
     // bool b_bad_zvtx   =  ((d_zvtx < 210.0) || (d_zvtx > 212.0)); //FXT 4.5GeV 2016
 
 
     //======================== END Z-VTX Selection =============================
 
-    bool b_bad_evt  = b_bad_zvtx || b_bad_trig ;
+    bool b_bad_evt  = b_bad_zvtx || b_bad_trig || b_bad_xvtx || b_bad_yvtx || b_bad_rvtx;
     if(b_bad_evt) continue;
 
     hist_Vz_cut->Fill(primaryVertex_Z);
@@ -3411,6 +3418,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
   h_trk_vs_cut->Write();
 
   hist_runId->Write();
+  hist_triggerID->Write();
   hist_Vz->Write();
   hist_Vz_cut->Write();
   hist_Vr->Write();
