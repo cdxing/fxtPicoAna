@@ -3289,7 +3289,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
                               +2.0*d_E0*d_E1
                               -2.0*(v3D_obj_p0.Dot(v3D_obj_p1)) );
 
-        if(d_mother_decay_length > d_cut_mother_decay_length_PHI) b_PHI    = false;
+        // if(d_mother_decay_length > d_cut_mother_decay_length_PHI) b_PHI    = false;
         // Decay Length Cut
 
         double d_dip_angle = TMath::ACos((d_pT0*d_pT1+d_pz0*d_pz1) / (d_mom0*d_mom1) );
@@ -3307,15 +3307,18 @@ cout<<KaonPlusEfficiencyTable<<endl;
     	  double d_phi_E  = d_E0+d_E1;
     	  double d_phi_y  = ((d_phi_E - d_phi_pz) != 0.0) ?  0.5*TMath::Log( (d_phi_E + d_phi_pz) / (d_phi_E - d_phi_pz) ) : -9999;
 
-        double d_phi_azimuth = v3D_p_mother.Phi();
+        // double d_phi_azimuth = v3D_p_mother.Phi();
+        /*
         if(d_phi_azimuth < 0.0            ) d_phi_azimuth += 2.0*TMath::Pi();
         if(d_phi_azimuth > 2.0*TMath::Pi()) d_phi_azimuth -= 2.0*TMath::Pi();
+        */
         if(b_PHI) h_prim_inv_m_PHI    -> Fill(d_inv_m);
         double d_v2_raw_phi = -999.0;
+        /*
         if(  bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / i_anisot) * 2.0*TMath::Pi() ) {
            d_v2_raw_phi = TMath::Cos(i_anisot * (d_phi_azimuth - bbc_east_plane3 - TMath::Pi()));
         }
-
+        */
         if(/*b_cent_01||b_cent_02||*/b_cent_07) continue;
         if(d_v2_raw_phi == -999.0) continue;
         // std::cout<< d_v2_raw_phi <<std::endl;
