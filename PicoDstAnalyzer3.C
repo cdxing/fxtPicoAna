@@ -3444,7 +3444,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
   hist_Vz->Write();
   hist_Vz_cut->Write();
   hist_Vr->Write();
+  hist_Vr_cut->Write();
   hist_VyVx->Write();
+  hist_VyVx_cut->Write();
 
   hist_realTrackMult->Write();
   hist_cent->Write();
