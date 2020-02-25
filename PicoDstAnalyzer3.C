@@ -548,6 +548,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   hist_pt_y_Phi->GetXaxis()->SetTitle("y");
   hist_pt_y_Phi->GetYaxis()->SetTitle("p_{T} [GeV/c]");
 
+  TH1D * h_dip_angle = new TH1D("h_dip_angle","h_dip_angle",1000,-1,1.0);
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -2479,8 +2480,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
       // Kaons
       if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
          && ( Beta != -999.0
-             && mass2 > 0.17
-             && mass2 < 0.33
+             && mass2 > 0.2//0.17
+             && mass2 < 0.3//0.33
             )
          && pt > 0.2
          && pt < 1.6
@@ -2674,7 +2675,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
       double d_y_PI       = 0.5*TMath::Log((d_E_PI + d_pz0)/(d_E_PI - d_pz0));
       double d_y_K        = 0.5*TMath::Log((d_E_K + d_pz0)/(d_E_K - d_pz0));
 
-      // b_K = false;//test
+      b_K = false;//test
       if(d_charge > 0.0)
         {
           if( b_E
@@ -2792,8 +2793,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
             //     {
                   if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
                      && ( d_tofBeta0 != -999.0
-                         && mass2 > 0.17
-                         && mass2 < 0.33
+                         && mass2 > 0.2//0.17
+                         && mass2 < 0.3//0.33
                         )
                      && d_pT0 > 0.2
                      && d_pT0 < 1.6
@@ -2965,8 +2966,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
             //     {
                   if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
                      && ( d_tofBeta0 != -999.0
-                         && mass2 > 0.17
-                         && mass2 < 0.33
+                         && mass2 > 0.2//0.17
+                         && mass2 < 0.3//0.33
                         )
                      && d_pT0 > 0.2
                      && d_pT0 < 1.6
@@ -3040,7 +3041,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
         bool b_bad_dEdx      = false;
         bool b_bad_tracking  = false;
         bool b_bad_DCA       = false;
-
         bool b_bad_ToF       = false;
 
         // b_bad_dEdx     = (cutID == 20)?  (picoTrack->nHitsDedx() <= 5*variationID):(picoTrack->nHitsDedx() <= 0);
@@ -3100,28 +3100,28 @@ cout<<KaonPlusEfficiencyTable<<endl;
       StPicoTrack * picoTrack0 = v_pri_tracks0[i];
       if(!picoTrack0) continue;
 
-      double d_TPCnSigmaPion0   = fabs(picoTrack0->nSigmaPion());
-      double d_TPCnSigmaProton0 = fabs(picoTrack0->nSigmaProton());
+      // double d_TPCnSigmaPion0   = fabs(picoTrack0->nSigmaPion());
+      // double d_TPCnSigmaProton0 = fabs(picoTrack0->nSigmaProton());
       double d_TPCnSigmaKaon0   = fabs(picoTrack0->nSigmaKaon());
 
-      bool b_PI0  = fabs(d_TPCnSigmaPion0)   < d_SigmaCutLevel;
-      bool b_PRO0 = fabs(d_TPCnSigmaProton0) < d_SigmaCutLevel;
-      bool b_K0   = fabs(d_TPCnSigmaKaon0)   < d_SigmaCutLevel;
+      // bool b_PI0  = fabs(d_TPCnSigmaPion0)   < d_SigmaCutLevel;
+      // bool b_PRO0 = fabs(d_TPCnSigmaProton0) < d_SigmaCutLevel;
+      // bool b_K0   = fabs(d_TPCnSigmaKaon0)   < d_SigmaCutLevel;
 
-      if( b_PI0
-         && (d_TPCnSigmaPion0 < d_TPCnSigmaProton0)
-         && (d_TPCnSigmaPion0 < d_TPCnSigmaKaon0) )
-        { b_PI0 = true; b_PRO0 = false;}// b_K0 = false;}
-
-      if( b_PRO0
-         && (d_TPCnSigmaProton0 < d_TPCnSigmaPion0)
-         && (d_TPCnSigmaProton0 < d_TPCnSigmaKaon0) )
-        { b_PRO0 = true; b_PI0 = false;}// b_K0 = false;}
-
-      if( b_K0
-         && (d_TPCnSigmaKaon0 < d_TPCnSigmaProton0)
-         && (d_TPCnSigmaKaon0 < d_TPCnSigmaPion0) )
-        { b_K0 = true; b_PRO0 = false; b_PI0 = false;}
+      // if( b_PI0
+      //    && (d_TPCnSigmaPion0 < d_TPCnSigmaProton0)
+      //    && (d_TPCnSigmaPion0 < d_TPCnSigmaKaon0) )
+      //   { b_PI0 = true; b_PRO0 = false;}// b_K0 = false;}
+      //
+      // if( b_PRO0
+      //    && (d_TPCnSigmaProton0 < d_TPCnSigmaPion0)
+      //    && (d_TPCnSigmaProton0 < d_TPCnSigmaKaon0) )
+      //   { b_PRO0 = true; b_PI0 = false;}// b_K0 = false;}
+      //
+      // if( b_K0
+      //    && (d_TPCnSigmaKaon0 < d_TPCnSigmaProton0)
+      //    && (d_TPCnSigmaKaon0 < d_TPCnSigmaPion0) )
+      //   { b_K0 = true; b_PRO0 = false; b_PI0 = false;}
 
       double d_M0       = -9999.0;
       double d_px0      = picoTrack0->pMom().x();
@@ -3129,17 +3129,17 @@ cout<<KaonPlusEfficiencyTable<<endl;
       double d_pz0      = picoTrack0->pMom().z();
       double d_pT0      = picoTrack0->pPt();
       double d_mom0     = sqrt(d_pT0*d_pT0 + d_pz0*d_pz0);
-      StPicoBTofPidTraits *trait = NULL;
-      if(picoTrack0->isTofTrack()) trait = dst->btofPidTraits(picoTrack0->bTofPidTraitsIndex());
-      double d_tofBeta0 = -999;
-      if(trait) d_tofBeta0 = trait->btofBeta();
-
       double d_charge0  = picoTrack0->charge();
       double d_mc0      = d_mom0/d_charge0;
       double d_eta0     = picoTrack0->pMom().Eta();
       double d_phi0     = picoTrack0->pMom().Phi();
-
       TVector3 v3D_obj_p0 = picoTrack0->pMom();
+
+      /*
+      StPicoBTofPidTraits *trait = NULL;
+      if(picoTrack0->isTofTrack()) trait = dst->btofPidTraits(picoTrack0->bTofPidTraitsIndex());
+      double d_tofBeta0 = -999;
+      if(trait) d_tofBeta0 = trait->btofBeta();
 
       StPicoPhysicalHelix    trackhelix0 = picoTrack0->helix(B);
 
@@ -3154,22 +3154,24 @@ cout<<KaonPlusEfficiencyTable<<endl;
       else if(b_K0)
         {
           d_M0 = d_K_m;
-        }
+        }*/
+      d_M0 = d_K_m;//test
 
       for(unsigned int j = 0; j < v_pri_tracks1.size(); j++)
       {
         StPicoTrack * picoTrack1 = v_pri_tracks1[j];
 
         if(!picoTrack1 || (picoTrack0->id() == picoTrack1->id())) continue;
-
+        /*
         double d_TPCnSigmaPion1   = fabs(picoTrack1->nSigmaPion());
         double d_TPCnSigmaProton1 = fabs(picoTrack1->nSigmaProton());
+        */
         double d_TPCnSigmaKaon1   = fabs(picoTrack1->nSigmaKaon());
 
+        /*
         bool b_PI1  = fabs(d_TPCnSigmaPion1) < d_SigmaCutLevel;
         bool b_PRO1 = fabs(d_TPCnSigmaProton1) < d_SigmaCutLevel;
         bool b_K1   = fabs(d_TPCnSigmaKaon1) < d_SigmaCutLevel;
-
         if( b_PI1
            && (d_TPCnSigmaPion1 < d_TPCnSigmaProton1)
            && (d_TPCnSigmaPion1 < d_TPCnSigmaKaon1) )
@@ -3190,29 +3192,33 @@ cout<<KaonPlusEfficiencyTable<<endl;
         if(b_PRO1) d_M1 = d_PRO_m;
         else if(b_PI1)  d_M1 = d_PI_m;
         else if(b_K1)   d_M1 = d_K_m;
+        */
+        double d_M1 = d_K_m;
 
         double d_px1      = picoTrack1->pMom().x();
         double d_py1      = picoTrack1->pMom().y();
         double d_pz1      = picoTrack1->pMom().z();
         double d_pT1      = picoTrack1->pPt();
         double d_mom1     = sqrt(d_pT1*d_pT1 + d_pz1*d_pz1);
+        double d_charge1    = picoTrack1->charge();
+        double d_mc1        = d_mom1/d_charge1;
+        double d_eta1       = picoTrack1->pMom().Eta();
+        double d_phi1       = picoTrack1->pMom().Phi();
+        TVector3 v3D_obj_p1 = picoTrack1->pMom();
+        /*
         StPicoBTofPidTraits *trait = NULL;
         if(picoTrack1->isTofTrack()) trait = dst->btofPidTraits(picoTrack1->bTofPidTraitsIndex());
         double d_tofBeta1 = -999;
         if(trait) d_tofBeta1 = trait->btofBeta();
-
-        double d_charge1    = picoTrack1->charge();
-
-        double d_mc1        = d_mom1/d_charge1;
-        double d_eta1       = picoTrack1->pMom().Eta();
-        double d_phi1       = picoTrack1->pMom().Phi();
-
-        TVector3 v3D_obj_p1 = picoTrack1->pMom();
-
+        */
         if(d_charge0 == d_charge1) continue;
+        bool b_PHI    = true;//test
+
+        /*
         bool b_PHI    = b_K0 && b_K1;
         bool b_RHO    = b_PI0 && b_PI1;
         bool b_K0S    = b_RHO;
+
 
         bool b_LAMBDA = (b_PRO0 && b_PI1)||(b_PRO1 && b_PI0);
         bool b_V0 = b_PHI || b_RHO || b_LAMBDA;
@@ -3249,7 +3255,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
         if(d_mother_decay_length < d_cut_mother_decay_length_lam) b_LAMBDA = false;
         if(d_mother_decay_length < d_cut_mother_decay_length_k0s) b_K0S    = false;
         if(d_mother_decay_length > d_cut_mother_decay_length_RHO) b_RHO    = false;
-
+        */
         double d_E0 = sqrt(v3D_obj_p0.Mag2()+d_M0*d_M0);
         double d_E1 = sqrt(v3D_obj_p1.Mag2()+d_M1*d_M1);
 
@@ -3258,14 +3264,18 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
         double d_mT0        = sqrt(d_pT0*d_pT0 + d_M0*d_M0);
         double d_mT1        = sqrt(d_pT1*d_pT1 + d_M1*d_M1);
-
+        /*
         // efficiency correction
         Int_t i_ybin0 = KaonPlusEfficiencyTable->GetYaxis()->FindBin(d_y0);
         Int_t i_zbin0 = KaonPlusEfficiencyTable->GetZaxis()->FindBin(d_mT0-d_M0);
 
         Int_t i_ybin1 = KaonMinusEfficiencyTable->GetYaxis()->FindBin(d_y1);
         Int_t i_zbin1 = KaonMinusEfficiencyTable->GetZaxis()->FindBin(d_mT1-d_M1);
+        */
+        double d_eff_corr0 = 1;
+        double d_eff_corr1 = 1;
 
+        /*
         double d_eff_corr0 = KaonPlusEfficiencyTable ->GetBinContent(centrality,i_ybin0,i_zbin0);
         double d_eff_corr1 = KaonMinusEfficiencyTable->GetBinContent(centrality,i_ybin1,i_zbin1);
 
@@ -3273,9 +3283,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
         d_eff_corr0 = (d_eff_corr0 <= 0.01 || d_eff_corr0 >= 1) ? 1 : 1 / d_eff_corr0;
         d_eff_corr1 = (d_eff_corr1 <= 0.01 || d_eff_corr1 >= 1) ? 1 : 1 / d_eff_corr1;
 
-        d_eff_corr0 = 1;
-        d_eff_corr1 = 1;
-
+        */
         double d_inv_m = sqrt(d_M0*d_M0
                               +d_M1*d_M1
                               +2.0*d_E0*d_E1
@@ -3285,10 +3293,11 @@ cout<<KaonPlusEfficiencyTable<<endl;
         // Decay Length Cut
 
         double d_dip_angle = TMath::ACos((d_pT0*d_pT1+d_pz0*d_pz1) / (d_mom0*d_mom1) );
-        if(d_dip_angle < 0.04) b_PHI = false;
+        h_dip_angle->Fill(d_dip_angle);
+        // if(d_dip_angle < 0.04) b_PHI = false;
         // Dip Angle Cut
 
-        double d_mother_m = -9999;
+        // double d_mother_m = -9999;
 
         double d_pT_phi = sqrt(d_px0*d_px0 + d_py0*d_py0 +d_px1*d_px1 +d_py1+d_py1 + 2.*d_px0*d_px1 + 2.*d_py0*d_py1);
     	  double m_phi = 1.019455;
@@ -3489,8 +3498,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
   hist_beta_kaonMinus->Write();
   hist_mass_kaonMinus->Write();
 
-  hist_pt_y_Phi->Write();
-
   profile3D_proton_v2->Write();
   profile3D_pionPlus_v2->Write();
   profile3D_pionMinus_v2->Write();
@@ -3500,6 +3507,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
   h_K_DCA_r      ->Write();
   h_K_obj_DCA_r  ->Write();
   h_K_diff_DCA_r ->Write();
+
+  hist_pt_y_Phi->Write();
+  h_dip_angle->Write();
   h_prim_inv_m_PHI ->Write();
   h2_phi_v2_vs_invM->Write();
   h2_phi_v2_vs_invM_bin2->Write();
