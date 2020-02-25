@@ -3049,12 +3049,12 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
         if(d_charge > 0.0)
           {
-            if(b_PI||b_PRO||b_E)         continue;
+            if(b_PI||b_PRO||b_E)    continue;
             if(!b_K)                continue;
           }
         else
           {
-            if(!(b_E||b_PI||b_PRO||b_K)) continue;
+            if(b_E||b_PI||b_PRO)    continue;
             if(!b_K)                continue;
           }
         // Kaon Cut
