@@ -291,9 +291,17 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   hist_Vr->GetXaxis()->SetTitle("V_{R} [cm]");
   hist_Vr->GetYaxis()->SetTitle("# of events");
 
+  TH1D *hist_Vr_cut = new TH1D("hist_Vr_cut","V_{R} after cut [cm]",500,0.0,20.0);
+  hist_Vr_cut->GetXaxis()->SetTitle("V_{R} [cm]");
+  hist_Vr_cut->GetYaxis()->SetTitle("# of events");
+
   TH2D *hist_VyVx = new TH2D("hist_VyVx","V_{Y} [cm] vs. V_{X} [cm]",500,-5.0,5.0,500,-5.0,5.0);
   hist_VyVx->GetXaxis()->SetTitle("V_{X} [cm]");
   hist_VyVx->GetYaxis()->SetTitle("V_{Y} [cm]");
+
+  TH2D *hist_VyVx_cut = new TH2D("hist_VyVx_cut","V_{Y} [cm] vs. V_{X} after cut [cm]",500,-5.0,5.0,500,-5.0,5.0);
+  hist_VyVx_cut->GetXaxis()->SetTitle("V_{X} [cm]");
+  hist_VyVx_cut->GetYaxis()->SetTitle("V_{Y} [cm]");
 
   TH1D *hist_realTrackMult = new TH1D("hist_realTrackMult","Actual track multiplicity",1001,-0.5,1000.5);
   hist_realTrackMult->GetXaxis()->SetTitle("TrackMult");
@@ -1155,6 +1163,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
     if(b_bad_evt) continue;
 
     hist_Vz_cut->Fill(primaryVertex_Z);
+    hist_Vr_cut->Fill(primaryVertex_perp);
+    hist_VyVx_cut->Fill(primaryVertex_X,primaryVertex_Y);
     // Bad Event Cut
     ievtcut[1] += 1;
 
