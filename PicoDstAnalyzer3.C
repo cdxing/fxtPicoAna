@@ -1126,7 +1126,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
       {
         Double_t d_trigger = (Double_t)triggerIDs[i] - 620050.0;
         hist_triggerID->Fill(d_trigger);
-        if(triggerIDs[i] == 620802) b_bad_trig = false; // hlt_fixedTargetGood 3GeV
+        if(triggerIDs[i] == 630802) b_bad_trig = false; // hlt_fixedTargetGood 7.2GeV
       }
 
     //=========================== End Trigger Slection =========================
