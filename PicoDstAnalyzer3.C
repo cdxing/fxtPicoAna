@@ -705,9 +705,9 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   profile_pions_v2->Sumw2();
 
   // Phi meson plots
-  TH1D *  h_K_DCA_r      = new TH1D("h_K_DCA_r","h_K_DCA_r",200,0.0,3.0);
-  TH1D *  h_K_obj_DCA_r  = new TH1D("h_K_obj_DCA_r","h_K_obj_DCA_r",200,0.0,3.0);
-  TH1D *  h_K_diff_DCA_r = new TH1D("h_K_diff_DCA_r","h_K_diff_DCA_r",400,-3.0,3.0);
+  TH1D *  h_K_DCA_r      = new TH1D("h_K_DCA_r","h_K_DCA_r",400,0.0,4.0);
+  TH1D *  h_K_obj_DCA_r  = new TH1D("h_K_obj_DCA_r","h_K_obj_DCA_r",400,0.0,4.0);
+  TH1D *  h_K_diff_DCA_r = new TH1D("h_K_diff_DCA_r","h_K_diff_DCA_r",800,-4.0,4.0);
 
   TH1D *  h_prim_inv_m_PHI    = new TH1D("h_prim_inv_m_PHI","h_prim_inv_m_PHI",1000,0.9,1.1);
 
@@ -1141,9 +1141,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
     // bool b_bad_zvtx  = ((d_zvtx < 210.0) || (d_zvtx > 212.0));
     // Insert systematic check cuts
     // bool b_bad_zvtx   = (cutID == 1) ? TMath::Abs(d_zvtx - 211.0)>(0.8 + 0.04*variationID) : ((d_zvtx < 210.0) || (d_zvtx > 212.0));
-    bool b_bad_zvtx   =  ((d_zvtx < 199.0) || (d_zvtx > 202.0)); //FXT_3p85_2018
-    bool b_bad_xvtx   =  ((d_xvtx < -1.5) || (d_xvtx > 0.3)); //FXT_3p85_2018, same as Yang offline
-    bool b_bad_yvtx   =  ((d_yvtx < -3.0) || (d_yvtx > -1.0)); //FXT_3p85_2018, same as Yang offline
+    bool b_bad_zvtx   =  ((d_zvtx < 199.0) || (d_zvtx > 202.0)); //FXT_26p5_2018
+    bool b_bad_xvtx   =  ((d_xvtx < -1.0) || (d_xvtx > 1.0)); //FXT_26p5_2018
+    bool b_bad_yvtx   =  ((d_yvtx < -3.0) || (d_yvtx > -0.5)); //FXT_26p5_2018
     bool b_bad_rvtx   =  primaryVertex_perp > 3.0;
 
     // bool b_bad_zvtx   =  ((d_zvtx < 210.0) || (d_zvtx > 212.0)); //FXT 4.5GeV 2016
@@ -2351,7 +2351,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
             GPC_request_m2_vs_dEdx_Neg->Fill(picoTrack->dEdx(),mass2);
         }
       }
-      // 2nd particle identifications
+      // 2nd particle identifications for flow calculation (1st PID is for TPC EP calculation)
       // Protons
       if(
         picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
@@ -2480,7 +2480,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
       // Kaons
       if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
          && ( Beta != -999.0
-             && mass2 > 0.2//0.17
+             && mass2 > 0.19//0.17
              && mass2 < 0.3//0.33
             )
          && pt > 0.2
@@ -2565,33 +2565,32 @@ cout<<KaonPlusEfficiencyTable<<endl;
     double d_pT_max = 10.0;//0.05;
     double d_mom_min = 0.1;//0.05;
     double d_mom_max = 10.0;// 1.0;//0.05;
-
     double d_SigmaCutLevel = 4.0;//3.0;//4.0; // PID Sigma Cut // Mon Jul  3 09:16:46 EDT 2017
 
     //--- Not being used Fri Jun 16 10:48:30 EDT 2017
-    double d_PRO_daughter_DCA = 0.3; // trk must be greater than this dca
-    double d_PI_daughter_DCA  = 1.0; // trk must be greater than this dca
+    // double d_PRO_daughter_DCA = 0.3; // trk must be greater than this dca
+    // double d_PI_daughter_DCA  = 1.0; // trk must be greater than this dca
 
     // Lambda: 1.0, K0s 1.2
     //  double d_cut_dca_daughters    = 2.0; //distance between daughters, must be less than this
-    double d_cut_dca_daughters_lam    = 1.0;//2.0; //distance between daughters, must be less than this
-    double d_cut_dca_daughters_k0s    = 1.2; //distance between daughters, must be less than this
+    // double d_cut_dca_daughters_lam    = 1.0;//2.0; //distance between daughters, must be less than this
+    // double d_cut_dca_daughters_k0s    = 1.2; //distance between daughters, must be less than this
 
 
     // Lambda: 1.5 Anti Lambda: 2.0 K0s: 1.0
     //double d_cut_dca_mother       = 5.0; // must be less than this
-    double d_cut_dca_mother_lam       = 1.5;//5.0; // must be less than this
-    double d_cut_dca_mother_k0s       = 1.0; // must be less than this
+    // double d_cut_dca_mother_lam       = 1.5;//5.0; // must be less than this
+    // double d_cut_dca_mother_k0s       = 1.0; // must be less than this
 
     // Lambda: 3.0, K0s: 2.0
     //  double d_cut_mother_decay_length = 3.0; // must be greater than this
-    double d_cut_mother_decay_length_lam = 3.0; // must be greater than this
-    double d_cut_mother_decay_length_k0s = 2.0; // must be greater than this
-    double d_cut_mother_decay_length_RHO = 0.5; // must be LESS    than this
-    double d_cut_mother_decay_length_PHI = 0.5; // must be LESS    than this
+    // double d_cut_mother_decay_length_lam = 3.0; // must be greater than this
+    // double d_cut_mother_decay_length_k0s = 2.0; // must be greater than this
+    // double d_cut_mother_decay_length_RHO = 0.5; // must be LESS    than this
+    // double d_cut_mother_decay_length_PHI = 0.5; // must be LESS    than this
     //======================== END Track Settings ================================================
 
-    //======================= Primary Track Loop =================================================
+    //======================= Primary Track Loop to get phi flow =================================================
     vector<StPicoTrack *> v_pri_tracks;
     vector<StPicoTrack *> v_pri_tracks_pl;
     vector<StPicoTrack *> v_pri_tracks_mi;
@@ -2612,11 +2611,27 @@ cout<<KaonPlusEfficiencyTable<<endl;
       if(!picoTrack->isPrimary()) continue;
       // Primary Track Cut
 
+      // To get beta from Btof to calculate mass2
       StPicoBTofPidTraits *trait = NULL;
       if(picoTrack->isTofTrack()) trait = dst->btofPidTraits( picoTrack->bTofPidTraitsIndex() );
 
+      //nHits minimum cut
       unsigned short nHits = picoTrack->nHits();
       if(nHits < i_Nhits_min)     continue;
+
+      bool b_bad_dEdx      = false;
+      bool b_bad_tracking  = false;
+      bool b_bad_ToF       = false;
+
+      // b_bad_dEdx     = (cutID == 20)?  (picoTrack->nHitsDedx() <= 5*variationID):(picoTrack->nHitsDedx() <= 0);
+      b_bad_dEdx     = (picoTrack->nHitsDedx() <= 0);
+      b_bad_tracking = (((double)picoTrack->nHitsFit() / (double)picoTrack->nHitsPoss()) < 0.52);
+
+      if(trait) b_bad_ToF       = (trait->btof() <= 0.0);
+      bool b_bad_track          = b_bad_dEdx || b_bad_tracking;
+      if(b_bad_track)              continue;
+      // Bad Track Cut
+
       double d_TPCnSigmaElectron = fabs(picoTrack->nSigmaElectron());
       double d_TPCnSigmaPion   = fabs(picoTrack->nSigmaPion());
       double d_TPCnSigmaProton = fabs(picoTrack->nSigmaProton());
@@ -2628,11 +2643,13 @@ cout<<KaonPlusEfficiencyTable<<endl;
       double d_tofBeta0    = -999;
       if(trait) d_tofBeta0 = trait->btofBeta();
 
-      bool b_PI  = fabs(d_TPCnSigmaPion)   < d_SigmaCutLevel;
-      bool b_PRO = fabs(d_TPCnSigmaProton) < d_SigmaCutLevel;
-      bool b_K   = fabs(d_TPCnSigmaKaon)   < d_SigmaCutLevel;
-      bool b_E   = fabs(d_TPCnSigmaElectron)< d_SigmaCutLevel;
+      // test new sets of PID cuts
+      bool b_PI  = false; //fabs(d_TPCnSigmaPion)   < d_SigmaCutLevel;
+      bool b_PRO = false; //fabs(d_TPCnSigmaProton) < d_SigmaCutLevel;
+      bool b_K   = false; //fabs(d_TPCnSigmaKaon)   < d_SigmaCutLevel;
+      bool b_E   = false; //fabs(d_TPCnSigmaElectron)< d_SigmaCutLevel;
 
+      /********* Remove this part of PID cut
       if( b_E
          && (d_TPCnSigmaElectron < d_TPCnSigmaPion)
          && (d_TPCnSigmaElectron < d_TPCnSigmaProton)
@@ -2656,9 +2673,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
          && (d_TPCnSigmaKaon < d_TPCnSigmaProton)
          && (d_TPCnSigmaKaon < d_TPCnSigmaPion) )
          { b_E = false; b_PI = false; b_PRO = false; b_K = true;}
+      */
 
       double d_charge     = picoTrack->charge();
-
       double d_px0        = picoTrack->pMom().x();
       double d_py0        = picoTrack->pMom().y();
       double d_pz0        = picoTrack->pMom().z();
@@ -2666,7 +2683,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
       double d_mom0       = sqrt(d_pT0*d_pT0 + d_pz0*d_pz0);
 
       double mass2        = d_mom0*d_mom0*((1.0/(d_tofBeta0*d_tofBeta0))-1.0);
-
       double d_E_PRO      = sqrt(d_PRO_m*d_PRO_m + d_mom0*d_mom0);
       double d_E_PI       = sqrt(d_PI_m*d_PI_m + d_mom0*d_mom0);
       double d_E_K        = sqrt(d_K_m*d_K_m + d_mom0*d_mom0);
@@ -2675,7 +2691,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
       double d_y_PI       = 0.5*TMath::Log((d_E_PI + d_pz0)/(d_E_PI - d_pz0));
       double d_y_K        = 0.5*TMath::Log((d_E_K + d_pz0)/(d_E_K - d_pz0));
 
-      b_K = false;//test
       if(d_charge > 0.0)
         {
           if( b_E
@@ -2793,7 +2808,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
             //     {
                   if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
                      && ( d_tofBeta0 != -999.0
-                         && mass2 > 0.2//0.17
+                         && mass2 > 0.19//0.17
                          && mass2 < 0.3//0.33
                         )
                      && d_pT0 > 0.2
@@ -2966,7 +2981,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
             //     {
                   if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
                      && ( d_tofBeta0 != -999.0
-                         && mass2 > 0.2//0.17
+                         && mass2 > 0.19//0.17
                          && mass2 < 0.3//0.33
                         )
                      && d_pT0 > 0.2
@@ -3038,29 +3053,13 @@ cout<<KaonPlusEfficiencyTable<<endl;
         if( (d_mom0<d_mom_min) || (d_mom0 > d_mom_max)) continue;
         //pT Min, Mom Min Cut
 
-        bool b_bad_dEdx      = false;
-        bool b_bad_tracking  = false;
         bool b_bad_DCA       = false;
-        bool b_bad_ToF       = false;
-
-        // b_bad_dEdx     = (cutID == 20)?  (picoTrack->nHitsDedx() <= 5*variationID):(picoTrack->nHitsDedx() <= 0);
-        b_bad_dEdx     = (picoTrack->nHitsDedx() <= 0);
-
-        b_bad_tracking = (((double)picoTrack->nHitsFit() / (double)picoTrack->nHitsPoss()) < 0.52);
-
-        if(trait) b_bad_ToF       = (trait->btof() <= 0.0);
-        bool b_bad_track          = b_bad_dEdx || b_bad_tracking;
-
-        if(b_bad_track)              continue;
-        // Bad Track Cut
-
         StPicoPhysicalHelix trackhelix = picoTrack->helix(B);
         double helixpathl              = trackhelix.pathLength(v3D_vtx, false);
         TVector3 v3D_dca               = trackhelix.at(helixpathl)-v3D_vtx;
         double d_helix_DCA_r           = v3D_dca.Mag();
         // double d_DCA_r_cut             = (cutID == 21) ? variationID : 4.0;
-        double d_DCA_r_cut             = 4.0;
-
+        double d_DCA_r_cut             = 3.0;
         TVector3 v3D_obj_DCA           = picoTrack->gDCA(pVtx);
         double d_obj_DCA               = v3D_obj_DCA.Mag();
 
@@ -3071,7 +3070,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
         if(d_helix_DCA_r > d_DCA_r_cut) b_bad_DCA == true;
         // if(cutID == 21 && variationID == 0) b_bad_DCA == false;
         if(b_bad_DCA)              continue;
-        //DCA Cut
+        //Kaon DCA Cut
+
         Double_t efficiency = 1.0 ;
         if(d_charge > 0.0)
         {
