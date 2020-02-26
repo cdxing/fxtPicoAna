@@ -119,44 +119,10 @@ Double_t BBC_GetPhi(Int_t e_w,Int_t iTile,Double_t Vx,Double_t Vy) {
 void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPicoAna/files/PicoDst/st_physics_16140033_raw_0000002.picoDst.root",
                       TString outFile = "test_BBCEP",
                       Int_t   inputp1 = 1
-                      // Int_t inputParameter1 = 0,
-                      // Int_t inputParameter2 = 0,
-                      // Int_t inputParameter3 = 0
                     )
 {
   // orders of Fourier expansion of momentum space distribution
   Int_t i_anisot = inputp1;
-
-  // Systematic analysis parameters
-  // Int_t cutID           = inputParameter1;
-  // Int_t variationID     = inputParameter2;
-  // Int_t versionID       = inputParameter3;
-  // TString s_eventPlanes_input        = Form("/star/data01/pwg/dchen/Ana/fxtPicoAna/result_version3/merged_%d_%d_%d_.root",cutID,variationID,versionID-1);
-  // TString s_eventPlanes_input        = Form("/star/data01/pwg/dchen/Ana/fxtPicoAna/result_version3/merged_%d_%d_%d_.root",cutID,variationID,versionID-1);
-  //
-  // std::cout<< "EP input file: "<< s_eventPlanes_input << std::endl;
-  // if(cutID == 0) std::cout<< "cutID == 0: no variation " << std::endl; //variationID: {0}
-  // if(cutID == 1) std::cout<< "cutID == 1: Vertex Z cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 2) std::cout<< "cutID == 2: nHitsDedx cut for EP " << std::endl; //variationID: {0, 1, 2, 3, 4}
-  // if(cutID == 3) std::cout<< "cutID == 3: DCA cut for EP " << std::endl; //variationID: {0, 1, 2, 3, 4}
-  // if(cutID == 4) std::cout<< "cutID == 4: Proton nSigmaProton cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 5) std::cout<< "cutID == 5: Proton nSigmaPion cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 6) std::cout<< "cutID == 6: Proton mass2 bottom cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 7) std::cout<< "cutID == 7: Proton mass2 top cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 8) std::cout<< "cutID == 8: Proton pT bottom cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 9) std::cout<< "cutID == 9: Proton pT top cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 10) std::cout<< "cutID == 10: Pion nSigmaPion cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 11) std::cout<< "cutID == 11: Pion mass2 bottom cut" << std::endl; //variationID: {0-10}
-  // if(cutID == 12) std::cout<< "cutID == 12: Pion mass2 top cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 13) std::cout<< "cutID == 13: Pion pT bottom cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 14) std::cout<< "cutID == 14: Pion pT top cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 15) std::cout<< "cutID == 15: Phi flow - Kaon nSigmaKaon cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 16) std::cout<< "cutID == 16: Phi flow - Kaon mass2 bottom cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 17) std::cout<< "cutID == 17: Phi flow - Kaon mass2 top cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 18) std::cout<< "cutID == 18: Phi flow - Kaon pT bottom cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 19) std::cout<< "cutID == 19: Phi flow - Kaon pT top cut " << std::endl; //variationID: {0-10}
-  // if(cutID == 20) std::cout<< "cutID == 20: Phi flow - nHitsDedx cut for flow " << std::endl; //variationID: {0, 1, 2, 3, 4}
-  // if(cutID == 21) std::cout<< "cutID == 21: Phi flow - DCA cut for flow " << std::endl; //variationID: {0, 1, 2, 3, 4}
 
   // Set particle masses
   Double_t Mass_Pion     = 0.13957061;
@@ -877,11 +843,6 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   profile_correlation_tpc_west_bbc_east->GetXaxis()->SetTitle("Centrality (%)");
   profile_correlation_tpc_west_bbc_east->GetYaxis()->SetTitle("Correlation");
 
-  // TProfile *profile_resolution2 = new TProfile("profile_resolution2","<cos(#psi^{TPC west}_{1} #minus #psi^{BBC east}_{1})>*<cos(#psi^{TPC east}_{1} #minus #psi^{BBC east}_{1})>/<cos(#psi^{TPC east}_{1} #minus #psi^{TPC west}_{1})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
-  // profile_resolution2->GetXaxis()->SetTitle("Centrality (%)");
-  // profile_resolution2->GetYaxis()->SetTitle("Resolution Squared");
-
-
   // END EP resolutions plots
   // EP correlations in 2D
   TH2D *correlation2D_tpc_sub = new TH2D("correlation2D_tpc_sub","#psi^{TPC east}_{1} vs. #psi^{TPC west}_{1}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
@@ -902,12 +863,9 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   // END Histograms
 
   // Read input files
-  // TFile *eventPlanes_input   = new TFile("/star/data01/pwg/dchen/Ana/fxtPicoAna/files/bbcEventPlane/three_EP_fourth_run.root","read");
-  // TFile *eventPlanes_input   = new TFile(s_eventPlanes_input,"read");
   TFile *eventPlanes_input   = new TFile("/star/data01/pwg/dchen/Ana/fxtPicoAna2/fxtPicoAna/inputs/ep.picoDst.result.combined.root","read");
 
   // Read resolution for systematic analysis
-  //TFile *t_resolution_iniput = new TFile(Form("/star/data01/pwg/dchen/Ana/fxtPicoAna/resultSysAna/averageflow_vertexZcut_%d.root",variationID),"read");
   TFile *t_resolution_iniput = new TFile("/star/data01/pwg/dchen/Ana/fxtPicoAna/result_event_plane_resolution/event_plane_resolution_primary.root","read");
 
   TH1D *h_resolution_input = (TH1D*)t_resolution_iniput->Get("h_resolution");
@@ -1172,7 +1130,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
     Int_t grefMult = event->grefMult();
 
-    ////////////////////////// Centrality Track Loop ///////////////////////////
+    /***************** Centrality Track Loop to determine centrality ******************/
     Int_t centrality = 0;
 
     bool b_cent_01  = false; // 0  < centrality <= 5%
@@ -1198,7 +1156,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
         hist_ndEdx->Fill(picoTrack->nHitsDedx());
         hist_DCA->Fill(picoTrack->gDCA(primaryVertex_X,primaryVertex_Y,primaryVertex_Z));
         //============== === Track Level Cuts ==============
-        // bool b_bad_dEdx     = (cutID == 2) ?  (picoTrack->nHitsDedx() <= 5*variationID):(picoTrack->nHitsDedx() <= 0);
         bool b_bad_dEdx     = (picoTrack->nHitsDedx() <= 0);
 
         bool b_bad_tracking = (((double)picoTrack->nHitsFit() / (double)picoTrack->nHitsPoss()) < 0.52);
@@ -1325,600 +1282,108 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
       // PID
       // Proton
-      // switch(cutID)
-      // {
-        // case 4: // 4: Proton nSigma cut
-        //     {
-        //       if(
-        //         //picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
-        //         TMath::Abs(picoTrack->nSigmaProton()) < (1.8 + 0.04*variationID)
-        //         && (( d_tofBeta == -999.0 && TMath::Abs( picoTrack->nSigmaPion() ) > 0.3 ) ||
-        //            ( d_tofBeta != -999.0
-        //             && mass2 > 0.5
-        //             && mass2 < 1.5
-        //             )
-        //         )
-        //         && charge > 0
-        //         && pt > 0.4
-        //         && pt < 2.0
-        //       )
-        //       {
-        //         // Get particle track rapidity
-        //         Double_t energy_Proton = TMath::Sqrt(trackP*trackP + Mass_Proton*Mass_Proton);
-        //         Double_t rap_Proton = 0.5*TMath::Log( (energy_Proton + pz) / (energy_Proton - pz) );
-        //         // Get eff corr
-        //         Double_t efficiency = 1.0;
-        //
-        //         // Get phi weight
-        //         Double_t phi_weight = 1.0;
-        //
-        //         if(efficiency > 0.0)
-        //         {
-        //           w0 = pt; // pt as weight to calculate v2. rap_Proton + 1.52;//1.4144;
-        //           w1 = efficiency * phi_weight;
-        //           //w1 = phi_weight;
-        //         }
-        //       }
-        //     }
-        //     break;
-        // case 5: //5: Proton nSigmaPion cut
-        //     {
-        //       if(
-        //         //picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
-        //         TMath::Abs(picoTrack->nSigmaProton()) <  2.0
-        //         && (( d_tofBeta == -999.0 && TMath::Abs( picoTrack->nSigmaPion() ) > (0.27 + 0.006*variationID) )  ||
-        //            ( d_tofBeta != -999.0
-        //             && mass2 > 0.5
-        //             && mass2 < 1.5
-        //             )
-        //         )
-        //         && charge > 0
-        //         && pt > 0.4
-        //         && pt < 2.0
-        //       )
-        //       {
-        //         // Get particle track rapidity
-        //         Double_t energy_Proton = TMath::Sqrt(trackP*trackP + Mass_Proton*Mass_Proton);
-        //         Double_t rap_Proton = 0.5*TMath::Log( (energy_Proton + pz) / (energy_Proton - pz) );
-        //         // Get eff corr
-        //         Double_t efficiency = 1.0;
-        //
-        //         // Get phi weight
-        //         Double_t phi_weight = 1.0;
-        //
-        //         if(efficiency > 0.0)
-        //         {
-        //           w0 = pt; // pt as weight to calculate v2. rap_Proton + 1.52;//1.4144;
-        //           w1 = efficiency * phi_weight;
-        //           //w1 = phi_weight;
-        //         }
-        //       }
-        //
-        //     }
-        //     break;
-        // case 6: //6: Proton mass2 bottom cut
-        //     {
-        //       if(
-        //         //picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
-        //         TMath::Abs(picoTrack->nSigmaProton()) <  2.0
-        //         && (( d_tofBeta == -999.0 && TMath::Abs( picoTrack->nSigmaPion() ) > 0.3 ) ||
-        //            ( d_tofBeta != -999.0
-        //             && mass2 > 0.5 + 0.01*variationID//0.5
-        //             && mass2 < 1.5
-        //             )
-        //         )
-        //         && charge > 0
-        //         && pt > 0.4
-        //         && pt < 2.0
-        //       )
-        //       {
-        //         // Get particle track rapidity
-        //         Double_t energy_Proton = TMath::Sqrt(trackP*trackP + Mass_Proton*Mass_Proton);
-        //         Double_t rap_Proton = 0.5*TMath::Log( (energy_Proton + pz) / (energy_Proton - pz) );
-        //         // Get eff corr
-        //         Double_t efficiency = 1.0;
-        //
-        //         // Get phi weight
-        //         Double_t phi_weight = 1.0;
-        //
-        //         if(efficiency > 0.0)
-        //         {
-        //           w0 = pt; // pt as weight to calculate v2. // rap_Proton + 1.52;//1.4144;
-        //           w1 = efficiency * phi_weight;
-        //           //w1 = phi_weight;
-        //         }
-        //       }
-        //
-        //     }
-        //     break;
-        // case 7: //7: Proton mass2 top cut
-        //     {
-        //       if(
-        //         //picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
-        //         TMath::Abs(picoTrack->nSigmaProton()) <  2.0
-        //         && (( d_tofBeta == -999.0 && TMath::Abs( picoTrack->nSigmaPion() ) > 0.3 ) ||
-        //            ( d_tofBeta != -999.0
-        //             && mass2 > 0.5
-        //             && mass2 < 1.5 - 0.03*variationID
-        //             )
-        //         )
-        //         && charge > 0
-        //         && pt > 0.4
-        //         && pt < 2.0
-        //       )
-        //       {
-        //         // Get particle track rapidity
-        //         Double_t energy_Proton = TMath::Sqrt(trackP*trackP + Mass_Proton*Mass_Proton);
-        //         Double_t rap_Proton = 0.5*TMath::Log( (energy_Proton + pz) / (energy_Proton - pz) );
-        //         // Get eff corr
-        //         Double_t efficiency = 1.0;
-        //
-        //         // Get phi weight
-        //         Double_t phi_weight = 1.0;
-        //
-        //         if(efficiency > 0.0)
-        //         {
-        //           w0 = pt; // pt as weight to calculate v2. // rap_Proton + 1.52;//1.4144;
-        //           w1 = efficiency * phi_weight;
-        //           //w1 = phi_weight;
-        //         }
-        //       }
-        //
-        //     }
-        //     break;
-        // case 8: //8: Proton pT bottom cut
-        //     {
-        //       if(
-        //         //picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
-        //         TMath::Abs(picoTrack->nSigmaProton()) <  2.0
-        //         && (( d_tofBeta == -999.0 && TMath::Abs( picoTrack->nSigmaPion() ) > 0.3 ) ||
-        //            ( d_tofBeta != -999.0
-        //             && mass2 > 0.5
-        //             && mass2 < 1.5
-        //             )
-        //         )
-        //         && charge > 0
-        //         && pt > 0.4 + 0.008*variationID
-        //         && pt < 2.0
-        //       )
-        //       {
-        //         // Get particle track rapidity
-        //         Double_t energy_Proton = TMath::Sqrt(trackP*trackP + Mass_Proton*Mass_Proton);
-        //         Double_t rap_Proton = 0.5*TMath::Log( (energy_Proton + pz) / (energy_Proton - pz) );
-        //         // Get eff corr
-        //         Double_t efficiency = 1.0;
-        //
-        //         // Get phi weight
-        //         Double_t phi_weight = 1.0;
-        //
-        //         if(efficiency > 0.0)
-        //         {
-        //           w0 = pt; // pt as weight to calculate v2. // rap_Proton + 1.52;//1.4144;
-        //           w1 = efficiency * phi_weight;
-        //           //w1 = phi_weight;
-        //         }
-        //       }
-        //
-        //     }
-        //     break;
-        // case 9: //9: Proton pT top cut
-        //     {
-        //       if(
-        //         //picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
-        //         TMath::Abs(picoTrack->nSigmaProton()) <  2.0
-        //         && (( d_tofBeta == -999.0 && TMath::Abs( picoTrack->nSigmaPion() ) > 0.3 ) ||
-        //            ( d_tofBeta != -999.0
-        //             && mass2 > 0.5
-        //             && mass2 < 1.5
-        //             )
-        //         )
-        //         && charge > 0
-        //         && pt > 0.4
-        //         && pt < 2.0 - 0.04*variationID
-        //       )
-        //       {
-        //         // Get particle track rapidity
-        //         Double_t energy_Proton = TMath::Sqrt(trackP*trackP + Mass_Proton*Mass_Proton);
-        //         Double_t rap_Proton = 0.5*TMath::Log( (energy_Proton + pz) / (energy_Proton - pz) );
-        //         // Get eff corr
-        //         Double_t efficiency = 1.0;
-        //
-        //         // Get phi weight
-        //         Double_t phi_weight = 1.0;
-        //
-        //         if(efficiency > 0.0)
-        //         {
-        //           w0 = pt; // pt as weight to calculate v2. // rap_Proton + 1.52;//1.4144;
-        //           w1 = efficiency * phi_weight;
-        //           //w1 = phi_weight;
-        //         }
-        //       }
-        //
-        //     }
-        //     break;
-        // default:
-        //     {
-              if(
-                //picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
-                TMath::Abs(picoTrack->nSigmaProton()) <  2.0
-                && (( d_tofBeta == -999.0 && TMath::Abs( picoTrack->nSigmaPion() ) > 0.3 ) ||
-                   ( d_tofBeta != -999.0
-                    && mass2 > 0.5
-                    && mass2 < 1.5
-                    )
-                )
-                && charge > 0
-                && pt > 0.4
-                && pt < 2.0
-              )
-              {
-                // Get particle track rapidity
-                Double_t energy_Proton = TMath::Sqrt(trackP*trackP + Mass_Proton*Mass_Proton);
-                Double_t rap_Proton    = 0.5*TMath::Log( (energy_Proton + pz) / (energy_Proton - pz) );
+      if(
+        //picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
+        TMath::Abs(picoTrack->nSigmaProton()) <  2.0
+        && (( d_tofBeta == -999.0 && TMath::Abs( picoTrack->nSigmaPion() ) > 0.3 ) ||
+           ( d_tofBeta != -999.0
+            && mass2 > 0.5
+            && mass2 < 1.5
+            )
+        )
+        && charge > 0
+        && pt > 0.4
+        && pt < 2.0
+      )
+      {
+        // Get particle track rapidity
+        Double_t energy_Proton = TMath::Sqrt(trackP*trackP + Mass_Proton*Mass_Proton);
+        Double_t rap_Proton    = 0.5*TMath::Log( (energy_Proton + pz) / (energy_Proton - pz) );
 
-                Double_t d_mT_Proton   = TMath::Sqrt(pt*pt + Mass_Proton*Mass_Proton);
-                // Get eff corr
-                Double_t efficiency = 0.0;//1.0
-                Int_t i_ybin_Proton = ProtonEfficiencyTable->GetYaxis()->FindBin(rap_Proton);
-                Int_t i_zbin_Proton = ProtonEfficiencyTable->GetZaxis()->FindBin(d_mT_Proton-Mass_Proton);
+        Double_t d_mT_Proton   = TMath::Sqrt(pt*pt + Mass_Proton*Mass_Proton);
+        // Get eff corr
+        Double_t efficiency = 0.0;//1.0
+        Int_t i_ybin_Proton = ProtonEfficiencyTable->GetYaxis()->FindBin(rap_Proton);
+        Int_t i_zbin_Proton = ProtonEfficiencyTable->GetZaxis()->FindBin(d_mT_Proton-Mass_Proton);
 
-                efficiency = ProtonEfficiencyTable ->GetBinContent(centrality,i_ybin_Proton,i_zbin_Proton);
-                efficiency = (efficiency >= 0.001 && efficiency <= 1.0)? 1.0 / efficiency : 0.0;
-                efficiency = 1.0;
-                // Get phi weight
-                Double_t phi_weight = 1.0;
+        efficiency = ProtonEfficiencyTable ->GetBinContent(centrality,i_ybin_Proton,i_zbin_Proton);
+        efficiency = (efficiency >= 0.001 && efficiency <= 1.0)? 1.0 / efficiency : 0.0;
+        efficiency = 1.0;
+        // Get phi weight
+        Double_t phi_weight = 1.0;
 
-                if(efficiency > 0.0)
-                {
-                  w0 = pt; // pt as weight to calculate v2. // rap_Proton + 1.52;//1.4144;
-                  w1 = efficiency * phi_weight;
-                  //w1 = phi_weight;
-                }
-              }
-            // }
-      // }
-
+        if(efficiency > 0.0)
+        {
+          w0 = pt; // pt as weight to calculate v2. // rap_Proton + 1.52;//1.4144;
+          w1 = efficiency * phi_weight;
+          //w1 = phi_weight;
+        }
+      }
 
       // Pions
-      // switch(cutID)
-      // {
-        // case 10: //cutID == 10: Pion nSigmaPion cut
-        //     {
-        //       if(
-        //          TMath::Abs( picoTrack->nSigmaPion() ) < (1.8 + 0.04*variationID)
-        //          //picoTrack->nSigmaPion() > -2.0 && picoTrack->nSigmaPion() < 2.0
-        //          && ( d_tofBeta != -999.0
-        //                && ( (  picoTrack->nSigmaPion() > 2.0 && picoTrack->nSigmaPion() < 6.0
-        //                       && ( mass2 < -0.005 || mass2 > 0.005 )
-        //                     ) || (picoTrack->nSigmaPion() > -4.0 && picoTrack->nSigmaPion() <= 2.0) )
-        //                && mass2 > -0.1
-        //                && mass2 < 0.15
-        //               )
-        //          && pt > 0.2
-        //          && pt < 1.6
-        //
-        //          )
-        //          {
-        //            // Get particle track rapidity
-        //            Double_t energy_Pion = TMath::Sqrt(trackP*trackP + Mass_Pion*Mass_Pion);
-        //            Double_t rap_Pion = 0.5*TMath::Log( (energy_Pion + pz) / (energy_Pion - pz) );
-        //            if(charge > 0)
-        //            {
-        //              // Get eff corr
-        //              Double_t efficiency = 1.0;
-        //
-        //              if(efficiency > 0.0)
-        //              {
-        //                w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-        //                w1 = efficiency /* -1.0*/;
-        //              }
-        //            }
-        //            if(charge < 0)
-        //            {
-        //              // Get eff corr
-        //              Double_t efficiency = 1.0;
-        //
-        //              if(efficiency > 0.0)
-        //              {
-        //                w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-        //                w1 = efficiency /* -1.0*/;
-        //              }
-        //            }
-        //          }
-        //
-        //     }
-        //     break;
-        //
-        // case 11: //cutID == 11: Pion mass2 bottom cut
-        //     {
-        //       if( //TMath::Abs( track->nSigmaPion() ) < 2.0
-        //          picoTrack->nSigmaPion() > -2.0 && picoTrack->nSigmaPion() < 2.0
-        //          && ( d_tofBeta != -999.0
-        //                && ( (  picoTrack->nSigmaPion() > 2.0 && picoTrack->nSigmaPion() < 6.0
-        //                       && ( mass2 < -0.005 || mass2 > 0.005 )
-        //                     ) || (picoTrack->nSigmaPion() > -4.0 && picoTrack->nSigmaPion() <= 2.0) )
-        //                && mass2 > -0.1 + 0.002*variationID//-0.1
-        //                && mass2 < 0.15
-        //               )
-        //          && pt > 0.2
-        //          && pt < 1.6
-        //
-        //          )
-        //          {
-        //            // Get particle track rapidity
-        //            Double_t energy_Pion = TMath::Sqrt(trackP*trackP + Mass_Pion*Mass_Pion);
-        //            Double_t rap_Pion = 0.5*TMath::Log( (energy_Pion + pz) / (energy_Pion - pz) );
-        //            if(charge > 0)
-        //            {
-        //              // Get eff corr
-        //              Double_t efficiency = 1.0;
-        //
-        //              if(efficiency > 0.0)
-        //              {
-        //                w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-        //                w1 = efficiency /* -1.0*/;
-        //              }
-        //            }
-        //            if(charge < 0)
-        //            {
-        //              // Get eff corr
-        //              Double_t efficiency = 1.0;
-        //
-        //              if(efficiency > 0.0)
-        //              {
-        //                w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-        //                w1 = efficiency /* -1.0*/;
-        //              }
-        //            }
-        //          }
-        //
-        //     }
-        //     break;
-        //
-        // case 12: //cutID == 12: Pion mass2 top cut
-        //     {
-        //       if( //TMath::Abs( track->nSigmaPion() ) < 2.0
-        //          picoTrack->nSigmaPion() > -2.0 && picoTrack->nSigmaPion() < 2.0
-        //          && ( d_tofBeta != -999.0
-        //                && ( (  picoTrack->nSigmaPion() > 2.0 && picoTrack->nSigmaPion() < 6.0
-        //                       && ( mass2 < -0.005 || mass2 > 0.005 )
-        //                     ) || (picoTrack->nSigmaPion() > -4.0 && picoTrack->nSigmaPion() <= 2.0) )
-        //                && mass2 > -0.1
-        //                && mass2 < 0.15 - 0.003*variationID//0.15
-        //               )
-        //          && pt > 0.2
-        //          && pt < 1.6
-        //
-        //          )
-        //          {
-        //            // Get particle track rapidity
-        //            Double_t energy_Pion = TMath::Sqrt(trackP*trackP + Mass_Pion*Mass_Pion);
-        //            Double_t rap_Pion = 0.5*TMath::Log( (energy_Pion + pz) / (energy_Pion - pz) );
-        //            if(charge > 0)
-        //            {
-        //              // Get eff corr
-        //              Double_t efficiency = 1.0;
-        //
-        //              if(efficiency > 0.0)
-        //              {
-        //                w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-        //                w1 = efficiency /* -1.0*/;
-        //              }
-        //            }
-        //            if(charge < 0)
-        //            {
-        //              // Get eff corr
-        //              Double_t efficiency = 1.0;
-        //
-        //              if(efficiency > 0.0)
-        //              {
-        //                w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-        //                w1 = efficiency /* -1.0*/;
-        //              }
-        //            }
-        //          }
-        //
-        //     }
-        //     break;
-        //
-        // case 13: //cutID == 13: Pion pT bottom cut
-        //     {
-        //       if( //TMath::Abs( track->nSigmaPion() ) < 2.0
-        //          picoTrack->nSigmaPion() > -2.0 && picoTrack->nSigmaPion() < 2.0
-        //          && ( d_tofBeta != -999.0
-        //                && ( (  picoTrack->nSigmaPion() > 2.0 && picoTrack->nSigmaPion() < 6.0
-        //                       && ( mass2 < -0.005 || mass2 > 0.005 )
-        //                     ) || (picoTrack->nSigmaPion() > -4.0 && picoTrack->nSigmaPion() <= 2.0) )
-        //                && mass2 > -0.1
-        //                && mass2 < 0.15
-        //               )
-        //          && pt > 0.2 + 0.004*variationID//0.2
-        //          && pt < 1.6
-        //
-        //          )
-        //          {
-        //            // Get particle track rapidity
-        //            Double_t energy_Pion = TMath::Sqrt(trackP*trackP + Mass_Pion*Mass_Pion);
-        //            Double_t rap_Pion = 0.5*TMath::Log( (energy_Pion + pz) / (energy_Pion - pz) );
-        //            if(charge > 0)
-        //            {
-        //              // Get eff corr
-        //              Double_t efficiency = 1.0;
-        //
-        //              if(efficiency > 0.0)
-        //              {
-        //                w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-        //                w1 = efficiency /* -1.0*/;
-        //              }
-        //            }
-        //            if(charge < 0)
-        //            {
-        //              // Get eff corr
-        //              Double_t efficiency = 1.0;
-        //
-        //              if(efficiency > 0.0)
-        //              {
-        //                w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-        //                w1 = efficiency /* -1.0*/;
-        //              }
-        //            }
-        //          }
-        //
-        //     }
-        //     break;
-        //
-        // case 14: //cutID == 14: Pion pT top cut
-        //     {
-        //       if( //TMath::Abs( track->nSigmaPion() ) < 2.0
-        //          picoTrack->nSigmaPion() > -2.0 && picoTrack->nSigmaPion() < 2.0
-        //          && ( d_tofBeta != -999.0
-        //                && ( (  picoTrack->nSigmaPion() > 2.0 && picoTrack->nSigmaPion() < 6.0
-        //                       && ( mass2 < -0.005 || mass2 > 0.005 )
-        //                     ) || (picoTrack->nSigmaPion() > -4.0 && picoTrack->nSigmaPion() <= 2.0) )
-        //                && mass2 > -0.1
-        //                && mass2 < 0.15
-        //               )
-        //          && pt > 0.2
-        //          && pt < 1.6 - 0.032*variationID//1.6
-        //
-        //          )
-        //          {
-        //            // Get particle track rapidity
-        //            Double_t energy_Pion = TMath::Sqrt(trackP*trackP + Mass_Pion*Mass_Pion);
-        //            Double_t rap_Pion = 0.5*TMath::Log( (energy_Pion + pz) / (energy_Pion - pz) );
-        //            if(charge > 0)
-        //            {
-        //              // Get eff corr
-        //              Double_t efficiency = 1.0;
-        //
-        //              if(efficiency > 0.0)
-        //              {
-        //                w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-        //                w1 = efficiency /* -1.0*/;
-        //              }
-        //            }
-        //            if(charge < 0)
-        //            {
-        //              // Get eff corr
-        //              Double_t efficiency = 1.0;
-        //
-        //              if(efficiency > 0.0)
-        //              {
-        //                w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-        //                w1 = efficiency /* -1.0*/;
-        //              }
-        //            }
-        //          }
-        //
-        //     }
-        //     break;
+      if( //TMath::Abs( track->nSigmaPion() ) < 2.0
+         picoTrack->nSigmaPion() > -2.0 && picoTrack->nSigmaPion() < 2.0
+         && ( d_tofBeta != -999.0
+               && ( (  picoTrack->nSigmaPion() > 2.0 && picoTrack->nSigmaPion() < 6.0
+                      && ( mass2 < -0.005 || mass2 > 0.005 )
+                    ) || (picoTrack->nSigmaPion() > -4.0 && picoTrack->nSigmaPion() <= 2.0) )
+               && mass2 > -0.1
+               && mass2 < 0.15
+              )
+         && pt > 0.2
+         && pt < 1.6
 
-        // default:
-        //     {
-              if( //TMath::Abs( track->nSigmaPion() ) < 2.0
-                 picoTrack->nSigmaPion() > -2.0 && picoTrack->nSigmaPion() < 2.0
-                 && ( d_tofBeta != -999.0
-                       && ( (  picoTrack->nSigmaPion() > 2.0 && picoTrack->nSigmaPion() < 6.0
-                              && ( mass2 < -0.005 || mass2 > 0.005 )
-                            ) || (picoTrack->nSigmaPion() > -4.0 && picoTrack->nSigmaPion() <= 2.0) )
-                       && mass2 > -0.1
-                       && mass2 < 0.15
-                      )
-                 && pt > 0.2
-                 && pt < 1.6
+         )
+         {
+           // Get particle track rapidity
+           Double_t energy_Pion = TMath::Sqrt(trackP*trackP + Mass_Pion*Mass_Pion);
+           Double_t rap_Pion = 0.5*TMath::Log( (energy_Pion + pz) / (energy_Pion - pz) );
+           if(charge > 0)
+           {
+             // Get eff corr
+             // Double_t efficiency = 1.0;
 
-                 )
-                 {
-                   // Get particle track rapidity
-                   Double_t energy_Pion = TMath::Sqrt(trackP*trackP + Mass_Pion*Mass_Pion);
-                   Double_t rap_Pion = 0.5*TMath::Log( (energy_Pion + pz) / (energy_Pion - pz) );
-                   if(charge > 0)
-                   {
-                     // Get eff corr
-                     // Double_t efficiency = 1.0;
+             Double_t d_mT_Pion   = TMath::Sqrt(pt*pt + Mass_Pion*Mass_Pion);
+             // Get eff corr
+             Double_t efficiency = 0.0;//1.0
+             Int_t i_ybin_Pion = PionPlusEfficiencyTable->GetYaxis()->FindBin(rap_Pion);
+             Int_t i_zbin_Pion = PionPlusEfficiencyTable->GetZaxis()->FindBin(d_mT_Pion-Mass_Pion);
 
-                     Double_t d_mT_Pion   = TMath::Sqrt(pt*pt + Mass_Pion*Mass_Pion);
-                     // Get eff corr
-                     Double_t efficiency = 0.0;//1.0
-                     Int_t i_ybin_Pion = PionPlusEfficiencyTable->GetYaxis()->FindBin(rap_Pion);
-                     Int_t i_zbin_Pion = PionPlusEfficiencyTable->GetZaxis()->FindBin(d_mT_Pion-Mass_Pion);
+             efficiency = PionPlusEfficiencyTable ->GetBinContent(centrality,i_ybin_Pion,i_zbin_Pion);
+             efficiency = (efficiency >= 0.001 && efficiency <= 1.0)? 1.0 / efficiency : 0.0;
+             efficiency = 1.0;
 
-                     efficiency = PionPlusEfficiencyTable ->GetBinContent(centrality,i_ybin_Pion,i_zbin_Pion);
-                     efficiency = (efficiency >= 0.001 && efficiency <= 1.0)? 1.0 / efficiency : 0.0;
-                     efficiency = 1.0;
+             if(efficiency > 0.0)
+             {
+               w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
+               w1 = efficiency /* -1.0*/;
+             }
+           }
+           if(charge < 0)
+           {
+             // Get eff corr
+             // Double_t efficiency = 1.0;
 
-                     if(efficiency > 0.0)
-                     {
-                       w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-                       w1 = efficiency /* -1.0*/;
-                     }
-                   }
-                   if(charge < 0)
-                   {
-                     // Get eff corr
-                     // Double_t efficiency = 1.0;
+             Double_t d_mT_Pion   = TMath::Sqrt(pt*pt + Mass_Pion*Mass_Pion);
+             // Get eff corr
+             Double_t efficiency = 0.0;//1.0
+             Int_t i_ybin_Pion = PionMinusEfficiencyTable->GetYaxis()->FindBin(rap_Pion);
+             Int_t i_zbin_Pion = PionMinusEfficiencyTable->GetZaxis()->FindBin(d_mT_Pion-Mass_Pion);
 
-                     Double_t d_mT_Pion   = TMath::Sqrt(pt*pt + Mass_Pion*Mass_Pion);
-                     // Get eff corr
-                     Double_t efficiency = 0.0;//1.0
-                     Int_t i_ybin_Pion = PionMinusEfficiencyTable->GetYaxis()->FindBin(rap_Pion);
-                     Int_t i_zbin_Pion = PionMinusEfficiencyTable->GetZaxis()->FindBin(d_mT_Pion-Mass_Pion);
+             efficiency = PionMinusEfficiencyTable ->GetBinContent(centrality,i_ybin_Pion,i_zbin_Pion);
+             efficiency = (efficiency >= 0.001 && efficiency <= 1.0)? 1.0 / efficiency : 0.0;
+             efficiency = 1.0;
 
-                     efficiency = PionMinusEfficiencyTable ->GetBinContent(centrality,i_ybin_Pion,i_zbin_Pion);
-                     efficiency = (efficiency >= 0.001 && efficiency <= 1.0)? 1.0 / efficiency : 0.0;
-                     efficiency = 1.0;
+             if(efficiency > 0.0)
+             {
+               w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
+               w1 = efficiency /* -1.0*/;
+             }
+           }
+         }
 
-                     if(efficiency > 0.0)
-                     {
-                       w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-                       w1 = efficiency /* -1.0*/;
-                     }
-                   }
-                 }
-
-            // }
-      // }
       // Kaons
       // Remove Kaons for EP to get rid of auto correlation
-      // if( //TMath::Abs( track->nSigmaKaon() ) < 2.0
-      //    picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-      //    && ( d_tofBeta != -999.0
-      //        && mass2 > 0.17
-      //        && mass2 < 0.33
-      //        )
-      //    && pt > 0.2
-      //    && pt < 1.6
-      //    )
-      //    {
-      //      // Get particle track rapidity
-      //      Double_t energy_Kaon = TMath::Sqrt(trackP*trackP + Mass_Kaon*Mass_Kaon);
-      //      Double_t rap_Kaon = 0.5*TMath::Log( (energy_Kaon + pz) / (energy_Kaon - pz) );
-      //      if(charge > 0)
-      //      {
-      //        // Get eff corr
-      //        Double_t efficiency = 1.0;
-      //
-      //        if(efficiency > 0.0)
-      //          {
-      //            w0 = pt; // pt as weight to calculate v2. // rap_Kaon + 1.52;//1.4144;
-      //            w1 = efficiency /* -1.0*/;
-      //            //w1 = 1.0;
-      //          }
-      //      }
-      //      if(charge < 0)
-      //      {
-      //        // Get eff corr
-      //        Double_t efficiency = 1.0;
-      //
-      //        if(efficiency > 0.0)
-      //          {
-      //            w0 = pt; // pt as weight to calculate v2. rap_Kaon + 1.52;//1.4144;
-      //            w1 = efficiency /* -1.0*/;
-      //            //w1 = 1.0;
-      //          }
-      //      }
-      //    }
-
       // END PID
       Bool_t IsEast = kFALSE, IsWest = kFALSE;
 
@@ -1946,7 +1411,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
     }
     /////// END Primary Tracks loop to get event plane parameters //////////////
-    // std::cout << "test a "<<std::endl;
 
     // Compute TPC east event planes
     if(N_tpc_east >= 5 && tpc_east_Qweight > 0.0)
@@ -2067,7 +1531,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
     }
 
     // END Compute TPC west event planes
-
 
     // Compute bbc event planes
     Int_t N_bbc_east = 0, N_bbc_west = 0;
@@ -2659,32 +2122,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
       bool b_K   = false; //fabs(d_TPCnSigmaKaon)   < d_SigmaCutLevel;
       bool b_E   = false; //fabs(d_TPCnSigmaElectron)< d_SigmaCutLevel;
 
-      /********* Remove this part of PID cut
-      if( b_E
-         && (d_TPCnSigmaElectron < d_TPCnSigmaPion)
-         && (d_TPCnSigmaElectron < d_TPCnSigmaProton)
-         && (d_TPCnSigmaElectron < d_TPCnSigmaKaon) )
-        { b_E = true; b_PI = false; b_PRO = false; b_K = false;}
-
-      if( b_PI
-         && (d_TPCnSigmaPion < d_TPCnSigmaElectron)
-         && (d_TPCnSigmaPion < d_TPCnSigmaKaon)
-         && (d_TPCnSigmaPion < d_TPCnSigmaProton) )
-         { b_E = false; b_PI = true; b_PRO = false; b_K = false;}
-
-      if( b_PRO
-         && (d_TPCnSigmaProton < d_TPCnSigmaElectron)
-         && (d_TPCnSigmaProton < d_TPCnSigmaPion)
-         && (d_TPCnSigmaProton < d_TPCnSigmaKaon) )
-         { b_E = false; b_PI = false; b_PRO = true; b_K = false;}
-
-      if( b_K
-         && (d_TPCnSigmaKaon < d_TPCnSigmaElectron)
-         && (d_TPCnSigmaKaon < d_TPCnSigmaProton)
-         && (d_TPCnSigmaKaon < d_TPCnSigmaPion) )
-         { b_E = false; b_PI = false; b_PRO = false; b_K = true;}
-      */
-
       double d_charge     = picoTrack->charge();
       double d_px0        = picoTrack->pMom().x();
       double d_py0        = picoTrack->pMom().y();
@@ -2715,107 +2152,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
             // h_E_plus_mT_Diff -> Fill((d_mT_E - d_E_m));
           }
           // kaon PID
-          // switch (cutID)
-          // {
-            // case 15: //cutID == 15: Phi flow - Kaon nSigmaKaon cut
-            //     {
-            //       if(
-            //         TMath::Abs(picoTrack->nSigmaKaon()) < (1.8 + 0.04*variationID)
-            //         //picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-            //          && ( d_tofBeta0 != -999.0
-            //              && mass2 > 0.17
-            //              && mass2 < 0.33
-            //             )
-            //          && d_pT0 > 0.2
-            //          && d_pT0 < 1.6
-            //       ){
-            //            b_E = false; b_PI = false; b_PRO = false; b_K = true;
-            //         // h_K_plus_pT -> Fill(d_pT0);
-            //         // h_K_plus_y  -> Fill(d_y_K);
-            //         // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
-            //         // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
-            //       }
-            //     }
-            //     break;
-            //
-            // case 16: //cutID == 16: Phi flow - Kaon mass2 bottom cut
-            //     {
-            //       if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-            //          && ( d_tofBeta0 != -999.0
-            //              && mass2 > 0.17 + 0.0034*variationID//0.17
-            //              && mass2 < 0.33
-            //             )
-            //          && d_pT0 > 0.2
-            //          && d_pT0 < 1.6
-            //       ){
-            //            b_E = false; b_PI = false; b_PRO = false; b_K = true;
-            //         // h_K_plus_pT -> Fill(d_pT0);
-            //         // h_K_plus_y  -> Fill(d_y_K);
-            //         // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
-            //         // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
-            //       }
-            //     }
-            //     break;
-            //
-            // case 17: //cutID == 17: Phi flow - Kaon mass2 top cut
-            //     {
-            //       if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-            //          && ( d_tofBeta0 != -999.0
-            //              && mass2 > 0.17
-            //              && mass2 < 0.33 - 0.0066*variationID//0.33
-            //             )
-            //          && d_pT0 > 0.2
-            //          && d_pT0 < 1.6
-            //       ){
-            //            b_E = false; b_PI = false; b_PRO = false; b_K = true;
-            //         // h_K_plus_pT -> Fill(d_pT0);
-            //         // h_K_plus_y  -> Fill(d_y_K);
-            //         // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
-            //         // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
-            //       }
-            //     }
-            //     break;
-            //
-            // case 18: //cutID == 18: Phi flow - Kaon pT bottom cut
-            //     {
-            //       if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-            //          && ( d_tofBeta0 != -999.0
-            //              && mass2 > 0.17
-            //              && mass2 < 0.33
-            //             )
-            //          && d_pT0 > 0.2 + 0.004*variationID//0.2
-            //          && d_pT0 < 1.6
-            //       ){
-            //            b_E = false; b_PI = false; b_PRO = false; b_K = true;
-            //         // h_K_plus_pT -> Fill(d_pT0);
-            //         // h_K_plus_y  -> Fill(d_y_K);
-            //         // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
-            //         // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
-            //       }
-            //     }
-            //     break;
-            //
-            // case 19: //cutID == 19: Phi flow - Kaon pT top cut
-            //     {
-            //       if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-            //          && ( d_tofBeta0 != -999.0
-            //              && mass2 > 0.17
-            //              && mass2 < 0.33
-            //             )
-            //          && d_pT0 > 0.2
-            //          && d_pT0 < 1.6 - 0.032*variationID//1.6
-            //       ){
-            //            b_E = false; b_PI = false; b_PRO = false; b_K = true;
-            //         // h_K_plus_pT -> Fill(d_pT0);
-            //         // h_K_plus_y  -> Fill(d_y_K);
-            //         // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
-            //         // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
-            //       }
-            //     }
-            //     break;
-
-            // default:
-            //     {
                   if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
                      && ( d_tofBeta0 != -999.0
                          && mass2 > 0.19//0.17
@@ -2830,9 +2166,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
                     // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
                     // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
                   }
-                // }
-
-          // }
 
           if(
             picoTrack->nSigmaPion() > -2.0 && picoTrack->nSigmaPion() < 2.0
@@ -2888,107 +2221,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
           }
 
           // kaon PID
-          // switch (cutID)
-          // {
-            // case 15: //cutID == 15: Phi flow - Kaon nSigmaKaon cut
-            //     {
-            //       if(
-            //         TMath::Abs(picoTrack->nSigmaKaon()) < (1.8 + 0.04*variationID)
-            //         //picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-            //          && ( d_tofBeta0 != -999.0
-            //              && mass2 > 0.17
-            //              && mass2 < 0.33
-            //             )
-            //          && d_pT0 > 0.2
-            //          && d_pT0 < 1.6
-            //       ){
-            //            b_E = false; b_PI = false; b_PRO = false; b_K = true;
-            //         // h_K_plus_pT -> Fill(d_pT0);
-            //         // h_K_plus_y  -> Fill(d_y_K);
-            //         // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
-            //         // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
-            //       }
-            //     }
-            //     break;
-            //
-            // case 16: //cutID == 16: Phi flow - Kaon mass2 bottom cut
-            //     {
-            //       if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-            //          && ( d_tofBeta0 != -999.0
-            //              && mass2 > 0.17 + 0.0034*variationID//0.17
-            //              && mass2 < 0.33
-            //             )
-            //          && d_pT0 > 0.2
-            //          && d_pT0 < 1.6
-            //       ){
-            //            b_E = false; b_PI = false; b_PRO = false; b_K = true;
-            //         // h_K_plus_pT -> Fill(d_pT0);
-            //         // h_K_plus_y  -> Fill(d_y_K);
-            //         // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
-            //         // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
-            //       }
-            //     }
-            //     break;
-            //
-            // case 17: //cutID == 17: Phi flow - Kaon mass2 top cut
-            //     {
-            //       if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-            //          && ( d_tofBeta0 != -999.0
-            //              && mass2 > 0.17
-            //              && mass2 < 0.33 - 0.0066*variationID//0.33
-            //             )
-            //          && d_pT0 > 0.2
-            //          && d_pT0 < 1.6
-            //       ){
-            //            b_E = false; b_PI = false; b_PRO = false; b_K = true;
-            //         // h_K_plus_pT -> Fill(d_pT0);
-            //         // h_K_plus_y  -> Fill(d_y_K);
-            //         // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
-            //         // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
-            //       }
-            //     }
-            //     break;
-            //
-            // case 18: //cutID == 18: Phi flow - Kaon pT bottom cut
-            //     {
-            //       if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-            //          && ( d_tofBeta0 != -999.0
-            //              && mass2 > 0.17
-            //              && mass2 < 0.33
-            //             )
-            //          && d_pT0 > 0.2 + 0.004*variationID//0.2
-            //          && d_pT0 < 1.6
-            //       ){
-            //            b_E = false; b_PI = false; b_PRO = false; b_K = true;
-            //         // h_K_plus_pT -> Fill(d_pT0);
-            //         // h_K_plus_y  -> Fill(d_y_K);
-            //         // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
-            //         // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
-            //       }
-            //     }
-            //     break;
-            //
-            // case 19: //cutID == 19: Phi flow - Kaon pT top cut
-            //     {
-            //       if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-            //          && ( d_tofBeta0 != -999.0
-            //              && mass2 > 0.17
-            //              && mass2 < 0.33
-            //             )
-            //          && d_pT0 > 0.2
-            //          && d_pT0 < 1.6 - 0.032*variationID//1.6
-            //       ){
-            //            b_E = false; b_PI = false; b_PRO = false; b_K = true;
-            //         // h_K_plus_pT -> Fill(d_pT0);
-            //         // h_K_plus_y  -> Fill(d_y_K);
-            //         // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
-            //         // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
-            //       }
-            //     }
-            //     break;
-
-            // default:
-            //     {
                   if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
                      && ( d_tofBeta0 != -999.0
                          && mass2 > 0.19//0.17
@@ -3003,9 +2235,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
                     // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
                     // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
                   }
-                // }
-
-          // }
 
           if(
             picoTrack->nSigmaPion() > -2.0 && picoTrack->nSigmaPion() < 2.0
