@@ -55,6 +55,10 @@
 #include "StRoot/StPicoEvent/StPicoEmcTrigger.h"
 #include "StRoot/StPicoEvent/StPicoBTofPidTraits.h"
 #include "StRoot/StPicoEvent/StPicoTrackCovMatrix.h"
+//EPD Utilizer
+#include "StRoot/StEpdUtil/StEpdEpFinder.h"
+#include "StRoot/StEpdUtil/StEpdEpInfo.h"
+
 
 // Define global constants
 const Int_t daynumber     = 6;
