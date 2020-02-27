@@ -182,11 +182,11 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   std::cout << "Number of events to read: " << events2read << std::endl;
 
   // EPD EP finder to get EPD event plane
-  StEpdEpFinder *mEpdFinder = new StEpdEpFinder(1,"epdTest"/*,*/);
+  StEpdEpFinder *mEpFinder = new StEpdEpFinder(1,"epdTest"/*,*/);
   int format = 2;
-  mEpdFinder->SetEpdHitFormat(format);    // format=0/1/2 for StEpdHit/StMuEpdHit/StPicoEpdHit
-  mEpdFinder->SetnMipThreshold(0.3);    // recommended by EPD group
-  mEpdFinder->SetMaxTileWeight(1.0);     // recommended by EPD group
+  mEpFinder->SetEpdHitFormat(format);    // format=0/1/2 for StEpdHit/StMuEpdHit/StPicoEpdHit
+  mEpFinder->SetnMipThreshold(0.3);    // recommended by EPD group
+  mEpFinder->SetMaxTileWeight(1.0);     // recommended by EPD group
   // mEpFinder->SetEtaWeights(2, TH2D EtaWeight);   // histogram is binned in |eta| and centrality
   // mEpFinder->SetRingWeights(2, double* RingWeights);    // RingWeights is a 1D array of 16 elements.
   TClonesArray * mEpdHits = new TClonesArray("StPicoEpdHit");
@@ -1163,13 +1163,16 @@ cout<<KaonPlusEfficiencyTable<<endl;
     /***************** Centrality Track Loop to determine centrality ******************/
     Int_t centrality = 0;
 
-    bool b_cent_01  = false; // 0  < centrality <= 5%
-    bool b_cent_02  = false; // 5  < centrality <= 10%
-    bool b_cent_03  = false; // 10 < centrality <= 15%
-    bool b_cent_04  = false; // 15 < centrality <= 20%
-    bool b_cent_05  = false; // 20 < centrality <= 25%
-    bool b_cent_06  = false; // 25 < centrality <= 30%
-    bool b_cent_07  = false; // centrality > 30%
+    bool b_cent_01  = false;
+    bool b_cent_02  = false;
+    bool b_cent_03  = false;
+    bool b_cent_04  = false;
+    bool b_cent_05  = false;
+    bool b_cent_06  = false;
+    bool b_cent_07  = false;
+    bool b_cent_08  = false;
+    bool b_cent_09  = false;
+    bool b_cent_10  = false;
 
     int nGoodTracks = 0;
     int nTrkvsCuts  = 0;
@@ -1251,8 +1254,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
     //EPD EP result
     StEpdEpInfo result = mEpFinder->Results(mEpdHits,pVtx,1);  // and now you have all the EP info you could ever want :-)
-    hist_Epd_east_psi_raw->Fill((double)result->EastRawPsi());
-    hist_Epd_west_psi_raw->Fill((double)result->WastRawPsi());
+    hist_Epd_east_psi_raw->Fill(result.EastRawPsi());
+    hist_Epd_west_psi_raw->Fill(result.WastRawPsi());
 
     // Define event plane parameters
     Int_t N_tpc_east = 0, N_tpc_west = 0, N_thirdEP = 0;
