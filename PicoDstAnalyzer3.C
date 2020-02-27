@@ -1267,12 +1267,17 @@ cout<<KaonPlusEfficiencyTable<<endl;
     Double_t EastRawQy = (Double_t) result.EastRawQ(EpOrder).Y();
     Double_t WestRawQx = (Double_t) result.WestRawQ(EpOrder).X();
     Double_t WestRawQy = (Double_t) result.WestRawQ(EpOrder).Y();
+    if(EastRawQx!=0 || EastRawQy!=0 )
+    {
+      hist2_Epd_east_Qy_Qx_raw->Fill(EastRawQx,EastRawQy);
+      hist2_Epd_west_Qy_Qx_raw->Fill(WestRawQx,WestRawQy);
+    }
+    if(WestRawQx!=0 || WestRawQy!=0 )
+    {
+      hist_Epd_east_psi_raw->Fill(result.EastRawPsi(EpOrder));
+      hist_Epd_west_psi_raw->Fill(result.WestRawPsi(EpOrder));
+    }
 
-    hist2_Epd_east_Qy_Qx_raw->Fill(EastRawQx,EastRawQy);
-    hist2_Epd_west_Qy_Qx_raw->Fill(WestRawQx,WestRawQy);
-
-    hist_Epd_east_psi_raw->Fill(result.EastRawPsi(EpOrder));
-    hist_Epd_west_psi_raw->Fill(result.WestRawPsi(EpOrder));
 
     // Define event plane parameters
     Int_t N_tpc_east = 0, N_tpc_west = 0, N_thirdEP = 0;
