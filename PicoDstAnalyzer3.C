@@ -1253,7 +1253,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
     ievtcut[2] += 1;
 
     //EPD EP result
-    StEpdEpInfo result = mEpFinder->Results(mEpdHits,pVtx,1);  // and now you have all the EP info you could ever want :-)
+    StEpdEpInfo result = mEpFinder->Results(mEpdHits,pVtx,2);  // and now you have all the EP info you could ever want :-)
     hist_Epd_east_psi_raw->Fill(result.EastRawPsi(2));
     hist_Epd_west_psi_raw->Fill(result.WestRawPsi(2));
 
