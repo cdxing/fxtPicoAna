@@ -769,11 +769,11 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   Char_t name[100], description[200];
 
   // EPD EPs
-  TH1D *hist2_Epd_east_Qy_Qx_raw = new TH1D("hist2_Epd_east_Qy_Qx_raw","EPD east Qy vs Qx",600,-3.0,3.0,600,-3.0,3.0);
+  TH2D *hist2_Epd_east_Qy_Qx_raw = new TH2D("hist2_Epd_east_Qy_Qx_raw","EPD east Qy vs Qx",600,-3.0,3.0,600,-3.0,3.0);
   hist2_Epd_east_Qy_Qx_raw->GetXaxis()->SetTitle("Q_x^{EPD east}_{2} ");
   hist2_Epd_east_Qy_Qx_raw->GetYaxis()->SetTitle("Q_y^{EPD east}_{2} ");
 
-  TH1D *hist2_Epd_west_Qy_Qx_raw = new TH1D("hist2_Epd_west_Qy_Qx_raw","EPD west Qy vs Qx",600,-3.0,3.0,600,-3.0,3.0);
+  TH2D *hist2_Epd_west_Qy_Qx_raw = new TH2D("hist2_Epd_west_Qy_Qx_raw","EPD west Qy vs Qx",600,-3.0,3.0,600,-3.0,3.0);
   hist2_Epd_west_Qy_Qx_raw->GetXaxis()->SetTitle("Q_x^{EPD west}_{2} ");
   hist2_Epd_west_Qy_Qx_raw->GetYaxis()->SetTitle("Q_y^{EPD west}_{2} ");
 
