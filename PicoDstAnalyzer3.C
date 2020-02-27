@@ -1254,8 +1254,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
     //EPD EP result
     StEpdEpInfo result = mEpFinder->Results(mEpdHits,pVtx,1);  // and now you have all the EP info you could ever want :-)
-    hist_Epd_east_psi_raw->Fill(result.EastRawPsi());
-    hist_Epd_west_psi_raw->Fill(result.WastRawPsi());
+    hist_Epd_east_psi_raw->Fill(result.EastRawPsi(2));
+    hist_Epd_west_psi_raw->Fill(result.WastRawPsi(2));
 
     // Define event plane parameters
     Int_t N_tpc_east = 0, N_tpc_west = 0, N_thirdEP = 0;
