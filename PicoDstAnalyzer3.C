@@ -126,7 +126,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
                     )
 {
   // orders of Fourier expansion of momentum space distribution
-  Int_t i_anisot = inputp1;
+  Int_t EpOrder = inputp1; // EpOrder = 1, 2, 3
 
   // Set particle masses
   Double_t Mass_Pion     = 0.13957061;
@@ -769,6 +769,15 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   Char_t name[100], description[200];
 
   // EPD EPs
+  TH1D *hist2_Epd_east_Qy_Qx_raw = new TH1D("hist2_Epd_east_Qy_Qx_raw","EPD east Qy vs Qx",600,-3.0,3.0,600,-3.0,3.0);
+  hist2_Epd_east_Qy_Qx_raw->GetXaxis()->SetTitle("Q_x^{EPD east}_{2} ");
+  hist2_Epd_east_Qy_Qx_raw->GetYaxis()->SetTitle("Q_y^{EPD east}_{2} ");
+
+  TH1D *hist2_Epd_west_Qy_Qx_raw = new TH1D("hist2_Epd_west_Qy_Qx_raw","EPD west Qy vs Qx",600,-3.0,3.0,600,-3.0,3.0);
+  hist2_Epd_west_Qy_Qx_raw->GetXaxis()->SetTitle("Q_x^{EPD west}_{2} ");
+  hist2_Epd_west_Qy_Qx_raw->GetYaxis()->SetTitle("Q_y^{EPD west}_{2} ");
+
+
   TH1D *hist_Epd_east_psi_raw = new TH1D("hist_Epd_east_psi_raw","EPD east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
   hist_Epd_east_psi_raw->GetXaxis()->SetTitle("#psi^{EPD east}_{1} [Radian]");
   hist_Epd_east_psi_raw->GetYaxis()->SetTitle("# of events");
@@ -1254,8 +1263,16 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
     //EPD EP result
     StEpdEpInfo result = mEpFinder->Results(mEpdHits,pVtx,2);  // and now you have all the EP info you could ever want :-)
-    hist_Epd_east_psi_raw->Fill(result.EastRawPsi(2));
-    hist_Epd_west_psi_raw->Fill(result.WestRawPsi(2));
+    Double_t EastRawQx = (Double_t) result.EastRawQ(EpOrder).X();
+    Double_t EastRawQy = (Double_t) result.EastRawQ(EpOrder).y();
+    Double_t WestRawQx = (Double_t) result.WestRawQ(EpOrder).X();
+    Double_t WestRawQy = (Double_t) result.WestRawQ(EpOrder).y();
+
+    hist2_Epd_east_Qy_Qx_raw->Fill(EastRawQx,EastRawQy);
+    hist2_Epd_west_Qy_Qx_raw->Fill(WestRawQx,WestRawQy);
+
+    hist_Epd_east_psi_raw->Fill(result.EastRawPsi(EpOrder));
+    hist_Epd_west_psi_raw->Fill(result.WestRawPsi(EpOrder));
 
     // Define event plane parameters
     Int_t N_tpc_east = 0, N_tpc_west = 0, N_thirdEP = 0;
@@ -1439,16 +1456,16 @@ cout<<KaonPlusEfficiencyTable<<endl;
       if( IsEast )
       {
           N_tpc_east++;
-          tpc_east_Qx += w0*w1 * TMath::Cos(i_anisot * phi);
-          tpc_east_Qy += w0*w1 * TMath::Sin(i_anisot * phi);
+          tpc_east_Qx += w0*w1 * TMath::Cos(EpOrder * phi);
+          tpc_east_Qy += w0*w1 * TMath::Sin(EpOrder * phi);
           tpc_east_Qweight += TMath::Abs(w0*w1);
       }
       // West
       if( IsWest )
       {
           N_tpc_west++;
-          tpc_west_Qx += w0*w1 * TMath::Cos(i_anisot * phi);
-          tpc_west_Qy += w0*w1 * TMath::Sin(i_anisot * phi);
+          tpc_west_Qx += w0*w1 * TMath::Cos(EpOrder * phi);
+          tpc_west_Qy += w0*w1 * TMath::Sin(EpOrder * phi);
           tpc_west_Qweight += TMath::Abs(w0*w1);
       }
 
@@ -1462,9 +1479,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
       tpc_east_Qy /= tpc_east_Qweight;
       if(tpc_east_Qx || tpc_east_Qy)
       {
-        tpc_east_plane1 = (1. / i_anisot) * TMath::ATan2(tpc_east_Qy,tpc_east_Qx);
-        if(tpc_east_plane1 < 0.0                             ) tpc_east_plane1 += (1. / i_anisot) * 2.0*TMath::Pi();
-        if(tpc_east_plane1 > (1. / i_anisot) * 2.0*TMath::Pi()) tpc_east_plane1 -= (1. / i_anisot) * 2.0*TMath::Pi();
+        tpc_east_plane1 = (1. / EpOrder) * TMath::ATan2(tpc_east_Qy,tpc_east_Qx);
+        if(tpc_east_plane1 < 0.0                             ) tpc_east_plane1 += (1. / EpOrder) * 2.0*TMath::Pi();
+        if(tpc_east_plane1 > (1. / EpOrder) * 2.0*TMath::Pi()) tpc_east_plane1 -= (1. / EpOrder) * 2.0*TMath::Pi();
         hist_tpc_east_psi_raw->Fill(tpc_east_plane1);
         // Recenter reaction plane vector
         profile3D_tpc_east_Qx_Qy->Fill(Day,centrality,1,tpc_east_Qx);
@@ -1476,16 +1493,16 @@ cout<<KaonPlusEfficiencyTable<<endl;
         }
         if(tpc_east_Qx || tpc_east_Qy)
         {
-          tpc_east_plane2 = (1. / i_anisot) * TMath::ATan2(tpc_east_Qy,tpc_east_Qx);
-          if(tpc_east_plane2 < 0.0                             ) tpc_east_plane2 += (1. / i_anisot) * 2.0*TMath::Pi();
-          if(tpc_east_plane2 > (1. / i_anisot) * 2.0*TMath::Pi()) tpc_east_plane2 -= (1. / i_anisot) * 2.0*TMath::Pi();
+          tpc_east_plane2 = (1. / EpOrder) * TMath::ATan2(tpc_east_Qy,tpc_east_Qx);
+          if(tpc_east_plane2 < 0.0                             ) tpc_east_plane2 += (1. / EpOrder) * 2.0*TMath::Pi();
+          if(tpc_east_plane2 > (1. / EpOrder) * 2.0*TMath::Pi()) tpc_east_plane2 -= (1. / EpOrder) * 2.0*TMath::Pi();
           hist_tpc_east_psi_recentered->Fill(tpc_east_plane2);
           // Shift recenterd event plane to flat
           Double_t reaction_plane_new = tpc_east_plane2;
           for(Int_t k=0;k<order;k++)
           {
-            profile3D_tpc_east_psiShift->Fill(Day,centrality,1+2*k,TMath::Cos(i_anisot * reaction_plane_new*(k+1)));
-            profile3D_tpc_east_psiShift->Fill(Day,centrality,2+2*k,TMath::Sin(i_anisot * reaction_plane_new*(k+1)));
+            profile3D_tpc_east_psiShift->Fill(Day,centrality,1+2*k,TMath::Cos(EpOrder * reaction_plane_new*(k+1)));
+            profile3D_tpc_east_psiShift->Fill(Day,centrality,2+2*k,TMath::Sin(EpOrder * reaction_plane_new*(k+1)));
           }
           Double_t psi_mean[twoorder];
           for(Int_t i=0;i<twoorder;i++)
@@ -1503,12 +1520,12 @@ cout<<KaonPlusEfficiencyTable<<endl;
           }
           for(Int_t k=0;k<order;k++)
           {
-            reaction_plane_new += (1. / i_anisot) * ( -2.0*psi_mean[1+2*k] * TMath::Cos( i_anisot * tpc_east_plane2*(k+1) )
-                                                    + 2.0*psi_mean[0+2*k] * TMath::Sin( i_anisot * tpc_east_plane2*(k+1) ) ) / (k+1);
+            reaction_plane_new += (1. / EpOrder) * ( -2.0*psi_mean[1+2*k] * TMath::Cos( EpOrder * tpc_east_plane2*(k+1) )
+                                                    + 2.0*psi_mean[0+2*k] * TMath::Sin( EpOrder * tpc_east_plane2*(k+1) ) ) / (k+1);
           }
           tpc_east_plane3 = reaction_plane_new;
-          if(tpc_east_plane3 < 0.0                             ) tpc_east_plane3 += (1. / i_anisot) * 2.0*TMath::Pi();
-          if(tpc_east_plane3 > (1. / i_anisot) * 2.0*TMath::Pi()) tpc_east_plane3 -= (1. / i_anisot) * 2.0*TMath::Pi();
+          if(tpc_east_plane3 < 0.0                             ) tpc_east_plane3 += (1. / EpOrder) * 2.0*TMath::Pi();
+          if(tpc_east_plane3 > (1. / EpOrder) * 2.0*TMath::Pi()) tpc_east_plane3 -= (1. / EpOrder) * 2.0*TMath::Pi();
           hist_tpc_east_psi_flattened->Fill(tpc_east_plane3);
         }
       }
@@ -1522,9 +1539,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
       tpc_west_Qy /= tpc_west_Qweight;
       if(tpc_west_Qx || tpc_west_Qy)
       {
-        tpc_west_plane1 = (1. / i_anisot) * TMath::ATan2(tpc_west_Qy,tpc_west_Qx);
-        if(tpc_west_plane1 < 0.0                             ) tpc_west_plane1 += (1. / i_anisot) * 2.0*TMath::Pi();
-        if(tpc_west_plane1 > (1. / i_anisot) * 2.0*TMath::Pi()) tpc_west_plane1 -= (1. / i_anisot) * 2.0*TMath::Pi();
+        tpc_west_plane1 = (1. / EpOrder) * TMath::ATan2(tpc_west_Qy,tpc_west_Qx);
+        if(tpc_west_plane1 < 0.0                             ) tpc_west_plane1 += (1. / EpOrder) * 2.0*TMath::Pi();
+        if(tpc_west_plane1 > (1. / EpOrder) * 2.0*TMath::Pi()) tpc_west_plane1 -= (1. / EpOrder) * 2.0*TMath::Pi();
         hist_tpc_west_psi_raw->Fill(tpc_west_plane1);
         // Recenter reaction plane vector
         profile3D_tpc_west_Qx_Qy->Fill(Day,centrality,1,tpc_west_Qx);
@@ -1536,16 +1553,16 @@ cout<<KaonPlusEfficiencyTable<<endl;
         }
         if(tpc_west_Qx || tpc_west_Qy)
         {
-          tpc_west_plane2 = (1. / i_anisot) * TMath::ATan2(tpc_west_Qy,tpc_west_Qx);
-          if(tpc_west_plane2 < 0.0                             ) tpc_west_plane2 += (1. / i_anisot) * 2.0*TMath::Pi();
-          if(tpc_west_plane2 > (1. / i_anisot) * 2.0*TMath::Pi()) tpc_west_plane2 -= (1. / i_anisot) * 2.0*TMath::Pi();
+          tpc_west_plane2 = (1. / EpOrder) * TMath::ATan2(tpc_west_Qy,tpc_west_Qx);
+          if(tpc_west_plane2 < 0.0                             ) tpc_west_plane2 += (1. / EpOrder) * 2.0*TMath::Pi();
+          if(tpc_west_plane2 > (1. / EpOrder) * 2.0*TMath::Pi()) tpc_west_plane2 -= (1. / EpOrder) * 2.0*TMath::Pi();
           hist_tpc_west_psi_recentered->Fill(tpc_west_plane2);
           // Shift recenterd event plane to flat
           Double_t reaction_plane_new = tpc_west_plane2;
           for(Int_t k=0;k<order;k++)
           {
-            profile3D_tpc_west_psiShift->Fill(Day,centrality,1+2*k,TMath::Cos(i_anisot * reaction_plane_new*(k+1)));
-            profile3D_tpc_west_psiShift->Fill(Day,centrality,2+2*k,TMath::Sin(i_anisot * reaction_plane_new*(k+1)));
+            profile3D_tpc_west_psiShift->Fill(Day,centrality,1+2*k,TMath::Cos(EpOrder * reaction_plane_new*(k+1)));
+            profile3D_tpc_west_psiShift->Fill(Day,centrality,2+2*k,TMath::Sin(EpOrder * reaction_plane_new*(k+1)));
           }
           Double_t psi_mean[twoorder];
           for(Int_t i=0;i<twoorder;i++)
@@ -1562,12 +1579,12 @@ cout<<KaonPlusEfficiencyTable<<endl;
           }
           for(Int_t k=0;k<order;k++)
           {
-            reaction_plane_new += (1. / i_anisot) * ( -2.0*psi_mean[1+2*k] * TMath::Cos( i_anisot * tpc_west_plane2*(k+1) )
-                                                    + 2.0*psi_mean[0+2*k] * TMath::Sin( i_anisot * tpc_west_plane2*(k+1) ) ) / (k+1);
+            reaction_plane_new += (1. / EpOrder) * ( -2.0*psi_mean[1+2*k] * TMath::Cos( EpOrder * tpc_west_plane2*(k+1) )
+                                                    + 2.0*psi_mean[0+2*k] * TMath::Sin( EpOrder * tpc_west_plane2*(k+1) ) ) / (k+1);
           }
           tpc_west_plane3 = reaction_plane_new;
-          if(tpc_west_plane3 < 0.0                             ) tpc_west_plane3 += (1. / i_anisot) * 2.0*TMath::Pi();
-          if(tpc_west_plane3 > (1. / i_anisot) * 2.0*TMath::Pi()) tpc_west_plane3 -= (1. / i_anisot) * 2.0*TMath::Pi();
+          if(tpc_west_plane3 < 0.0                             ) tpc_west_plane3 += (1. / EpOrder) * 2.0*TMath::Pi();
+          if(tpc_west_plane3 > (1. / EpOrder) * 2.0*TMath::Pi()) tpc_west_plane3 -= (1. / EpOrder) * 2.0*TMath::Pi();
           hist_tpc_west_psi_flattened->Fill(tpc_west_plane3);
         }
       }
@@ -1633,16 +1650,16 @@ cout<<KaonPlusEfficiencyTable<<endl;
       if(nHitE[iTile] > 0.0)
       {
           N_bbc_east++;
-          bbc_east_Qx += TMath::Cos( i_anisot * BBC_GetPhi(0,iTile,primaryVertex_X,primaryVertex_Y) ) * nHitE[iTile];
-          bbc_east_Qy += TMath::Sin( i_anisot * BBC_GetPhi(0,iTile,primaryVertex_X,primaryVertex_Y) ) * nHitE[iTile];
+          bbc_east_Qx += TMath::Cos( EpOrder * BBC_GetPhi(0,iTile,primaryVertex_X,primaryVertex_Y) ) * nHitE[iTile];
+          bbc_east_Qy += TMath::Sin( EpOrder * BBC_GetPhi(0,iTile,primaryVertex_X,primaryVertex_Y) ) * nHitE[iTile];
           bbc_east_Qweight += nHitE[iTile];
       }
       // BBC west
       if(nHitW[iTile] > 0.0)
       {
           N_bbc_west++;
-          bbc_west_Qx += TMath::Cos( i_anisot * BBC_GetPhi(1,iTile,primaryVertex_X,primaryVertex_Y) ) * nHitW[iTile];
-          bbc_west_Qy += TMath::Sin( i_anisot * BBC_GetPhi(1,iTile,primaryVertex_X,primaryVertex_Y) ) * nHitW[iTile];
+          bbc_west_Qx += TMath::Cos( EpOrder * BBC_GetPhi(1,iTile,primaryVertex_X,primaryVertex_Y) ) * nHitW[iTile];
+          bbc_west_Qy += TMath::Sin( EpOrder * BBC_GetPhi(1,iTile,primaryVertex_X,primaryVertex_Y) ) * nHitW[iTile];
           bbc_west_Qweight += nHitW[iTile];
       }
     }
@@ -1655,9 +1672,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
       bbc_east_Qy /= bbc_east_Qweight;
       if(bbc_east_Qx || bbc_east_Qy)
       {
-        bbc_east_plane1 = (1. / i_anisot) * TMath::ATan2(bbc_east_Qy,bbc_east_Qx);
-        if(bbc_east_plane1 < 0.0                             ) bbc_east_plane1 += (1. / i_anisot) * 2.0*TMath::Pi();
-        if(bbc_east_plane1 > (1. / i_anisot) * 2.0*TMath::Pi()) bbc_east_plane1 -= (1. / i_anisot) * 2.0*TMath::Pi();
+        bbc_east_plane1 = (1. / EpOrder) * TMath::ATan2(bbc_east_Qy,bbc_east_Qx);
+        if(bbc_east_plane1 < 0.0                             ) bbc_east_plane1 += (1. / EpOrder) * 2.0*TMath::Pi();
+        if(bbc_east_plane1 > (1. / EpOrder) * 2.0*TMath::Pi()) bbc_east_plane1 -= (1. / EpOrder) * 2.0*TMath::Pi();
         hist_bbc_east_psi_raw->Fill(bbc_east_plane1);
 
         // Recenter event plane vector
@@ -1670,17 +1687,17 @@ cout<<KaonPlusEfficiencyTable<<endl;
         }
         if(bbc_east_Qx || bbc_east_Qy)
         {
-          bbc_east_plane2 = (1. / i_anisot) * TMath::ATan2(bbc_east_Qy,bbc_east_Qx);
-          if(bbc_east_plane2 < 0.0                             ) bbc_east_plane2 += (1. / i_anisot) * 2.0*TMath::Pi();
-          if(bbc_east_plane2 > (1. / i_anisot) * 2.0*TMath::Pi()) bbc_east_plane2 -= (1. / i_anisot) * 2.0*TMath::Pi();
+          bbc_east_plane2 = (1. / EpOrder) * TMath::ATan2(bbc_east_Qy,bbc_east_Qx);
+          if(bbc_east_plane2 < 0.0                             ) bbc_east_plane2 += (1. / EpOrder) * 2.0*TMath::Pi();
+          if(bbc_east_plane2 > (1. / EpOrder) * 2.0*TMath::Pi()) bbc_east_plane2 -= (1. / EpOrder) * 2.0*TMath::Pi();
           hist_bbc_east_psi_recentered->Fill(bbc_east_plane2);
 
           // Shift recentered event plane to flat
           Double_t reaction_plane_new = bbc_east_plane2;
           for(Int_t k=0;k<order;k++)
           {
-              profile3D_bbc_east_psiShift->Fill(Day,centrality,1+2*k,TMath::Cos(i_anisot * reaction_plane_new*(k+1)));
-              profile3D_bbc_east_psiShift->Fill(Day,centrality,2+2*k,TMath::Sin(i_anisot * reaction_plane_new*(k+1)));
+              profile3D_bbc_east_psiShift->Fill(Day,centrality,1+2*k,TMath::Cos(EpOrder * reaction_plane_new*(k+1)));
+              profile3D_bbc_east_psiShift->Fill(Day,centrality,2+2*k,TMath::Sin(EpOrder * reaction_plane_new*(k+1)));
           }
           Double_t psi_mean[twoorder] = {0.0};
           if(eventPlanes_input->IsOpen() && profile3D_bbc_east_psiShift_input && profile3D_bbc_east_psiShift_input->GetEntries() > 0)
@@ -1693,13 +1710,13 @@ cout<<KaonPlusEfficiencyTable<<endl;
           }
           for(Int_t k=0;k<order;k++)
           {
-            reaction_plane_new += (1. / i_anisot) * ( -2.0*psi_mean[1+2*k] * TMath::Cos( i_anisot * bbc_east_plane2*(k+1) )
-                                                    + 2.0*psi_mean[0+2*k] * TMath::Sin( i_anisot * bbc_east_plane2*(k+1) ) ) / (k+1);
+            reaction_plane_new += (1. / EpOrder) * ( -2.0*psi_mean[1+2*k] * TMath::Cos( EpOrder * bbc_east_plane2*(k+1) )
+                                                    + 2.0*psi_mean[0+2*k] * TMath::Sin( EpOrder * bbc_east_plane2*(k+1) ) ) / (k+1);
 
           }
           bbc_east_plane3 = reaction_plane_new;
-          if(bbc_east_plane3 < 0.0                             ) bbc_east_plane3 += (1. / i_anisot) * 2.0*TMath::Pi();
-          if(bbc_east_plane3 > (1. / i_anisot) * 2.0*TMath::Pi()) bbc_east_plane3 -= (1. / i_anisot) * 2.0*TMath::Pi();
+          if(bbc_east_plane3 < 0.0                             ) bbc_east_plane3 += (1. / EpOrder) * 2.0*TMath::Pi();
+          if(bbc_east_plane3 > (1. / EpOrder) * 2.0*TMath::Pi()) bbc_east_plane3 -= (1. / EpOrder) * 2.0*TMath::Pi();
           hist_bbc_east_psi_flattened->Fill(bbc_east_plane3);
         }
       }
@@ -1711,9 +1728,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
       bbc_west_Qy /= bbc_west_Qweight;
       if(bbc_west_Qx || bbc_west_Qy)
       {
-        bbc_west_plane1 = (1. / i_anisot) * TMath::ATan2(bbc_west_Qy,bbc_west_Qx);
-        if(bbc_west_plane1 < 0.0                             ) bbc_west_plane1 += (1. / i_anisot) * 2.0*TMath::Pi();
-        if(bbc_west_plane1 > (1. / i_anisot) * 2.0*TMath::Pi()) bbc_west_plane1 -= (1. / i_anisot) * 2.0*TMath::Pi();
+        bbc_west_plane1 = (1. / EpOrder) * TMath::ATan2(bbc_west_Qy,bbc_west_Qx);
+        if(bbc_west_plane1 < 0.0                             ) bbc_west_plane1 += (1. / EpOrder) * 2.0*TMath::Pi();
+        if(bbc_west_plane1 > (1. / EpOrder) * 2.0*TMath::Pi()) bbc_west_plane1 -= (1. / EpOrder) * 2.0*TMath::Pi();
         hist_bbc_west_psi_raw->Fill(bbc_west_plane1);
 
         // Recenter event plane vector
@@ -1726,17 +1743,17 @@ cout<<KaonPlusEfficiencyTable<<endl;
         }
         if(bbc_west_Qx || bbc_west_Qy)
         {
-          bbc_west_plane2 = (1. / i_anisot) * TMath::ATan2(bbc_west_Qy,bbc_west_Qx);
-          if(bbc_west_plane2 < 0.0                             ) bbc_west_plane2 += (1. / i_anisot) * 2.0*TMath::Pi();
-          if(bbc_west_plane2 > (1. / i_anisot) * 2.0*TMath::Pi()) bbc_west_plane2 -= (1. / i_anisot) * 2.0*TMath::Pi();
+          bbc_west_plane2 = (1. / EpOrder) * TMath::ATan2(bbc_west_Qy,bbc_west_Qx);
+          if(bbc_west_plane2 < 0.0                             ) bbc_west_plane2 += (1. / EpOrder) * 2.0*TMath::Pi();
+          if(bbc_west_plane2 > (1. / EpOrder) * 2.0*TMath::Pi()) bbc_west_plane2 -= (1. / EpOrder) * 2.0*TMath::Pi();
           hist_bbc_west_psi_recentered->Fill(bbc_west_plane2);
         }
         // Shift recentered event plane to flat
         Double_t reaction_plane_new = bbc_west_plane2;
         for(Int_t k=0;k<order;k++)
         {
-            profile3D_bbc_west_psiShift->Fill(Day,centrality,1+2*k,TMath::Cos(i_anisot * reaction_plane_new*(k+1)));
-            profile3D_bbc_west_psiShift->Fill(Day,centrality,2+2*k,TMath::Sin(i_anisot * reaction_plane_new*(k+1)));
+            profile3D_bbc_west_psiShift->Fill(Day,centrality,1+2*k,TMath::Cos(EpOrder * reaction_plane_new*(k+1)));
+            profile3D_bbc_west_psiShift->Fill(Day,centrality,2+2*k,TMath::Sin(EpOrder * reaction_plane_new*(k+1)));
         }
         Double_t psi_mean[twoorder] = {0.0};
         if(eventPlanes_input->IsOpen() && profile3D_bbc_west_psiShift_input && profile3D_bbc_west_psiShift_input->GetEntries() > 0)
@@ -1749,12 +1766,12 @@ cout<<KaonPlusEfficiencyTable<<endl;
         }
         for(Int_t k=0;k<order;k++)
         {
-          reaction_plane_new += (1. / i_anisot) * ( -2.0*psi_mean[1+2*k] * TMath::Cos( i_anisot * bbc_west_plane2*(k+1) )
-                                                  + 2.0*psi_mean[0+2*k] * TMath::Sin( i_anisot * bbc_west_plane2*(k+1) ) ) / (k+1);
+          reaction_plane_new += (1. / EpOrder) * ( -2.0*psi_mean[1+2*k] * TMath::Cos( EpOrder * bbc_west_plane2*(k+1) )
+                                                  + 2.0*psi_mean[0+2*k] * TMath::Sin( EpOrder * bbc_west_plane2*(k+1) ) ) / (k+1);
         }
         bbc_west_plane3 = reaction_plane_new;
-        if(bbc_west_plane3 < 0.0                             ) bbc_west_plane3 += (1. / i_anisot) * 2.0*TMath::Pi();
-        if(bbc_west_plane3 > (1. / i_anisot) * 2.0*TMath::Pi()) bbc_west_plane3 -= (1. / i_anisot) * 2.0*TMath::Pi();
+        if(bbc_west_plane3 < 0.0                             ) bbc_west_plane3 += (1. / EpOrder) * 2.0*TMath::Pi();
+        if(bbc_west_plane3 > (1. / EpOrder) * 2.0*TMath::Pi()) bbc_west_plane3 -= (1. / EpOrder) * 2.0*TMath::Pi();
         hist_bbc_west_psi_flattened->Fill(bbc_west_plane3);
       }
 
@@ -1762,24 +1779,24 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
     // Accumulate Event Plane correlations
     // Double_t centTMP = Ncentralities-centrality+1;
-    if( tpc_east_plane3 >= 0.0 && tpc_east_plane3 <= (1. / i_anisot) * 2.0*TMath::Pi() )
+    if( tpc_east_plane3 >= 0.0 && tpc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() )
     {
-      if( tpc_west_plane3 >= 0.0 && tpc_west_plane3 <= (1. / i_anisot) * 2.0*TMath::Pi() )
+      if( tpc_west_plane3 >= 0.0 && tpc_west_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() )
       {
-        profile_correlation_tpc_east_tpc_west->Fill(centrality,TMath::Cos(i_anisot * (tpc_east_plane3 - tpc_west_plane3)));
+        profile_correlation_tpc_east_tpc_west->Fill(centrality,TMath::Cos(EpOrder * (tpc_east_plane3 - tpc_west_plane3)));
         correlation2D_tpc_sub->Fill(tpc_west_plane3,tpc_east_plane3);
       }
-      if( bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / i_anisot) * 2.0*TMath::Pi() )
+      if( bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() )
       {
-        profile_correlation_tpc_east_bbc_east->Fill(centrality,TMath::Cos(i_anisot * (tpc_east_plane3 - bbc_east_plane3 - TMath::Pi())));
+        profile_correlation_tpc_east_bbc_east->Fill(centrality,TMath::Cos(EpOrder * (tpc_east_plane3 - bbc_east_plane3 - TMath::Pi())));
         correlation2D_bbc_east_tpc_east->Fill(tpc_east_plane3,bbc_east_plane3);
       }
     }
-    if( tpc_west_plane3 >= 0.0 && tpc_west_plane3 <= (1. / i_anisot) * 2.0*TMath::Pi() )
+    if( tpc_west_plane3 >= 0.0 && tpc_west_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() )
     {
-      if( bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / i_anisot) * 2.0*TMath::Pi() )
+      if( bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() )
       {
-        profile_correlation_tpc_west_bbc_east->Fill(centrality,TMath::Cos(i_anisot * (tpc_west_plane3 - bbc_east_plane3 - TMath::Pi())));
+        profile_correlation_tpc_west_bbc_east->Fill(centrality,TMath::Cos(EpOrder * (tpc_west_plane3 - bbc_east_plane3 - TMath::Pi())));
         correlation2D_bbc_east_tpc_west->Fill(tpc_west_plane3,bbc_east_plane3);
       }
     }
@@ -1788,8 +1805,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
     // std::cout << "test 5 "<<std::endl;
 
     // Get Three EP resolutions
-    Double_t d_resolution2 = TMath::Cos(i_anisot * (tpc_west_plane3 - bbc_east_plane3 - TMath::Pi()))*TMath::Cos(i_anisot * (tpc_east_plane3 - bbc_east_plane3 - TMath::Pi()))
-                            /TMath::Cos(i_anisot * (tpc_east_plane3 - tpc_west_plane3));
+    Double_t d_resolution2 = TMath::Cos(EpOrder * (tpc_west_plane3 - bbc_east_plane3 - TMath::Pi()))*TMath::Cos(EpOrder * (tpc_east_plane3 - bbc_east_plane3 - TMath::Pi()))
+                            /TMath::Cos(EpOrder * (tpc_east_plane3 - tpc_west_plane3));
     Double_t d_resolution_test = 0;
     if(d_resolution2>0) d_resolution_test = TMath::Sqrt(d_resolution2);
 
@@ -1904,9 +1921,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
         }
 
         // Accumulate flows
-        if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / i_anisot) * 2.0*TMath::Pi() /*&& d_resolution[centrality-1]>0*//*&& efficiency > 0.0 */) {
-            profile3D_proton_v2->Fill(centrality,pt,rap_Proton/*track->eta()*/,TMath::Cos(i_anisot * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,/*efficiency*/1.0);
-            h2_proton_v2       ->Fill(pt,TMath::Cos(i_anisot * (phi - bbc_east_plane3 - TMath::Pi())),1);
+        if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() /*&& d_resolution[centrality-1]>0*//*&& efficiency > 0.0 */) {
+            profile3D_proton_v2->Fill(centrality,pt,rap_Proton/*track->eta()*/,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,/*efficiency*/1.0);
+            h2_proton_v2       ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
         }
         // if( /*chooseTPCEP &&*/ reaction_plane3_ex_west[itr] >= 0.0 && reaction_plane3_ex_west[itr] <= 2.0*TMath::Pi() && efficiency > 0.0 ) {
         //     profile3D_proton_v2_tpc->Fill(centrality,pt,rap_Proton/*track->eta()*/,TMath::Cos(1.0*phi - reaction_plane3_ex_west[itr]),/*efficiency*/1.0);
@@ -1956,10 +1973,10 @@ cout<<KaonPlusEfficiencyTable<<endl;
               hist_mass_pionPlus->Fill(charge*trackP,mass2);
           }
           // Accumulate flows
-          if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / i_anisot) * 2.0*TMath::Pi() && efficiency > 0.0  /*&& d_resolution[centrality-1]>0*/) {
-              profile3D_pionPlus_v2->Fill(centrality,pt,rap_Pion/*track->eta()*/,TMath::Cos(i_anisot * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,efficiency/*1.0*/);
-              h2_pionPlus_v2       ->Fill(pt,TMath::Cos(i_anisot * (phi - bbc_east_plane3 - TMath::Pi())),1);
-              h2_pions_v2          ->Fill(pt,TMath::Cos(i_anisot * (phi - bbc_east_plane3 - TMath::Pi())),1);
+          if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() && efficiency > 0.0  /*&& d_resolution[centrality-1]>0*/) {
+              profile3D_pionPlus_v2->Fill(centrality,pt,rap_Pion/*track->eta()*/,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,efficiency/*1.0*/);
+              h2_pionPlus_v2       ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
+              h2_pions_v2          ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
           }
 
         }
@@ -1984,10 +2001,10 @@ cout<<KaonPlusEfficiencyTable<<endl;
               hist_mass_pionMinus->Fill(charge*trackP,mass2);
           }
           // Accumulate flows
-          if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / i_anisot) * 2.0*TMath::Pi() && efficiency > 0.0 /*&& d_resolution[centrality-1]>0*/) {
-              profile3D_pionMinus_v2->Fill(centrality,pt,rap_Pion/*track->eta()*/,TMath::Cos(i_anisot * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,efficiency/*1.0*/);
-              h2_pionMinus_v2       ->Fill(pt,TMath::Cos(i_anisot * (phi - bbc_east_plane3 - TMath::Pi())),1);
-              h2_pions_v2           ->Fill(pt,TMath::Cos(i_anisot * (phi - bbc_east_plane3 - TMath::Pi())),1);
+          if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() && efficiency > 0.0 /*&& d_resolution[centrality-1]>0*/) {
+              profile3D_pionMinus_v2->Fill(centrality,pt,rap_Pion/*track->eta()*/,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,efficiency/*1.0*/);
+              h2_pionMinus_v2       ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
+              h2_pions_v2           ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
           }
 
         }
@@ -2029,9 +2046,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
               hist_mass_kaonPlus->Fill(charge*trackP,mass2);
           }
           // Accumulate flows
-          if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / i_anisot) * 2.0*TMath::Pi() && efficiency > 0.0 /*&& d_resolution[centrality-1]>0*/) {
-              profile3D_kaonPlus_v2->Fill(centrality,pt,rap_Kaon/*track->eta()*/,TMath::Cos(i_anisot * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,efficiency/*1.0*/);
-              h2_kaonPlus_v2       ->Fill(pt,TMath::Cos(i_anisot * (phi - bbc_east_plane3 - TMath::Pi())),1);
+          if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() && efficiency > 0.0 /*&& d_resolution[centrality-1]>0*/) {
+              profile3D_kaonPlus_v2->Fill(centrality,pt,rap_Kaon/*track->eta()*/,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,efficiency/*1.0*/);
+              h2_kaonPlus_v2       ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
           }
 
         }
@@ -2055,9 +2072,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
               hist_mass_kaonMinus->Fill(charge*trackP,mass2);
           }
           // Accumulate flows
-          if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / i_anisot) * 2.0*TMath::Pi() && efficiency > 0.0 /*&& d_resolution[centrality-1]>0*/) {
-              profile3D_kaonMinus_v2->Fill(centrality,pt,rap_Kaon/*track->eta()*/,TMath::Cos(i_anisot * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,efficiency/*1.0*/);
-              h2_kaonMinus_v2       ->Fill(pt,TMath::Cos(i_anisot * (phi - bbc_east_plane3 - TMath::Pi())),1);
+          if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() && efficiency > 0.0 /*&& d_resolution[centrality-1]>0*/) {
+              profile3D_kaonMinus_v2->Fill(centrality,pt,rap_Kaon/*track->eta()*/,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,efficiency/*1.0*/);
+              h2_kaonMinus_v2       ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
           }
 
         }
@@ -2597,8 +2614,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
         if(b_PHI) h_prim_inv_m_PHI    -> Fill(d_inv_m);
         double d_v2_raw_phi = -999.0;
         /*
-        if(  bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / i_anisot) * 2.0*TMath::Pi() ) {
-           d_v2_raw_phi = TMath::Cos(i_anisot * (d_phi_azimuth - bbc_east_plane3 - TMath::Pi()));
+        if(  bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() ) {
+           d_v2_raw_phi = TMath::Cos(EpOrder * (d_phi_azimuth - bbc_east_plane3 - TMath::Pi()));
         }
         */
         if(/*b_cent_01||b_cent_02||*/b_cent_07) continue;
@@ -2785,57 +2802,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
   hist_beta_kaonMinus->Write();
   hist_mass_kaonMinus->Write();
 
-  profile3D_proton_v2->Write();
-  profile3D_pionPlus_v2->Write();
-  profile3D_pionMinus_v2->Write();
-  profile3D_kaonPlus_v2->Write();
-  profile3D_kaonMinus_v2->Write();
-
-  h_K_DCA_r      ->Write();
-  h_K_obj_DCA_r  ->Write();
-  h_K_diff_DCA_r ->Write();
-
-  hist_pt_y_Phi->Write();
-  h_dip_angle->Write();
-  h_prim_inv_m_PHI ->Write();
-  h2_phi_v2_vs_invM->Write();
-  h2_phi_v2_vs_invM_bin2->Write();
-  h2_phi_v2_vs_invM_bin3->Write();
-  h2_phi_v2_vs_invM_bin4->Write();
-
-  TP_phi_v2_vs_invM      = h2_phi_v2_vs_invM->ProfileX();
-  TP_phi_v2_vs_invM_bin2 = h2_phi_v2_vs_invM_bin2->ProfileX();
-  TP_phi_v2_vs_invM_bin3 = h2_phi_v2_vs_invM_bin3->ProfileX();
-  TP_phi_v2_vs_invM_bin4 = h2_phi_v2_vs_invM_bin4->ProfileX();
-
-  TP_phi_v2_vs_invM     ->Write();
-  TP_phi_v2_vs_invM_bin2->Write();
-  TP_phi_v2_vs_invM_bin3->Write();
-  TP_phi_v2_vs_invM_bin4->Write();
-
-  h2_phi_v2_vs_invM_pTbin1->Write();
-  h2_phi_v2_vs_invM_pTbin2->Write();
-  h2_phi_v2_vs_invM_pTbin3->Write();
-  h2_phi_v2_vs_invM_pTbin4->Write();
-  h2_phi_v2_vs_invM_pTbin5->Write();
-  h2_phi_v2_vs_invM_pTbin6->Write();
-  h2_phi_v2_vs_invM_pTbin7->Write();
-
-  TP_phi_v2_vs_invM_pTbin1 = h2_phi_v2_vs_invM_pTbin1->ProfileX();
-  TP_phi_v2_vs_invM_pTbin2 = h2_phi_v2_vs_invM_pTbin2->ProfileX();
-  TP_phi_v2_vs_invM_pTbin3 = h2_phi_v2_vs_invM_pTbin3->ProfileX();
-  TP_phi_v2_vs_invM_pTbin4 = h2_phi_v2_vs_invM_pTbin4->ProfileX();
-  TP_phi_v2_vs_invM_pTbin5 = h2_phi_v2_vs_invM_pTbin5->ProfileX();
-  TP_phi_v2_vs_invM_pTbin6 = h2_phi_v2_vs_invM_pTbin6->ProfileX();
-  TP_phi_v2_vs_invM_pTbin7 = h2_phi_v2_vs_invM_pTbin7->ProfileX();
-
-  TP_phi_v2_vs_invM_pTbin1->Write();
-  TP_phi_v2_vs_invM_pTbin2->Write();
-  TP_phi_v2_vs_invM_pTbin3->Write();
-  TP_phi_v2_vs_invM_pTbin4->Write();
-  TP_phi_v2_vs_invM_pTbin5->Write();
-  TP_phi_v2_vs_invM_pTbin6->Write();
-  TP_phi_v2_vs_invM_pTbin7->Write();
+  hist2_Epd_east_Qy_Qx_raw->Write();
+  hist2_Epd_west_Qy_Qx_raw->Write();
 
   hist_Epd_east_psi_raw->Write();
   hist_Epd_west_psi_raw->Write();
@@ -2901,6 +2869,59 @@ cout<<KaonPlusEfficiencyTable<<endl;
   profile_kaonPlus_v2->Write();
   profile_kaonMinus_v2->Write();
   profile_pions_v2->Write();
+
+  profile3D_proton_v2->Write();
+  profile3D_pionPlus_v2->Write();
+  profile3D_pionMinus_v2->Write();
+  profile3D_kaonPlus_v2->Write();
+  profile3D_kaonMinus_v2->Write();
+
+  h_K_DCA_r      ->Write();
+  h_K_obj_DCA_r  ->Write();
+  h_K_diff_DCA_r ->Write();
+
+  hist_pt_y_Phi->Write();
+  h_dip_angle->Write();
+  h_prim_inv_m_PHI ->Write();
+  h2_phi_v2_vs_invM->Write();
+  h2_phi_v2_vs_invM_bin2->Write();
+  h2_phi_v2_vs_invM_bin3->Write();
+  h2_phi_v2_vs_invM_bin4->Write();
+
+  TP_phi_v2_vs_invM      = h2_phi_v2_vs_invM->ProfileX();
+  TP_phi_v2_vs_invM_bin2 = h2_phi_v2_vs_invM_bin2->ProfileX();
+  TP_phi_v2_vs_invM_bin3 = h2_phi_v2_vs_invM_bin3->ProfileX();
+  TP_phi_v2_vs_invM_bin4 = h2_phi_v2_vs_invM_bin4->ProfileX();
+
+  TP_phi_v2_vs_invM     ->Write();
+  TP_phi_v2_vs_invM_bin2->Write();
+  TP_phi_v2_vs_invM_bin3->Write();
+  TP_phi_v2_vs_invM_bin4->Write();
+
+  h2_phi_v2_vs_invM_pTbin1->Write();
+  h2_phi_v2_vs_invM_pTbin2->Write();
+  h2_phi_v2_vs_invM_pTbin3->Write();
+  h2_phi_v2_vs_invM_pTbin4->Write();
+  h2_phi_v2_vs_invM_pTbin5->Write();
+  h2_phi_v2_vs_invM_pTbin6->Write();
+  h2_phi_v2_vs_invM_pTbin7->Write();
+
+  TP_phi_v2_vs_invM_pTbin1 = h2_phi_v2_vs_invM_pTbin1->ProfileX();
+  TP_phi_v2_vs_invM_pTbin2 = h2_phi_v2_vs_invM_pTbin2->ProfileX();
+  TP_phi_v2_vs_invM_pTbin3 = h2_phi_v2_vs_invM_pTbin3->ProfileX();
+  TP_phi_v2_vs_invM_pTbin4 = h2_phi_v2_vs_invM_pTbin4->ProfileX();
+  TP_phi_v2_vs_invM_pTbin5 = h2_phi_v2_vs_invM_pTbin5->ProfileX();
+  TP_phi_v2_vs_invM_pTbin6 = h2_phi_v2_vs_invM_pTbin6->ProfileX();
+  TP_phi_v2_vs_invM_pTbin7 = h2_phi_v2_vs_invM_pTbin7->ProfileX();
+
+  TP_phi_v2_vs_invM_pTbin1->Write();
+  TP_phi_v2_vs_invM_pTbin2->Write();
+  TP_phi_v2_vs_invM_pTbin3->Write();
+  TP_phi_v2_vs_invM_pTbin4->Write();
+  TP_phi_v2_vs_invM_pTbin5->Write();
+  TP_phi_v2_vs_invM_pTbin6->Write();
+  TP_phi_v2_vs_invM_pTbin7->Write();
+
 
 }
 //////////////////////////// END Main Function /////////////////////////////////
