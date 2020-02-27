@@ -768,6 +768,15 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   // END Flow Histograms
   Char_t name[100], description[200];
 
+  // EPD EPs
+  TH1D *hist_Epd_east_psi_raw = new TH1D("hist_Epd_east_psi_raw","EPD east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  hist_Epd_east_psi_raw->GetXaxis()->SetTitle("#psi^{EPD east}_{1} [Radian]");
+  hist_Epd_east_psi_raw->GetYaxis()->SetTitle("# of events");
+
+  TH1D *hist_Epd_west_psi_raw = new TH1D("hist_Epd_west_psi_raw","EPD west EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  hist_Epd_west_psi_raw->GetXaxis()->SetTitle("#psi^{EPD west}_{1} [Radian]");
+  hist_Epd_west_psi_raw->GetYaxis()->SetTitle("# of events");
+
   // TPC EPs
   TH1D *hist_tpc_east_psi_raw = new TH1D("hist_tpc_east_psi_raw","TPC east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
   hist_tpc_east_psi_raw->GetXaxis()->SetTitle("#psi^{TPC east}_{1} [Radian]");
@@ -1149,7 +1158,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
     ievtcut[1] += 1;
 
     Int_t refMult = event->refMult();
-
     Int_t grefMult = event->grefMult();
 
     /***************** Centrality Track Loop to determine centrality ******************/
@@ -1206,17 +1214,20 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
         nTrkvsCuts++;
     }
-    ////////////////////// END Centrality Track Loop ///////////////////////////
+    ////////////////////// END Centrality Track Loop for 7p2 ///////////////////////////
 
-    bool b_pileup   = (nGoodTracks >  240);
-    b_cent_01       = (nGoodTracks >= 153);// 0 - 5%
-    b_cent_02       = (nGoodTracks >= 121 && nGoodTracks < 153);// 5 - 10%
-    b_cent_03       = (nGoodTracks >= 97  && nGoodTracks < 121);// 10 - 15%
-    b_cent_04       = (nGoodTracks >= 77  && nGoodTracks < 97);// 15 - 20%
-    b_cent_05       = (nGoodTracks >= 61  && nGoodTracks < 77);// 20 - 25%
-    b_cent_06       = (nGoodTracks >= 48  && nGoodTracks < 61);// 25 - 30%
-    b_cent_07       = (nGoodTracks < 48); // > 30%
-    bool b_low_mult = (nGoodTracks <= 25);
+    bool b_pileup   = (nGoodTracks >  270);
+    b_cent_01       = (nGoodTracks >= 200);// 0 - 10%
+    b_cent_02       = (nGoodTracks >= 150 && nGoodTracks < 200);// 10 - 20%
+    b_cent_03       = (nGoodTracks >= 124  && nGoodTracks < 150);// 20 - 30%
+    b_cent_04       = (nGoodTracks >= 100  && nGoodTracks < 124);// 30 - 40%
+    b_cent_05       = (nGoodTracks >= 72  && nGoodTracks < 100);// 40 - 50%
+    b_cent_06       = (nGoodTracks >= 50  && nGoodTracks < 72);// 50 - 60%
+    b_cent_07       = (nGoodTracks >= 40  && nGoodTracks < 50);// 60 - 70%
+    b_cent_08       = (nGoodTracks >= 30  && nGoodTracks < 40);// 70 - 80%
+    b_cent_09       = (nGoodTracks >= 20  && nGoodTracks < 30);// 80 - 90%
+    b_cent_10       = (nGoodTracks >= 10  && nGoodTracks < 20);// >90%
+    bool b_low_mult = (nGoodTracks <= 10);
 
     if(b_cent_01) centrality = 1;
     if(b_cent_02) centrality = 2;
@@ -1225,8 +1236,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
     if(b_cent_05) centrality = 5;
     if(b_cent_06) centrality = 6;
     if(b_cent_07) centrality = 7;
-
-
+    if(b_cent_08) centrality = 8;
+    if(b_cent_09) centrality = 9;
+    if(b_cent_10) centrality = 10;
 
     hist_realTrackMult->Fill(nGoodTracks);
     hist_cent->Fill(centrality);
@@ -1236,6 +1248,12 @@ cout<<KaonPlusEfficiencyTable<<endl;
     if(b_pileup) continue;
     // pile-up cut
     ievtcut[2] += 1;
+
+    //EPD EP result
+    StEpdEpInfo result = mEpFinder->Results(mEpdHits,pVtx,1);  // and now you have all the EP info you could ever want :-)
+    hist_Epd_east_psi_raw->Fill((double)result->EastRawPsi());
+    hist_Epd_west_psi_raw->Fill((double)result->WastRawPsi());
+
     // Define event plane parameters
     Int_t N_tpc_east = 0, N_tpc_west = 0, N_thirdEP = 0;
     Double_t tpc_east_Qx = 0.0, tpc_east_Qy = 0.0, tpc_east_Qweight = 0.0;
@@ -2815,6 +2833,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
   TP_phi_v2_vs_invM_pTbin5->Write();
   TP_phi_v2_vs_invM_pTbin6->Write();
   TP_phi_v2_vs_invM_pTbin7->Write();
+
+  hist_Epd_east_psi_raw->Write();
+  hist_Epd_west_psi_raw->Write();
 
   profile_correlation_tpc_east_tpc_west->Write();
   correlation2D_tpc_sub->Write();
