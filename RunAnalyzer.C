@@ -39,5 +39,6 @@ void RunAnalyzer() {
     //gROOT->ProcessLine("#define _VANILLA_ROOT_");
 
     gROOT->ProcessLine( ".L StRoot/StPicoEvent/libStPicoDst.so" );
+    gROOT->ProcessLine( ".L StRoot/StEpdUtil/libStEpdUtil.so" );
     gROOT->ProcessLine( ".L PicoDstAnalyzer3.C++" );
 }
