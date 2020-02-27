@@ -1270,11 +1270,11 @@ cout<<KaonPlusEfficiencyTable<<endl;
     if(EastRawQx!=0 || EastRawQy!=0 )
     {
       hist2_Epd_east_Qy_Qx_raw->Fill(EastRawQx,EastRawQy);
-      hist2_Epd_west_Qy_Qx_raw->Fill(WestRawQx,WestRawQy);
+      hist_Epd_east_psi_raw->Fill(result.EastRawPsi(EpOrder));
     }
     if(WestRawQx!=0 || WestRawQy!=0 )
     {
-      hist_Epd_east_psi_raw->Fill(result.EastRawPsi(EpOrder));
+      hist2_Epd_west_Qy_Qx_raw->Fill(WestRawQx,WestRawQy);
       hist_Epd_west_psi_raw->Fill(result.WestRawPsi(EpOrder));
     }
 
