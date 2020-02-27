@@ -182,7 +182,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   std::cout << "Number of events to read: " << events2read << std::endl;
 
   // EPD EP finder to get EPD event plane
-  StEpdEpFinder *mEpdFinder = new StEpdEpFinder(int nEventTypeBins=10,"epdTest"/*,*/);
+  StEpdEpFinder *mEpdFinder = new StEpdEpFinder(1,"epdTest"/*,*/);
   int format = 2;
   mEpdFinder->SetEpdHitFormat(format);    // format=0/1/2 for StEpdHit/StMuEpdHit/StPicoEpdHit
   mEpFinder->SetnMipThreshold(0.3);    // recommended by EPD group
@@ -191,9 +191,11 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   // mEpFinder->SetRingWeights(2, double* RingWeights);    // RingWeights is a 1D array of 16 elements.
   TClonesArray * mEpdHits = new TClonesArray("StPicoEpdHit");
   unsigned int found;
-  picoReader->SetBranchStatus("epdHit*",1,&found);   // note you need the asterisk
+  // Retrieve picoDst
+  StPicoDst *mPicoDst = picoReader->picoDst();
+  mPicoDst->SetBranchStatus("epdHit*",1,&found);   // note you need the asterisk
   std::cout << "EpdHit Branch returned found= " << found << endl;
-  picoReader->SetBranchAddress("epdHit",&mEpdHits);
+  mPicoDst->SetBranchAddress("epdHit",&mEpdHits);
 
   outFile.Append(".picoDst.result.root");
   // outFile.Prepend(Form("%d_%d_%d_",cutID,variationID,versionID));
