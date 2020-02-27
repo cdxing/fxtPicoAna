@@ -192,10 +192,10 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   TClonesArray * mEpdHits = new TClonesArray("StPicoEpdHit");
   unsigned int found;
   // Retrieve picoDst
-  // StPicoDst *mPicoDst = picoReader->picoDst();
-  picoReader->SetBranchStatus("epdHit*",1,&found);   // note you need the asterisk
+  StPicoDst *mPicoDst = picoReader->chain();
+  mPicoDst->SetBranchStatus("epdHit*",1,&found);   // note you need the asterisk
   std::cout << "EpdHit Branch returned found= " << found << endl;
-  picoReader->SetBranchAddress("epdHit",&mEpdHits);
+  mPicoDst->SetBranchAddress("epdHit",&mEpdHits);
 
   outFile.Append(".picoDst.result.root");
   // outFile.Prepend(Form("%d_%d_%d_",cutID,variationID,versionID));
