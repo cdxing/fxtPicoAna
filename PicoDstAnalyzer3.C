@@ -182,7 +182,9 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   std::cout << "Number of events to read: " << events2read << std::endl;
 
   // EPD EP finder to get EPD event plane
-  StEpdEpFinder *mEpFinder = new StEpdEpFinder();
+  StEpdEpFinder *mEpFinder = new StEpdEpFinder(int nEventTypeBins=2,
+    char const* OutFileName="StEpdEpFinderCorrectionHistograms_OUTPUT.root",
+  char const* CorrectionFileName="StEpdEpFinderCorrectionHistograms_INPUT.root");
   int format = 2;
   mEpFinder->SetEpdHitFormat(format);    // format=0/1/2 for StEpdHit/StMuEpdHit/StPicoEpdHit
   mEpFinder->SetnMipThreshold(0.3);    // recommended by EPD group
@@ -2844,7 +2846,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
   hist_Epd_west_psi_raw->Write();
   hist_Epd_east_psi_Weighted->Write();
   hist_Epd_west_psi_Weighted->Write();
-  
+
   profile_correlation_tpc_east_tpc_west->Write();
   correlation2D_tpc_sub->Write();
 
