@@ -182,7 +182,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   std::cout << "Number of events to read: " << events2read << std::endl;
 
   // EPD EP finder to get EPD event plane
-  StEpdEpFinder *mEpFinder = new StEpdEpFinder(10,"StEpdEpFinderCorrectionHistograms_OUTPUT.root","StEpdEpFinderCorrectionHistograms_INPUT.root");
+  StEpdEpFinder *mEpFinder = new StEpdEpFinder(1,"StEpdEpFinderCorrectionHistograms_OUTPUT.root","StEpdEpFinderCorrectionHistograms_INPUT.root");
   int format = 2;
   mEpFinder->SetEpdHitFormat(format);    // format=0/1/2 for StEpdHit/StMuEpdHit/StPicoEpdHit
   mEpFinder->SetnMipThreshold(0.3);    // recommended by EPD group
@@ -1277,7 +1277,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
     ievtcut[2] += 1;
 
     //EPD EP result
-    StEpdEpInfo result = mEpFinder->Results(mEpdHits,pVtx,0);  // and now you have all the EP info you could ever want :-)
+    StEpdEpInfo result = mEpFinder->Results(mEpdHits,pVtx,1);  // and now you have all the EP info you could ever want :-)
     Double_t EastRawQx = (Double_t) result.EastRawQ(EpOrder).X();
     Double_t EastRawQy = (Double_t) result.EastRawQ(EpOrder).Y();
     Double_t WestRawQx = (Double_t) result.WestRawQ(EpOrder).X();
