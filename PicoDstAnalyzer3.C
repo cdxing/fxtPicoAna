@@ -773,18 +773,33 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   hist2_Epd_east_Qy_Qx_raw->GetXaxis()->SetTitle("Q_x^{EPD east}_{2} ");
   hist2_Epd_east_Qy_Qx_raw->GetYaxis()->SetTitle("Q_y^{EPD east}_{2} ");
 
+  TH2D *hist2_Epd_east_Qy_Qx_Weighted = new TH2D("hist2_Epd_east_Qy_Qx_Weighted","EPD east Qy vs Qx (Weighted)",600,-3.0,3.0,600,-3.0,3.0);
+  hist2_Epd_east_Qy_Qx_Weighted->GetXaxis()->SetTitle("Q_x^{EPD east}_{2} ");
+  hist2_Epd_east_Qy_Qx_Weighted->GetYaxis()->SetTitle("Q_y^{EPD east}_{2} ");
+
   TH2D *hist2_Epd_west_Qy_Qx_raw = new TH2D("hist2_Epd_west_Qy_Qx_raw","EPD west Qy vs Qx",600,-3.0,3.0,600,-3.0,3.0);
   hist2_Epd_west_Qy_Qx_raw->GetXaxis()->SetTitle("Q_x^{EPD west}_{2} ");
   hist2_Epd_west_Qy_Qx_raw->GetYaxis()->SetTitle("Q_y^{EPD west}_{2} ");
 
+  TH2D *hist2_Epd_west_Qy_Qx_Weighted = new TH2D("hist2_Epd_west_Qy_Qx_Weighted","EPD west Qy vs Qx (Weighted)",600,-3.0,3.0,600,-3.0,3.0);
+  hist2_Epd_west_Qy_Qx_Weighted->GetXaxis()->SetTitle("Q_x^{EPD west}_{2} ");
+  hist2_Epd_west_Qy_Qx_Weighted->GetYaxis()->SetTitle("Q_y^{EPD west}_{2} ");
 
   TH1D *hist_Epd_east_psi_raw = new TH1D("hist_Epd_east_psi_raw","EPD east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
   hist_Epd_east_psi_raw->GetXaxis()->SetTitle("#psi^{EPD east}_{1} [Radian]");
   hist_Epd_east_psi_raw->GetYaxis()->SetTitle("# of events");
 
+  TH1D *hist_Epd_east_psi_Weighted = new TH1D("hist_Epd_east_psi_Weighted","EPD east EP (Weighted)",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  hist_Epd_east_psi_Weighted->GetXaxis()->SetTitle("#psi^{EPD east}_{1} [Radian]");
+  hist_Epd_east_psi_Weighted->GetYaxis()->SetTitle("# of events");
+
   TH1D *hist_Epd_west_psi_raw = new TH1D("hist_Epd_west_psi_raw","EPD west EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
   hist_Epd_west_psi_raw->GetXaxis()->SetTitle("#psi^{EPD west}_{1} [Radian]");
   hist_Epd_west_psi_raw->GetYaxis()->SetTitle("# of events");
+
+  TH1D *hist_Epd_west_psi_Weighted = new TH1D("hist_Epd_west_psi_Weighted","EPD west EP (Weighted)",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  hist_Epd_west_psi_Weighted->GetXaxis()->SetTitle("#psi^{EPD west}_{1} [Radian]");
+  hist_Epd_west_psi_Weighted->GetYaxis()->SetTitle("# of events");
 
   // TPC EPs
   TH1D *hist_tpc_east_psi_raw = new TH1D("hist_tpc_east_psi_raw","TPC east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
@@ -1267,15 +1282,28 @@ cout<<KaonPlusEfficiencyTable<<endl;
     Double_t EastRawQy = (Double_t) result.EastRawQ(EpOrder).Y();
     Double_t WestRawQx = (Double_t) result.WestRawQ(EpOrder).X();
     Double_t WestRawQy = (Double_t) result.WestRawQ(EpOrder).Y();
+
+    Double_t EastWeightedQx = (Double_t) result.EastPhiWeightedQ(EpOrder).X();
+    Double_t EastWeightedQy = (Double_t) result.EastPhiWeightedQ(EpOrder).Y();
+    Double_t WestWeightedQx = (Double_t) result.WestPhiWeightedQ(EpOrder).X();
+    Double_t WestWeightedQy = (Double_t) result.WestPhiWeightedQ(EpOrder).Y();
+
+
     if(EastRawQx!=0 || EastRawQy!=0 )
     {
       hist2_Epd_east_Qy_Qx_raw->Fill(EastRawQx,EastRawQy);
+      hist2_Epd_east_Qy_Qx_Weighted->Fill(EastWeightedQx,EastWeightedQy);
+
       hist_Epd_east_psi_raw->Fill(result.EastRawPsi(EpOrder));
+      hist_Epd_east_psi_Weighted->Fill(result.EastPhiWeightedPsi(EpOrder));
     }
     if(WestRawQx!=0 || WestRawQy!=0 )
     {
       hist2_Epd_west_Qy_Qx_raw->Fill(WestRawQx,WestRawQy);
+      hist2_Epd_west_Qy_Qx_Weighted->Fill(WestWeightedQx,WestWeightedQy);
+
       hist_Epd_west_psi_raw->Fill(result.WestRawPsi(EpOrder));
+      hist_Epd_west_psi_Weighted->Fill(result.WestPhiWeightedPsi(EpOrder));
     }
 
 
@@ -2022,7 +2050,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
              && mass2 < 0.3//0.33
             )
          && pt > 0.2
-         && pt < 1.6
+         // && pt < 1.6
       )
       {
         // Get particle track rapidity
@@ -2809,10 +2837,14 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
   hist2_Epd_east_Qy_Qx_raw->Write();
   hist2_Epd_west_Qy_Qx_raw->Write();
+  hist2_Epd_east_Qy_Qx_Weighted->Write();
+  hist2_Epd_west_Qy_Qx_Weighted->Write();
 
   hist_Epd_east_psi_raw->Write();
   hist_Epd_west_psi_raw->Write();
-
+  hist_Epd_east_psi_Weighted->Write();
+  hist_Epd_west_psi_Weighted->Write();
+  
   profile_correlation_tpc_east_tpc_west->Write();
   correlation2D_tpc_sub->Write();
 
