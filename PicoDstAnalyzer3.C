@@ -1277,7 +1277,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
     ievtcut[2] += 1;
 
     //EPD EP result
-    StEpdEpInfo result = mEpFinder->Results(mEpdHits,pVtx,2);  // and now you have all the EP info you could ever want :-)
+    StEpdEpInfo result = mEpFinder->Results(mEpdHits,pVtx,0);  // and now you have all the EP info you could ever want :-)
     Double_t EastRawQx = (Double_t) result.EastRawQ(EpOrder).X();
     Double_t EastRawQy = (Double_t) result.EastRawQ(EpOrder).Y();
     Double_t WestRawQx = (Double_t) result.WestRawQ(EpOrder).X();
