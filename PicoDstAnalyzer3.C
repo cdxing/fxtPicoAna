@@ -166,7 +166,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   picoReader->SetStatus("BTofHit",1);
   picoReader->SetStatus("BTofPidTraits",1);
   picoReader->SetStatus("StPicoEpdHit",1);
-
+  picoReader->SetStatus("EpdHit",1);
 
   std::cout << "Status has been set" << std::endl;
 
