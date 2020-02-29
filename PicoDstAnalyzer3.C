@@ -182,7 +182,10 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   std::cout << "Number of events to read: " << events2read << std::endl;
 
   // EPD EP finder to get EPD event plane
-  StEpdEpFinder *mEpFinder = new StEpdEpFinder(1,Form("EpdEpCorrectionHistograms_OUTPUT_%s.root",outFile),"EpdEpCorrectionHistograms_INPUT.root");
+  TString EpdEpOutputName = "EpdEpCorrectionHistograms_OUTPUT_";
+  EpdEpOutputName += outFile;
+  EpdEpOutputName += ".root";
+  StEpdEpFinder *mEpFinder = new StEpdEpFinder(1,EpdEpOutputName,"EpdEpCorrectionHistograms_INPUT.root");
   int format = 2;
   mEpFinder->SetEpdHitFormat(format);    // format=0/1/2 for StEpdHit/StMuEpdHit/StPicoEpdHit
   mEpFinder->SetnMipThreshold(0.3);    // recommended by EPD group
