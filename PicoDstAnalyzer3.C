@@ -195,7 +195,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   // Retrieve picoDst TChain*
   TChain *mPicoDst = picoReader->chain();
   mPicoDst->SetBranchStatus("EpdHit*",1,&found);   // note you need the asterisk
-  std::cout << "EpdHit Branch returned found= " << found << endl;
+  std::cout << "EpdHit Branch returned found= " << found <<std::endl;
   mPicoDst->SetBranchAddress("EpdHit",&mEpdHits);
 
   // outFile.Append(".picoDst.result.root");
@@ -2690,7 +2690,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
     // END Phi meson flow analysis
 */
-
+}
   }
   //////////////////////// END Event Loop //////////////////////////////////////
 /*
