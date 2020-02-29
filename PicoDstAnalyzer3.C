@@ -2952,7 +2952,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
   TP_phi_v2_vs_invM_pTbin5->Write();
   TP_phi_v2_vs_invM_pTbin6->Write();
   TP_phi_v2_vs_invM_pTbin7->Write();
-
+  mEpFinder->Finish();
 
 }
 //////////////////////////// END Main Function /////////////////////////////////
