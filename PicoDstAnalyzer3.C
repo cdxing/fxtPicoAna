@@ -67,6 +67,7 @@ const Int_t order         = 20;
 const Int_t twoorder      = 2 * order;
 const double d_mean  = 1.02087;//primary
 const double d_sigma = 0.00444335;//primary
+/*
 // BBC azimuthal distribution
 Double_t BBC_GetPhi(Int_t e_w,Int_t iTile,Double_t Vx,Double_t Vy) {
     // Get phi of BBC tile
@@ -118,7 +119,7 @@ Double_t BBC_GetPhi(Int_t e_w,Int_t iTile,Double_t Vx,Double_t Vy) {
     if(bbc_phi > 2.0*TMath::Pi()) bbc_phi -= 2.0*TMath::Pi();
     return bbc_phi;
 }
-
+*/
 //////////////////////////////// Main Function /////////////////////////////////
 void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPicoAna/files/PicoDst/st_physics_16140033_raw_0000002.picoDst.root",
                       TString outFile = "test_BBCEP",
@@ -197,9 +198,9 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   std::cout << "EpdHit Branch returned found= " << found << endl;
   mPicoDst->SetBranchAddress("EpdHit",&mEpdHits);
 
-  outFile.Append(".picoDst.result.root");
+  // outFile.Append(".picoDst.result.root");
   // outFile.Prepend(Form("%d_%d_%d_",cutID,variationID,versionID));
-  TFile *outputFile = new TFile(outFile,"recreate");
+  // TFile *outputFile = new TFile(outFile,"recreate");
 
   int ievtcut[5] = {0};
   int itrkcut[6] = {0};
@@ -917,11 +918,11 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   // END Histograms
 
   // Read input files
-  TFile *eventPlanes_input   = new TFile("/star/data01/pwg/dchen/Ana/fxtPicoAna2/fxtPicoAna/inputs/ep.picoDst.result.combined.root","read");
+  // TFile *eventPlanes_input   = new TFile("/star/data01/pwg/dchen/Ana/fxtPicoAna2/fxtPicoAna/inputs/ep.picoDst.result.combined.root","read");
 
   // Read resolution for systematic analysis
-  TFile *t_resolution_iniput = new TFile("/star/data01/pwg/dchen/Ana/fxtPicoAna/result_event_plane_resolution/event_plane_resolution_primary.root","read");
-
+  // TFile *t_resolution_iniput = new TFile("/star/data01/pwg/dchen/Ana/fxtPicoAna/result_event_plane_resolution/event_plane_resolution_primary.root","read");
+/*
   TH1D *h_resolution_input = (TH1D*)t_resolution_iniput->Get("h_resolution");
   Double_t d_resolution_input[Ncentralities]={0};
   for(int i = 0; i<Ncentralities;i++)
@@ -1086,6 +1087,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
       BBC_ADC_WEST[i]->GetYaxis()->SetTitle("# of events");
   }
   // std::cout << "test 1 "<<std::endl;
+  */
   //////////////////////////// Event Loop //////////////////////////////////////
   for(Long64_t iEvent=0; iEvent<events2read; iEvent++)
   {
@@ -1504,7 +1506,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
     }
     /////// END Primary Tracks loop to get event plane parameters //////////////
-
+/*
     // Compute TPC east event planes
     if(N_tpc_east >= 5 && tpc_east_Qweight > 0.0)
     {
@@ -1624,7 +1626,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
     }
 
     // END Compute TPC west event planes
+*/
 
+/*
     // Compute bbc event planes
     Int_t N_bbc_east = 0, N_bbc_west = 0;
     Double_t bbc_east_Qx = 0.0, bbc_east_Qy = 0.0, bbc_east_Qweight = 0.0;
@@ -1842,9 +1846,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
                             /TMath::Cos(EpOrder * (tpc_east_plane3 - tpc_west_plane3));
     Double_t d_resolution_test = 0;
     if(d_resolution2>0) d_resolution_test = TMath::Sqrt(d_resolution2);
+*/
 
-
-
+/*
     // Define PID parameters
     Int_t Nprotons = 0, NpionPlus = 0, NpionMinus = 0, NkaonPlus = 0, NkaonMinus = 0;
     //////////////////// Primary Tracks loop to get flow ///////////////////////
@@ -1943,8 +1947,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
         hist_eta_proton->Fill(eta);
         hist_y_proton->Fill(rap_Proton);
         hist_rap_eta_proton->Fill(eta,rap_Proton);
-        hist_pt_y_proton->Fill(rap_Proton,pt,1/*efficiency*/);
-        hist_pt_eta_proton->Fill(eta,pt,1/*efficiency*/);
+        hist_pt_y_proton->Fill(rap_Proton,pt,1);
+        hist_pt_eta_proton->Fill(eta,pt,1);
         hist_phi_proton->Fill(phi);
         hist_dEdx_proton->Fill(charge*trackP,picoTrack->dEdx());
         if(Beta != -999.0)
@@ -1954,15 +1958,12 @@ cout<<KaonPlusEfficiencyTable<<endl;
         }
 
         // Accumulate flows
-        if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() /*&& d_resolution[centrality-1]>0*//*&& efficiency > 0.0 */) {
-            profile3D_proton_v2->Fill(centrality,pt,rap_Proton/*track->eta()*/,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,/*efficiency*/1.0);
-            h2_proton_v2       ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
-        }
-        // if( /*chooseTPCEP &&*/ reaction_plane3_ex_west[itr] >= 0.0 && reaction_plane3_ex_west[itr] <= 2.0*TMath::Pi() && efficiency > 0.0 ) {
-        //     profile3D_proton_v2_tpc->Fill(centrality,pt,rap_Proton/*track->eta()*/,TMath::Cos(1.0*phi - reaction_plane3_ex_west[itr]),/*efficiency*/1.0);
+        // if(  bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() /*&& d_resolution[centrality-1]>0*//*&& efficiency > 0.0 ) {
+        //     h2_proton_v2       ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
+        // }
         // }
 
-      }
+      // }
 
       // Pions
       if(
@@ -2006,8 +2007,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
               hist_mass_pionPlus->Fill(charge*trackP,mass2);
           }
           // Accumulate flows
-          if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() && efficiency > 0.0  /*&& d_resolution[centrality-1]>0*/) {
-              profile3D_pionPlus_v2->Fill(centrality,pt,rap_Pion/*track->eta()*/,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,efficiency/*1.0*/);
               h2_pionPlus_v2       ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
               h2_pions_v2          ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
           }
@@ -2034,8 +2033,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
               hist_mass_pionMinus->Fill(charge*trackP,mass2);
           }
           // Accumulate flows
-          if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() && efficiency > 0.0 /*&& d_resolution[centrality-1]>0*/) {
-              profile3D_pionMinus_v2->Fill(centrality,pt,rap_Pion/*track->eta()*/,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,efficiency/*1.0*/);
               h2_pionMinus_v2       ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
               h2_pions_v2           ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
           }
@@ -2079,8 +2076,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
               hist_mass_kaonPlus->Fill(charge*trackP,mass2);
           }
           // Accumulate flows
-          if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() && efficiency > 0.0 /*&& d_resolution[centrality-1]>0*/) {
-              profile3D_kaonPlus_v2->Fill(centrality,pt,rap_Kaon/*track->eta()*/,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,efficiency/*1.0*/);
               h2_kaonPlus_v2       ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
           }
 
@@ -2105,8 +2100,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
               hist_mass_kaonMinus->Fill(charge*trackP,mass2);
           }
           // Accumulate flows
-          if( /*chooseBBCeastEP &&*/ bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() && efficiency > 0.0 /*&& d_resolution[centrality-1]>0*/) {
-              profile3D_kaonMinus_v2->Fill(centrality,pt,rap_Kaon/*track->eta()*/,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi()))/*/d_resolution[centrality-1]*/,efficiency/*1.0*/);
               h2_kaonMinus_v2       ->Fill(pt,TMath::Cos(EpOrder * (phi - bbc_east_plane3 - TMath::Pi())),1);
           }
 
@@ -2486,7 +2479,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
       else if(b_K0)
         {
           d_M0 = d_K_m;
-        }*/
+        }
       d_M0 = d_K_m;//test
 
       for(unsigned int j = 0; j < v_pri_tracks1.size(); j++)
@@ -2497,7 +2490,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
         /*
         double d_TPCnSigmaPion1   = fabs(picoTrack1->nSigmaPion());
         double d_TPCnSigmaProton1 = fabs(picoTrack1->nSigmaProton());
-        */
+
         double d_TPCnSigmaKaon1   = fabs(picoTrack1->nSigmaKaon());
 
         /*
@@ -2524,7 +2517,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
         if(b_PRO1) d_M1 = d_PRO_m;
         else if(b_PI1)  d_M1 = d_PI_m;
         else if(b_K1)   d_M1 = d_K_m;
-        */
+
         double d_M1 = d_K_m;
 
         double d_px1      = picoTrack1->pMom().x();
@@ -2542,7 +2535,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
         if(picoTrack1->isTofTrack()) trait = dst->btofPidTraits(picoTrack1->bTofPidTraitsIndex());
         double d_tofBeta1 = -999;
         if(trait) d_tofBeta1 = trait->btofBeta();
-        */
+
         if(d_charge0 == d_charge1) continue;
         bool b_PHI    = true;//test
 
@@ -2587,7 +2580,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
         if(d_mother_decay_length < d_cut_mother_decay_length_lam) b_LAMBDA = false;
         if(d_mother_decay_length < d_cut_mother_decay_length_k0s) b_K0S    = false;
         if(d_mother_decay_length > d_cut_mother_decay_length_RHO) b_RHO    = false;
-        */
+
         double d_E0 = sqrt(v3D_obj_p0.Mag2()+d_M0*d_M0);
         double d_E1 = sqrt(v3D_obj_p1.Mag2()+d_M1*d_M1);
 
@@ -2603,7 +2596,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
         Int_t i_ybin1 = KaonMinusEfficiencyTable->GetYaxis()->FindBin(d_y1);
         Int_t i_zbin1 = KaonMinusEfficiencyTable->GetZaxis()->FindBin(d_mT1-d_M1);
-        */
+
         double d_eff_corr0 = 1;
         double d_eff_corr1 = 1;
 
@@ -2615,7 +2608,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
         d_eff_corr0 = (d_eff_corr0 <= 0.01 || d_eff_corr0 >= 1) ? 1 : 1 / d_eff_corr0;
         d_eff_corr1 = (d_eff_corr1 <= 0.01 || d_eff_corr1 >= 1) ? 1 : 1 / d_eff_corr1;
 
-        */
+
         double d_inv_m = sqrt(d_M0*d_M0
                               +d_M1*d_M1
                               +2.0*d_E0*d_E1
@@ -2643,15 +2636,15 @@ cout<<KaonPlusEfficiencyTable<<endl;
         /*
         if(d_phi_azimuth < 0.0            ) d_phi_azimuth += 2.0*TMath::Pi();
         if(d_phi_azimuth > 2.0*TMath::Pi()) d_phi_azimuth -= 2.0*TMath::Pi();
-        */
+
         if(b_PHI) h_prim_inv_m_PHI    -> Fill(d_inv_m);
         double d_v2_raw_phi = -999.0;
         /*
         if(  bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() ) {
            d_v2_raw_phi = TMath::Cos(EpOrder * (d_phi_azimuth - bbc_east_plane3 - TMath::Pi()));
         }
-        */
-        if(/*b_cent_01||b_cent_02||*/b_cent_07) continue;
+
+        if(/*b_cent_01||b_cent_02||b_cent_07) continue;
         if(d_v2_raw_phi == -999.0) continue;
         // std::cout<< d_v2_raw_phi <<std::endl;
         // if(b_cent_03) d_v2_raw_phi /= 0.398419;
@@ -2696,11 +2689,11 @@ cout<<KaonPlusEfficiencyTable<<endl;
     //=================== END Invariant Mass Nested Primary Track Loop ===========================
 
     // END Phi meson flow analysis
-
+*/
 
   }
   //////////////////////// END Event Loop //////////////////////////////////////
-
+/*
   // Compute BBC ADCs mean
   for(Int_t i=0;i<16;i++) {
       if(esum[i] > 0.0) {
@@ -2743,6 +2736,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
   h_trk_vs_cut->GetXaxis()->SetBinLabel(3,"Primary Track cut");
   h_trk_vs_cut->GetXaxis()->SetBinLabel(4,"bad track cut");
 
+*/
   outputFile->cd();
   h_phi_y->Write();
   hist_mass->Write();
@@ -2959,6 +2953,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
   TP_phi_v2_vs_invM_pTbin6->Write();
   TP_phi_v2_vs_invM_pTbin7->Write();
 
-
+*/
 }
 //////////////////////////// END Main Function /////////////////////////////////
