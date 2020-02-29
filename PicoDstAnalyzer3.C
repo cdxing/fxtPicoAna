@@ -200,7 +200,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
 
   // outFile.Append(".picoDst.result.root");
   // outFile.Prepend(Form("%d_%d_%d_",cutID,variationID,versionID));
-  // TFile *outputFile = new TFile(outFile,"recreate");
+  TFile *outputFile = new TFile(outFile,"recreate");
 
   int ievtcut[5] = {0};
   int itrkcut[6] = {0};
@@ -1374,7 +1374,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
       hist_phi->Fill(phi);
       // Define flow weight
       Double_t w0 = 0.0, w1 = 0.0;
-
+/*
       // PID
       // Proton
       if(
@@ -1451,7 +1451,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
              if(efficiency > 0.0)
              {
                w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-               w1 = efficiency /* -1.0*/;
+               w1 = efficiency /* -1.0;
              }
            }
            if(charge < 0)
@@ -1472,7 +1472,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
              if(efficiency > 0.0)
              {
                w0 = pt; // pt as weight to calculate v2. // rap_Pion + 1.52;//1.4144;
-               w1 = efficiency /* -1.0*/;
+               w1 = efficiency /* -1.0;
              }
            }
          }
@@ -2953,6 +2953,6 @@ cout<<KaonPlusEfficiencyTable<<endl;
   TP_phi_v2_vs_invM_pTbin6->Write();
   TP_phi_v2_vs_invM_pTbin7->Write();
 
-*/
+
 }
 //////////////////////////// END Main Function /////////////////////////////////
