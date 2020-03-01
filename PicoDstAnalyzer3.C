@@ -789,44 +789,54 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   hist2_Epd_west_Qy_Qx_Weighted->GetYaxis()->SetTitle("Q_y^{EPD west}_{2} ");
 
   TH1D *hist_Epd_east_psi_raw = new TH1D("hist_Epd_east_psi_raw","EPD east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_Epd_east_psi_raw->GetXaxis()->SetTitle("#psi^{EPD east}_{1} [Radian]");
+  hist_Epd_east_psi_raw->GetXaxis()->SetTitle("#psi^{EPD east}_{2} [Radian]");
   hist_Epd_east_psi_raw->GetYaxis()->SetTitle("# of events");
 
   TH1D *hist_Epd_east_psi_Weighted = new TH1D("hist_Epd_east_psi_Weighted","EPD east EP (Weighted)",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_Epd_east_psi_Weighted->GetXaxis()->SetTitle("#psi^{EPD east}_{1} [Radian]");
+  hist_Epd_east_psi_Weighted->GetXaxis()->SetTitle("#psi^{EPD east}_{2} [Radian]");
   hist_Epd_east_psi_Weighted->GetYaxis()->SetTitle("# of events");
 
+  TH1D *hist_Epd_east_psi_Shifted = new TH1D("hist_Epd_east_psi_Shifted","EPD east EP (Weighted & Shifted)",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  hist_Epd_east_psi_Shifted->GetXaxis()->SetTitle("#psi^{EPD east}_{2} [Radian]");
+  hist_Epd_east_psi_Shifted->GetYaxis()->SetTitle("# of events");
+
+
   TH1D *hist_Epd_west_psi_raw = new TH1D("hist_Epd_west_psi_raw","EPD west EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_Epd_west_psi_raw->GetXaxis()->SetTitle("#psi^{EPD west}_{1} [Radian]");
+  hist_Epd_west_psi_raw->GetXaxis()->SetTitle("#psi^{EPD west}_{2} [Radian]");
   hist_Epd_west_psi_raw->GetYaxis()->SetTitle("# of events");
 
   TH1D *hist_Epd_west_psi_Weighted = new TH1D("hist_Epd_west_psi_Weighted","EPD west EP (Weighted)",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_Epd_west_psi_Weighted->GetXaxis()->SetTitle("#psi^{EPD west}_{1} [Radian]");
+  hist_Epd_west_psi_Weighted->GetXaxis()->SetTitle("#psi^{EPD west}_{2} [Radian]");
   hist_Epd_west_psi_Weighted->GetYaxis()->SetTitle("# of events");
+
+
+  TH1D *hist_Epd_west_psi_Shifted = new TH1D("hist_Epd_west_psi_Shifted","EPD west EP (Weighted & Shifted)",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  hist_Epd_west_psi_Shifted->GetXaxis()->SetTitle("#psi^{EPD west}_{2} [Radian]");
+  hist_Epd_west_psi_Shifted->GetYaxis()->SetTitle("# of events");
 
   // TPC EPs
   TH1D *hist_tpc_east_psi_raw = new TH1D("hist_tpc_east_psi_raw","TPC east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_tpc_east_psi_raw->GetXaxis()->SetTitle("#psi^{TPC east}_{1} [Radian]");
+  hist_tpc_east_psi_raw->GetXaxis()->SetTitle("#psi^{TPC east}_{2} [Radian]");
   hist_tpc_east_psi_raw->GetYaxis()->SetTitle("# of events");
 
   TH1D *hist_tpc_east_psi_recentered = new TH1D("hist_tpc_east_psi_recentered","TPC east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_tpc_east_psi_recentered->GetXaxis()->SetTitle("#psi^{TPC east}_{1} [Radian]");
+  hist_tpc_east_psi_recentered->GetXaxis()->SetTitle("#psi^{TPC east}_{2} [Radian]");
   hist_tpc_east_psi_recentered->GetYaxis()->SetTitle("# of events");
 
   TH1D *hist_tpc_east_psi_flattened = new TH1D("hist_tpc_east_psi_flattened","TPC east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_tpc_east_psi_flattened->GetXaxis()->SetTitle("#psi^{TPC east}_{1} [Radian]");
+  hist_tpc_east_psi_flattened->GetXaxis()->SetTitle("#psi^{TPC east}_{2} [Radian]");
   hist_tpc_east_psi_flattened->GetYaxis()->SetTitle("# of events");
 
   TH1D *hist_tpc_west_psi_raw = new TH1D("hist_tpc_west_psi_raw","TPC west EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_tpc_west_psi_raw->GetXaxis()->SetTitle("#psi^{TPC west}_{1} [Radian]");
+  hist_tpc_west_psi_raw->GetXaxis()->SetTitle("#psi^{TPC west}_{2} [Radian]");
   hist_tpc_west_psi_raw->GetYaxis()->SetTitle("# of events");
 
   TH1D *hist_tpc_west_psi_recentered = new TH1D("hist_tpc_west_psi_recentered","TPC east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_tpc_west_psi_recentered->GetXaxis()->SetTitle("#psi^{TPC east}_{1} [Radian]");
+  hist_tpc_west_psi_recentered->GetXaxis()->SetTitle("#psi^{TPC east}_{2} [Radian]");
   hist_tpc_west_psi_recentered->GetYaxis()->SetTitle("# of events");
 
   TH1D *hist_tpc_west_psi_flattened = new TH1D("hist_tpc_west_psi_flattened","TPC east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_tpc_west_psi_flattened->GetXaxis()->SetTitle("#psi^{TPC east}_{1} [Radian]");
+  hist_tpc_west_psi_flattened->GetXaxis()->SetTitle("#psi^{TPC east}_{2} [Radian]");
   hist_tpc_west_psi_flattened->GetYaxis()->SetTitle("# of events");
 
   TProfile3D *profile3D_tpc_east_Qx_Qy = new TProfile3D("profile3D_tpc_east_Qx_Qy","profile3D_tpc_east_Qx_Qy",daynumber,0.5,daynumber+0.5,Ncentralities,0.5,Ncentralities+0.5,2,0.5,2.5,"");
@@ -848,15 +858,15 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   TH1D *bbc_east_gain_corrected_adc_profile = new TH1D("bbc_east_gain_corrected_adc_profile","bbc_east_gain_corrected_adc_profile",16,0.5,16.5);
 
   TH1D *hist_bbc_east_psi_raw = new TH1D("hist_bbc_east_psi_raw","BBC east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_bbc_east_psi_raw->GetXaxis()->SetTitle("#psi^{BBC east}_{1} [Radian]");
+  hist_bbc_east_psi_raw->GetXaxis()->SetTitle("#psi^{BBC east}_{2} [Radian]");
   hist_bbc_east_psi_raw->GetYaxis()->SetTitle("# of events");
 
   TH1D *hist_bbc_east_psi_recentered = new TH1D("hist_bbc_east_psi_recentered","BBC east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_bbc_east_psi_recentered->GetXaxis()->SetTitle("#psi^{BBC east}_{1} [Radian]");
+  hist_bbc_east_psi_recentered->GetXaxis()->SetTitle("#psi^{BBC east}_{2} [Radian]");
   hist_bbc_east_psi_recentered->GetYaxis()->SetTitle("# of events");
 
   TH1D *hist_bbc_east_psi_flattened = new TH1D("hist_bbc_east_psi_flattened","BBC east EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_bbc_east_psi_flattened->GetXaxis()->SetTitle("#psi^{BBC east}_{1} [Radian]");
+  hist_bbc_east_psi_flattened->GetXaxis()->SetTitle("#psi^{BBC east}_{2} [Radian]");
   hist_bbc_east_psi_flattened->GetYaxis()->SetTitle("# of events");
 
   TProfile3D *profile3D_bbc_east_Qx_Qy = new TProfile3D("profile3D_bbc_east_Qx_Qy","profile3D_bbc_east_Qx_Qy",daynumber,0.5,daynumber+0.5,Ncentralities,0.5,Ncentralities+0.5,2,0.5,2.5,"");
@@ -869,15 +879,15 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   TH1D *bbc_west_gain_corrected_adc_profile = new TH1D("bbc_west_gain_corrected_adc_profile","bbc_west_gain_corrected_adc_profile",16,0.5,16.5);
 
   TH1D *hist_bbc_west_psi_raw = new TH1D("hist_bbc_west_psi_raw","BBC west EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_bbc_west_psi_raw->GetXaxis()->SetTitle("#psi^{BBC west}_{1} [Radian]");
+  hist_bbc_west_psi_raw->GetXaxis()->SetTitle("#psi^{BBC west}_{2} [Radian]");
   hist_bbc_west_psi_raw->GetYaxis()->SetTitle("# of events");
 
   TH1D *hist_bbc_west_psi_recentered = new TH1D("hist_bbc_west_psi_recentered","BBC west EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_bbc_west_psi_recentered->GetXaxis()->SetTitle("#psi^{BBC west}_{1} [Radian]");
+  hist_bbc_west_psi_recentered->GetXaxis()->SetTitle("#psi^{BBC west}_{2} [Radian]");
   hist_bbc_west_psi_recentered->GetYaxis()->SetTitle("# of events");
 
   TH1D *hist_bbc_west_psi_flattened = new TH1D("hist_bbc_west_psi_flattened","BBC west EP",500,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  hist_bbc_west_psi_flattened->GetXaxis()->SetTitle("#psi^{BBC west}_{1} [Radian]");
+  hist_bbc_west_psi_flattened->GetXaxis()->SetTitle("#psi^{BBC west}_{2} [Radian]");
   hist_bbc_west_psi_flattened->GetYaxis()->SetTitle("# of events");
 
   TProfile3D *profile3D_bbc_west_Qx_Qy = new TProfile3D("profile3D_bbc_west_Qx_Qy","profile3D_bbc_west_Qx_Qy",daynumber,0.5,daynumber+0.5,Ncentralities,0.5,Ncentralities+0.5,2,0.5,2.5,"");
@@ -903,16 +913,16 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   // END EP resolutions plots
   // EP correlations in 2D
   TH2D *correlation2D_tpc_sub = new TH2D("correlation2D_tpc_sub","#psi^{TPC east}_{1} vs. #psi^{TPC west}_{1}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  correlation2D_tpc_sub->GetXaxis()->SetTitle("#psi^{TPC west}_{1} [Radian]");
-  correlation2D_tpc_sub->GetYaxis()->SetTitle("#psi^{TPC east}_{1} [Radian]");
+  correlation2D_tpc_sub->GetXaxis()->SetTitle("#psi^{TPC west}_{2} [Radian]");
+  correlation2D_tpc_sub->GetYaxis()->SetTitle("#psi^{TPC east}_{2} [Radian]");
 
   TH2D *correlation2D_bbc_east_tpc_east = new TH2D("correlation2D_bbc_east_tpc_east","#psi^{BBC east}_{1} vs. #psi^{TPC east}_{1}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  correlation2D_bbc_east_tpc_east->GetXaxis()->SetTitle("#psi^{TPC east}_{1} [Radian]");
-  correlation2D_bbc_east_tpc_east->GetYaxis()->SetTitle("#psi^{BBC east}_{1} [Radian]");
+  correlation2D_bbc_east_tpc_east->GetXaxis()->SetTitle("#psi^{TPC east}_{2} [Radian]");
+  correlation2D_bbc_east_tpc_east->GetYaxis()->SetTitle("#psi^{BBC east}_{2} [Radian]");
 
   TH2D *correlation2D_bbc_east_tpc_west = new TH2D("correlation2D_bbc_east_tpc_west","#psi^{BBC east}_{1} vs. #psi^{TPC west}_{1}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
-  correlation2D_bbc_east_tpc_west->GetXaxis()->SetTitle("#psi^{TPC west}_{1} [Radian]");
-  correlation2D_bbc_east_tpc_west->GetYaxis()->SetTitle("#psi^{BBC east}_{1} [Radian]");
+  correlation2D_bbc_east_tpc_west->GetXaxis()->SetTitle("#psi^{TPC west}_{2} [Radian]");
+  correlation2D_bbc_east_tpc_west->GetYaxis()->SetTitle("#psi^{BBC east}_{2} [Radian]");
 
   // END EP correlations in 2D
 
@@ -1299,6 +1309,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
       hist_Epd_east_psi_raw->Fill(result.EastRawPsi(EpOrder));
       hist_Epd_east_psi_Weighted->Fill(result.EastPhiWeightedPsi(EpOrder));
+      hist_Epd_east_psi_Shifted->Fill(result.EastPhiWeightedAndShiftedPsi(EpOrder));
+
     }
     if(WestRawQx!=0 || WestRawQy!=0 )
     {
@@ -1307,6 +1319,8 @@ cout<<KaonPlusEfficiencyTable<<endl;
 
       hist_Epd_west_psi_raw->Fill(result.WestRawPsi(EpOrder));
       hist_Epd_west_psi_Weighted->Fill(result.WestPhiWeightedPsi(EpOrder));
+      hist_Epd_west_psi_Shifted->Fill(result.WestPhiWeightedAndShiftedPsi(EpOrder));
+
     }
 
 
@@ -2847,6 +2861,9 @@ cout<<KaonPlusEfficiencyTable<<endl;
   hist_Epd_west_psi_raw->Write();
   hist_Epd_east_psi_Weighted->Write();
   hist_Epd_west_psi_Weighted->Write();
+  hist_Epd_east_psi_Shifted->Write();
+  hist_Epd_west_psi_Shifted->Write();
+
 
   profile_correlation_tpc_east_tpc_west->Write();
   correlation2D_tpc_sub->Write();
