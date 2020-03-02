@@ -930,7 +930,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   // END Histograms
 
   // Read input files
-  TFile *eventPlanes_input   = new TFile("/star/data01/pwg/dchen/Ana/fxtPicoAna2/fxtPicoAna/inputs/ep.picoDst.result.combined.root","read");
+  TFile *eventPlanes_input   = new TFile("/star/u/dchen/GitHub/fxtPicoAna/TpcEpCorrectionHistograms_INPUT.root","read");
 
   // Read resolution for systematic analysis
   TFile *t_resolution_iniput = new TFile("/star/data01/pwg/dchen/Ana/fxtPicoAna/result_event_plane_resolution/event_plane_resolution_primary.root","read");
