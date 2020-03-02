@@ -1937,7 +1937,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
       if(
         TMath::Abs(picoTrack->nSigmaProton()) <  2.0
         && (
-            d_tofBeta != -999.0
+            Beta != -999.0
             && mass2 > 0.5
             && mass2 < 1.5
         )
@@ -2296,13 +2296,12 @@ cout<<KaonPlusEfficiencyTable<<endl;
           if(
             TMath::Abs(picoTrack->nSigmaProton()) <  2.0
             && (
-                d_tofBeta != -999.0
+                d_tofBeta0 != -999.0
                 && mass2 > 0.5
                 && mass2 < 1.5
             )
-            && charge > 0
-            && pt > 0.4
-            && pt < 2.0
+            && d_pT0 > 0.4
+            && d_pT0 < 2.0
           )
             {
               b_E = false; b_PI = false; b_PRO = true; b_K = false;
@@ -2364,13 +2363,12 @@ cout<<KaonPlusEfficiencyTable<<endl;
           if(
             TMath::Abs(picoTrack->nSigmaProton()) <  2.0
             && (
-                d_tofBeta != -999.0
+                d_tofBeta0 != -999.0
                 && mass2 > 0.5
                 && mass2 < 1.5
             )
-            && charge > 0
-            && pt > 0.4
-            && pt < 2.0
+            && d_pT0 > 0.4
+            && d_pT0 < 2.0
           )
             {
               b_E = false; b_PI = false; b_PRO = true; b_K = false;
