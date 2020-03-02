@@ -1390,16 +1390,14 @@ cout<<KaonPlusEfficiencyTable<<endl;
       // Define flow weight
       Double_t w0 = 0.0, w1 = 0.0;
 
-      // PID
-      // Proton
+      // PID for TPC Event plane
+      // Protons
       if(
-        //picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
         TMath::Abs(picoTrack->nSigmaProton()) <  2.0
-        && (( d_tofBeta == -999.0 && TMath::Abs( picoTrack->nSigmaPion() ) > 0.3 ) ||
-           ( d_tofBeta != -999.0
+        && (
+            d_tofBeta != -999.0
             && mass2 > 0.5
             && mass2 < 1.5
-            )
         )
         && charge > 0
         && pt > 0.4
@@ -1937,13 +1935,12 @@ cout<<KaonPlusEfficiencyTable<<endl;
       // 2nd particle identifications for flow calculation (1st PID is for TPC EP calculation)
       // Protons
       if(
-        picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
-        && ( ( Beta == -999.0 && TMath::Abs( picoTrack->nSigmaPion() ) > 0.3 ) ||
-            ( Beta != -999.0
-             && mass2 > 0.5
-             && mass2 < 1.5
-             )
-            )
+        TMath::Abs(picoTrack->nSigmaProton()) <  2.0
+        && (
+            d_tofBeta != -999.0
+            && mass2 > 0.5
+            && mass2 < 1.5
+        )
         && charge > 0
         && pt > 0.4
         && pt < 2.0
@@ -2173,7 +2170,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
     // double d_cut_mother_decay_length_PHI = 0.5; // must be LESS    than this
     //======================== END Track Settings ================================================
 
-    //======================= Primary Track Loop to get phi flow =================================================
+    //======================= Primary Track Loop to kaon tracks =================================================
     vector<StPicoTrack *> v_pri_tracks;
     vector<StPicoTrack *> v_pri_tracks_pl;
     vector<StPicoTrack *> v_pri_tracks_mi;
@@ -2297,16 +2294,15 @@ cout<<KaonPlusEfficiencyTable<<endl;
             // h_PI_plus_mT_Diff -> Fill((d_mT_PI - d_PI_m));
           }
           if(
-            picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
-            && ( ( d_tofBeta0 == -999.0 && TMath::Abs( picoTrack->nSigmaPion() ) > 0.3 ) ||
-                ( d_tofBeta0 != -999.0
-                 && mass2 > 0.5
-                 && mass2 < 1.5
-                 )
-                )
-            && d_charge > 0
-            && d_pT0 > 0.4
-            && d_pT0 < 2.0
+            TMath::Abs(picoTrack->nSigmaProton()) <  2.0
+            && (
+                d_tofBeta != -999.0
+                && mass2 > 0.5
+                && mass2 < 1.5
+            )
+            && charge > 0
+            && pt > 0.4
+            && pt < 2.0
           )
             {
               b_E = false; b_PI = false; b_PRO = true; b_K = false;
@@ -2366,16 +2362,15 @@ cout<<KaonPlusEfficiencyTable<<endl;
             // h_PI_minus_mT_Diff -> Fill((d_mT_PI - d_PI_m));
           }
           if(
-            picoTrack->nSigmaProton() > -2 && picoTrack->nSigmaProton() < 2
-            && ( ( d_tofBeta0 == -999.0 && TMath::Abs( picoTrack->nSigmaPion() ) > 0.3 ) ||
-                ( d_tofBeta0 != -999.0
-                 && mass2 > 0.5
-                 && mass2 < 1.5
-                 )
-                )
-            && d_charge > 0
-            && d_pT0 > 0.4
-            && d_pT0 < 2.0
+            TMath::Abs(picoTrack->nSigmaProton()) <  2.0
+            && (
+                d_tofBeta != -999.0
+                && mass2 > 0.5
+                && mass2 < 1.5
+            )
+            && charge > 0
+            && pt > 0.4
+            && pt < 2.0
           )
             {
               b_E = false; b_PI = false; b_PRO = true; b_K = false;
@@ -2439,7 +2434,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
     }
     //=================== END Primary Track Loop =================================================
 
-    //======================= Invariant Mass Nested Primary Track Loop ===========================
+    //======== Invariant Mass Nested Primary Track Loop to get Phi meson flow ====================
 
     vector<StPicoTrack *> v_pri_tracks0 = v_pri_tracks_pl;
     vector<StPicoTrack *> v_pri_tracks1 = v_pri_tracks_mi;
