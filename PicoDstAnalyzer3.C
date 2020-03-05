@@ -197,7 +197,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   // Retrieve picoDst TChain*
   TChain *mPicoDst = picoReader->chain();
   mPicoDst->SetBranchStatus("EpdHit*",1,&found);   // note you need the asterisk
-  std::cout << "EpdHit Branch returned found= " << found << endl;
+  std::cout << "EpdHit Branch returned found= " << found << std::endl;
   mPicoDst->SetBranchAddress("EpdHit",&mEpdHits);
 
   outFile.Append(".picoDst.result.root");
@@ -1095,11 +1095,11 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
         std::cout<< Form("resolution %d = ",i+1) << d_resolution[i]<<std::endl;
       }
     }
-cout<<ProtonEfficiencyTable<<endl;
-cout<<PionPlusEfficiencyTable<<endl;
-cout<<PionMinusEfficiencyTable<<endl;
-cout<<KaonMinusEfficiencyTable<<endl;
-cout<<KaonPlusEfficiencyTable<<endl;
+std::cout<<ProtonEfficiencyTable<<std::endl;
+std::cout<<PionPlusEfficiencyTable<<std::endl;
+std::cout<<PionMinusEfficiencyTable<<std::endl;
+std::cout<<KaonMinusEfficiencyTable<<std::endl;
+std::cout<<KaonPlusEfficiencyTable<<std::endl;
 
   }
   TH1D *BBC_ADC_EAST[16], *BBC_ADC_WEST[16];
@@ -1858,7 +1858,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
       }
       if( result.EastPhiWeightedAndShiftedPsi(EpOrder) >= 0.0 && result.EastPhiWeightedAndShiftedPsi(EpOrder) <= (1. / EpOrder) * 2.0*TMath::Pi() )
       {
-        profile_correlation_tpc_east_epd_east->Fill(centrality,TMath::Cos(EpOrder * (tpc_east_plane3 - result.EastPhiWeightedAndShiftedPsi(EpOrder) ));
+        profile_correlation_tpc_east_epd_east->Fill(centrality,TMath::Cos(EpOrder * (tpc_east_plane3 - result.EastPhiWeightedAndShiftedPsi(EpOrder) )));
         correlation2D_epd_east_tpc_east->Fill(tpc_east_plane3,result.EastPhiWeightedAndShiftedPsi(EpOrder));
       }
     }
@@ -1871,7 +1871,7 @@ cout<<KaonPlusEfficiencyTable<<endl;
       }
       if( result.EastPhiWeightedAndShiftedPsi(EpOrder) >= 0.0 && result.EastPhiWeightedAndShiftedPsi(EpOrder) <= (1. / EpOrder) * 2.0*TMath::Pi() )
       {
-        profile_correlation_tpc_west_epd_east->Fill(centrality,TMath::Cos(EpOrder * (tpc_west_plane3 - result.EastPhiWeightedAndShiftedPsi(EpOrder) ));
+        profile_correlation_tpc_west_epd_east->Fill(centrality,TMath::Cos(EpOrder * (tpc_west_plane3 - result.EastPhiWeightedAndShiftedPsi(EpOrder) )));
         correlation2D_epd_east_tpc_west->Fill(tpc_west_plane3,result.EastPhiWeightedAndShiftedPsi(EpOrder));
       }
     }
