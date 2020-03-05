@@ -62,7 +62,7 @@
 
 // Define global constants
 const Int_t daynumber     = 6;
-const Int_t Ncentralities = 7;
+const Int_t Ncentralities = 10;
 const Int_t order         = 20;
 const Int_t twoorder      = 2 * order;
 const double d_mean  = 1.02087;//primary
@@ -898,6 +898,15 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
 
   // EP resolutions plots
   Double_t xbin[8] = {0.0,5.0,10.0,15.0,20.0,25.0,30.0,35.0};
+
+  TProfile *profile_correlation_tpc_east_epd_east = new TProfile("profile_correlation_tpc_east_epd_east","<cos(#psi^{TPC east}_{1} #minus #psi^{epd east}_{1})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
+  profile_correlation_tpc_east_epd_east->GetXaxis()->SetTitle("Centrality (%)");
+  profile_correlation_tpc_east_epd_east->GetYaxis()->SetTitle("Correlation");
+
+  TProfile *profile_correlation_tpc_west_epd_east = new TProfile("profile_correlation_tpc_west_epd_east","<cos(#psi^{TPC west}_{1} #minus #psi^{epd east}_{1})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
+  profile_correlation_tpc_west_epd_east->GetXaxis()->SetTitle("Centrality (%)");
+  profile_correlation_tpc_west_epd_east->GetYaxis()->SetTitle("Correlation");
+
   TProfile *profile_correlation_tpc_east_tpc_west = new TProfile("profile_correlation_tpc_east_tpc_west","<cos(#psi^{TPC east}_{1} #minus #psi^{TPC west}_{1})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
   profile_correlation_tpc_east_tpc_west->GetXaxis()->SetTitle("Centrality (%)");
   profile_correlation_tpc_east_tpc_west->GetYaxis()->SetTitle("Correlation");
@@ -912,6 +921,14 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
 
   // END EP resolutions plots
   // EP correlations in 2D
+  TH2D *correlation2D_epd_east_tpc_east = new TH2D("correlation2D_epd_east_tpc_east","#psi^{EPD east}_{1} vs. #psi^{TPC east}_{1}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  correlation2D_epd_east_tpc_east->GetXaxis()->SetTitle("#psi^{TPC east}_{2} [Radian]");
+  correlation2D_epd_east_tpc_east->GetYaxis()->SetTitle("#psi^{EPD east}_{2} [Radian]");
+
+  TH2D *correlation2D_epd_east_tpc_west = new TH2D("correlation2D_epd_east_tpc_west","#psi^{EPD east}_{1} vs. #psi^{TPC west}_{1}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  correlation2D_epd_east_tpc_west->GetXaxis()->SetTitle("#psi^{TPC west}_{2} [Radian]");
+  correlation2D_epd_east_tpc_west->GetYaxis()->SetTitle("#psi^{EPD east}_{2} [Radian]");
+
   TH2D *correlation2D_tpc_sub = new TH2D("correlation2D_tpc_sub","#psi^{TPC east}_{1} vs. #psi^{TPC west}_{1}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
   correlation2D_tpc_sub->GetXaxis()->SetTitle("#psi^{TPC west}_{2} [Radian]");
   correlation2D_tpc_sub->GetYaxis()->SetTitle("#psi^{TPC east}_{2} [Radian]");
@@ -1839,6 +1856,11 @@ cout<<KaonPlusEfficiencyTable<<endl;
         profile_correlation_tpc_east_bbc_east->Fill(centrality,TMath::Cos(EpOrder * (tpc_east_plane3 - bbc_east_plane3 - TMath::Pi())));
         correlation2D_bbc_east_tpc_east->Fill(tpc_east_plane3,bbc_east_plane3);
       }
+      if( result.EastPhiWeightedAndShiftedPsi(EpOrder) >= 0.0 && result.EastPhiWeightedAndShiftedPsi(EpOrder) <= (1. / EpOrder) * 2.0*TMath::Pi() )
+      {
+        profile_correlation_tpc_east_epd_east->Fill(centrality,TMath::Cos(EpOrder * (tpc_east_plane3 - result.EastPhiWeightedAndShiftedPsi(EpOrder) ));
+        correlation2D_epd_east_tpc_east->Fill(tpc_east_plane3,result.EastPhiWeightedAndShiftedPsi(EpOrder));
+      }
     }
     if( tpc_west_plane3 >= 0.0 && tpc_west_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() )
     {
@@ -1846,6 +1868,11 @@ cout<<KaonPlusEfficiencyTable<<endl;
       {
         profile_correlation_tpc_west_bbc_east->Fill(centrality,TMath::Cos(EpOrder * (tpc_west_plane3 - bbc_east_plane3 - TMath::Pi())));
         correlation2D_bbc_east_tpc_west->Fill(tpc_west_plane3,bbc_east_plane3);
+      }
+      if( result.EastPhiWeightedAndShiftedPsi(EpOrder) >= 0.0 && result.EastPhiWeightedAndShiftedPsi(EpOrder) <= (1. / EpOrder) * 2.0*TMath::Pi() )
+      {
+        profile_correlation_tpc_west_epd_east->Fill(centrality,TMath::Cos(EpOrder * (tpc_west_plane3 - result.EastPhiWeightedAndShiftedPsi(EpOrder) ));
+        correlation2D_epd_east_tpc_west->Fill(tpc_west_plane3,result.EastPhiWeightedAndShiftedPsi(EpOrder));
       }
     }
 
@@ -2857,6 +2884,11 @@ cout<<KaonPlusEfficiencyTable<<endl;
   hist_Epd_east_psi_Shifted->Write();
   hist_Epd_west_psi_Shifted->Write();
 
+  profile_correlation_tpc_east_epd_east->Write();
+  correlation2D_epd_east_tpc_east->Write();
+
+  profile_correlation_tpc_west_epd_east->Write();
+  correlation2D_epd_east_tpc_west->Write();
 
   profile_correlation_tpc_east_tpc_west->Write();
   correlation2D_tpc_sub->Write();
