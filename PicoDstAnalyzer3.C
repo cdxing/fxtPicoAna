@@ -981,6 +981,9 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   TProfile *profile_correlation_tpc_east_bbc_east_input = nullptr;
   TProfile *profile_correlation_tpc_west_bbc_east_input = nullptr;
 
+  Double_t d_correlation_epd_east_tpc_east_input[Ncentralities]={0};
+  Double_t d_correlation_epd_east_tpc_west_input[Ncentralities]={0};
+
   Double_t d_correlation_tpc_east_tpc_west_input[Ncentralities]={0};
   Double_t d_correlation_bbc_east_tpc_east_input[Ncentralities]={0};
   Double_t d_correlation_bbc_east_tpc_west_input[Ncentralities]={0};
