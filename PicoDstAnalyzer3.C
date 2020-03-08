@@ -899,45 +899,45 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   // EP resolutions plots
   Double_t xbin[8] = {0.0,5.0,10.0,15.0,20.0,25.0,30.0,35.0};
 
-  TProfile *profile_correlation_tpc_east_epd_east = new TProfile("profile_correlation_tpc_east_epd_east","<cos(#psi^{TPC east}_{1} #minus #psi^{epd east}_{1})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
+  TProfile *profile_correlation_tpc_east_epd_east = new TProfile("profile_correlation_tpc_east_epd_east","<cos(#psi^{TPC east}_{2} #minus #psi^{epd east}_{2})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
   profile_correlation_tpc_east_epd_east->GetXaxis()->SetTitle("Centrality (%)");
   profile_correlation_tpc_east_epd_east->GetYaxis()->SetTitle("Correlation");
 
-  TProfile *profile_correlation_tpc_west_epd_east = new TProfile("profile_correlation_tpc_west_epd_east","<cos(#psi^{TPC west}_{1} #minus #psi^{epd east}_{1})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
+  TProfile *profile_correlation_tpc_west_epd_east = new TProfile("profile_correlation_tpc_west_epd_east","<cos(#psi^{TPC west}_{2} #minus #psi^{epd east}_{2})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
   profile_correlation_tpc_west_epd_east->GetXaxis()->SetTitle("Centrality (%)");
   profile_correlation_tpc_west_epd_east->GetYaxis()->SetTitle("Correlation");
 
-  TProfile *profile_correlation_tpc_east_tpc_west = new TProfile("profile_correlation_tpc_east_tpc_west","<cos(#psi^{TPC east}_{1} #minus #psi^{TPC west}_{1})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
+  TProfile *profile_correlation_tpc_east_tpc_west = new TProfile("profile_correlation_tpc_east_tpc_west","<cos(#psi^{TPC east}_{2} #minus #psi^{TPC west}_{2})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
   profile_correlation_tpc_east_tpc_west->GetXaxis()->SetTitle("Centrality (%)");
   profile_correlation_tpc_east_tpc_west->GetYaxis()->SetTitle("Correlation");
 
-  TProfile *profile_correlation_tpc_east_bbc_east = new TProfile("profile_correlation_tpc_east_bbc_east","<cos(#psi^{TPC east}_{1} #minus #psi^{BBC east}_{1})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
+  TProfile *profile_correlation_tpc_east_bbc_east = new TProfile("profile_correlation_tpc_east_bbc_east","<cos(#psi^{TPC east}_{2} #minus #psi^{BBC east}_{2})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
   profile_correlation_tpc_east_bbc_east->GetXaxis()->SetTitle("Centrality (%)");
   profile_correlation_tpc_east_bbc_east->GetYaxis()->SetTitle("Correlation");
 
-  TProfile *profile_correlation_tpc_west_bbc_east = new TProfile("profile_correlation_tpc_west_bbc_east","<cos(#psi^{TPC west}_{1} #minus #psi^{BBC east}_{1})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
+  TProfile *profile_correlation_tpc_west_bbc_east = new TProfile("profile_correlation_tpc_west_bbc_east","<cos(#psi^{TPC west}_{2} #minus #psi^{BBC east}_{2})>",Ncentralities,0.5,Ncentralities+0.5,-1.0,1.0,"");
   profile_correlation_tpc_west_bbc_east->GetXaxis()->SetTitle("Centrality (%)");
   profile_correlation_tpc_west_bbc_east->GetYaxis()->SetTitle("Correlation");
 
   // END EP resolutions plots
   // EP correlations in 2D
-  TH2D *correlation2D_epd_east_tpc_east = new TH2D("correlation2D_epd_east_tpc_east","#psi^{EPD east}_{1} vs. #psi^{TPC east}_{1}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  TH2D *correlation2D_epd_east_tpc_east = new TH2D("correlation2D_epd_east_tpc_east","#psi^{EPD east}_{2} vs. #psi^{TPC east}_{2}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
   correlation2D_epd_east_tpc_east->GetXaxis()->SetTitle("#psi^{TPC east}_{2} [Radian]");
   correlation2D_epd_east_tpc_east->GetYaxis()->SetTitle("#psi^{EPD east}_{2} [Radian]");
 
-  TH2D *correlation2D_epd_east_tpc_west = new TH2D("correlation2D_epd_east_tpc_west","#psi^{EPD east}_{1} vs. #psi^{TPC west}_{1}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  TH2D *correlation2D_epd_east_tpc_west = new TH2D("correlation2D_epd_east_tpc_west","#psi^{EPD east}_{2} vs. #psi^{TPC west}_{2}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
   correlation2D_epd_east_tpc_west->GetXaxis()->SetTitle("#psi^{TPC west}_{2} [Radian]");
   correlation2D_epd_east_tpc_west->GetYaxis()->SetTitle("#psi^{EPD east}_{2} [Radian]");
 
-  TH2D *correlation2D_tpc_sub = new TH2D("correlation2D_tpc_sub","#psi^{TPC east}_{1} vs. #psi^{TPC west}_{1}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  TH2D *correlation2D_tpc_sub = new TH2D("correlation2D_tpc_sub","#psi^{TPC east}_{2} vs. #psi^{TPC west}_{2}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
   correlation2D_tpc_sub->GetXaxis()->SetTitle("#psi^{TPC west}_{2} [Radian]");
   correlation2D_tpc_sub->GetYaxis()->SetTitle("#psi^{TPC east}_{2} [Radian]");
 
-  TH2D *correlation2D_bbc_east_tpc_east = new TH2D("correlation2D_bbc_east_tpc_east","#psi^{BBC east}_{1} vs. #psi^{TPC east}_{1}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  TH2D *correlation2D_bbc_east_tpc_east = new TH2D("correlation2D_bbc_east_tpc_east","#psi^{BBC east}_{2} vs. #psi^{TPC east}_{2}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
   correlation2D_bbc_east_tpc_east->GetXaxis()->SetTitle("#psi^{TPC east}_{2} [Radian]");
   correlation2D_bbc_east_tpc_east->GetYaxis()->SetTitle("#psi^{BBC east}_{2} [Radian]");
 
-  TH2D *correlation2D_bbc_east_tpc_west = new TH2D("correlation2D_bbc_east_tpc_west","#psi^{BBC east}_{1} vs. #psi^{TPC west}_{1}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  TH2D *correlation2D_bbc_east_tpc_west = new TH2D("correlation2D_bbc_east_tpc_west","#psi^{BBC east}_{2} vs. #psi^{TPC west}_{2}",50,-0.5*TMath::Pi(),2.5*TMath::Pi(),50,-0.5*TMath::Pi(),2.5*TMath::Pi());
   correlation2D_bbc_east_tpc_west->GetXaxis()->SetTitle("#psi^{TPC west}_{2} [Radian]");
   correlation2D_bbc_east_tpc_west->GetYaxis()->SetTitle("#psi^{BBC east}_{2} [Radian]");
 
@@ -974,6 +974,9 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   TProfile3D *profile3D_bbc_west_psiShift_input = nullptr;
 
   // EP Resolution
+  TProfile *profile_correlation_tpc_east_epd_east_input = nullptr;
+  TProfile *profile_correlation_tpc_west_epd_east_input = nullptr;
+
   TProfile *profile_correlation_tpc_east_tpc_west_input = nullptr;
   TProfile *profile_correlation_tpc_east_bbc_east_input = nullptr;
   TProfile *profile_correlation_tpc_west_bbc_east_input = nullptr;
@@ -1011,6 +1014,9 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
     profile3D_bbc_west_psiShift_input = (TProfile3D*)eventPlanes_input->Get("profile3D_bbc_west_psiShift");
 
     // Read EP correlation histograms
+    profile_correlation_tpc_east_epd_east_input = (TProfile*)eventPlanes_input->Get("profile_correlation_tpc_east_epd_east");
+    profile_correlation_tpc_west_epd_east_input = (TProfile*)eventPlanes_input->Get("profile_correlation_tpc_west_epd_east");
+
     profile_correlation_tpc_east_tpc_west_input = (TProfile*)eventPlanes_input->Get("profile_correlation_tpc_east_tpc_west");
     profile_correlation_tpc_east_bbc_east_input = (TProfile*)eventPlanes_input->Get("profile_correlation_tpc_east_bbc_east");
     profile_correlation_tpc_west_bbc_east_input = (TProfile*)eventPlanes_input->Get("profile_correlation_tpc_west_bbc_east");
@@ -1083,23 +1089,24 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
     }
 
     // Compute EP resolutions
-    if(profile_correlation_tpc_east_tpc_west_input&&profile_correlation_tpc_east_bbc_east_input&&profile_correlation_tpc_west_bbc_east_input)
+    if(profile_correlation_tpc_east_tpc_west_input&&profile_correlation_tpc_east_epd_east_input&&profile_correlation_tpc_west_epd_east_input)
     {
       for(Int_t i=0;i<Ncentralities;i++)
       {
         d_correlation_tpc_east_tpc_west_input[i] = profile_correlation_tpc_east_tpc_west_input->GetBinContent(i+1);
-        d_correlation_bbc_east_tpc_east_input[i] = profile_correlation_tpc_east_bbc_east_input->GetBinContent(i+1);
-        d_correlation_bbc_east_tpc_west_input[i] = profile_correlation_tpc_west_bbc_east_input->GetBinContent(i+1);
-        Double_t value = d_correlation_bbc_east_tpc_east_input[i]*d_correlation_bbc_east_tpc_west_input[i]/d_correlation_tpc_east_tpc_west_input[i];
+        d_correlation_epd_east_tpc_east_input[i] = profile_correlation_tpc_east_epd_east_input->GetBinContent(i+1);
+        d_correlation_epd_east_tpc_west_input[i] = profile_correlation_tpc_west_epd_east_input->GetBinContent(i+1);
+        Double_t value = d_correlation_epd_east_tpc_east_input[i]*d_correlation_epd_east_tpc_west_input[i]/d_correlation_tpc_east_tpc_west_input[i];
         if(value > 0) d_resolution[i] = TMath::Sqrt(value);
         std::cout<< Form("resolution %d = ",i+1) << d_resolution[i]<<std::endl;
       }
     }
-std::cout<<ProtonEfficiencyTable<<std::endl;
-std::cout<<PionPlusEfficiencyTable<<std::endl;
-std::cout<<PionMinusEfficiencyTable<<std::endl;
-std::cout<<KaonMinusEfficiencyTable<<std::endl;
-std::cout<<KaonPlusEfficiencyTable<<std::endl;
+
+// std::cout<<ProtonEfficiencyTable<<std::endl;
+// std::cout<<PionPlusEfficiencyTable<<std::endl;
+// std::cout<<PionMinusEfficiencyTable<<std::endl;
+// std::cout<<KaonMinusEfficiencyTable<<std::endl;
+// std::cout<<KaonPlusEfficiencyTable<<std::endl;
 
   }
   TH1D *BBC_ADC_EAST[16], *BBC_ADC_WEST[16];
