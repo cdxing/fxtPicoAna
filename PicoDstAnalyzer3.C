@@ -720,7 +720,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   TH2D *mHistPhiV2VsInvMpT[12];
   for(int pt=0; pt<12; pt++)
   {
-    mHistPhiV2VsInvMpT[pt] = new TH2D(Form("histPhiV2VsInvMpT%d",pt),Form("histPhiV2VsInvMpT%d",pt),100,0.9,1.1,2000,-2.0,2.0);
+    mHistPhiV2VsInvMpT[pt] = new TH2D(Form("histPhiV2VsInvMpT%d",pt),Form("histPhiV2VsInvMpT%d",pt),100,0.9,1.1,8000,-8.0,8.0);
     mHistPhiV2VsInvMpT[pt]->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
     mHistPhiV2VsInvMpT[pt]->GetYaxis()->SetTitle("v_{2}");
   }
