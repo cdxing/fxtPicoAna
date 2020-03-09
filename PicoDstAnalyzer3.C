@@ -709,6 +709,31 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
 
   TH1D *  h_prim_inv_m_PHI    = new TH1D("h_prim_inv_m_PHI","h_prim_inv_m_PHI",1000,0.9,1.1);
 
+  TH2D *mHistPhiV2VsInvMpTRaw[12];
+  for(int pt=0; pt<12; pt++)
+  {
+    mHistPhiV2VsInvMpTRaw[pt] = new TH2D(Form("histPhiV2VsInvMpT%dRaw",pt),Form("histPhiV2VsInvMpT%dRaw",pt),100,0.9,1.1,1000,-1.0,1.0);
+    mHistPhiV2VsInvMpTRaw[pt]->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+    mHistPhiV2VsInvMpTRaw[pt]->GetYaxis()->SetTitle("v_{2}");
+  }
+
+  TH2D *mHistPhiV2VsInvMpT[12];
+  for(int pt=0; pt<12; pt++)
+  {
+    mHistPhiV2VsInvMpT[pt] = new TH2D(Form("histPhiV2VsInvMpT%d",pt),Form("histPhiV2VsInvMpT%d",pt),100,0.9,1.1,1000,-1.0,1.0);
+    mHistPhiV2VsInvMpT[pt]->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+    mHistPhiV2VsInvMpT[pt]->GetYaxis()->SetTitle("v_{2}");
+  }
+
+
+  TH2D *mHistPhiV2VsInvMmT[12];
+  for(int pt=0; pt<12; pt++)
+  {
+    mHistPhiV2VsInvMmT[pt] = new TH2D(Form("histPhiV2VsInvMmT%d",pt),Form("histPhiV2VsInvMmT%d",pt),100,0.9,1.1,1000,-1.0,1.0);
+    mHistPhiV2VsInvMmT[pt]->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+    mHistPhiV2VsInvMmT[pt]->GetYaxis()->SetTitle("v_{2}");
+  }
+
   TH2D  *h2_phi_v2_vs_invM = new TH2D("h2_phi_v2_vs_invM","h2_phi_v2_vs_invM",100,0.9,1.1,1000,-1.0,1.0);
   h2_phi_v2_vs_invM->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
   h2_phi_v2_vs_invM->GetYaxis()->SetTitle("v_{2}");
@@ -757,6 +782,9 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   TProfile  *TP_phi_v2_vs_invM_bin2 = nullptr;
   TProfile  *TP_phi_v2_vs_invM_bin3 = nullptr;
   TProfile  *TP_phi_v2_vs_invM_bin4 = nullptr;
+
+  TProfile *mProfilePhiV2VsInvMpTRaw[12] = {nullptr};
+  TProfile *mProfilePhiV2VsInvMpT[12] = {nullptr};
 
   TProfile  *TP_phi_v2_vs_invM_pTbin1 = nullptr;
   TProfile  *TP_phi_v2_vs_invM_pTbin2 = nullptr;
@@ -1227,16 +1255,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
     /***************** Centrality Track Loop to determine centrality ******************/
     Int_t centrality = 0;
 
-    bool b_cent_01  = false;
-    bool b_cent_02  = false;
-    bool b_cent_03  = false;
-    bool b_cent_04  = false;
-    bool b_cent_05  = false;
-    bool b_cent_06  = false;
-    bool b_cent_07  = false;
-    bool b_cent_08  = false;
-    bool b_cent_09  = false;
-    bool b_cent_10  = false;
+    bool a_b_cent[10]={false};
 
     int nGoodTracks = 0;
     int nTrkvsCuts  = 0;
@@ -1284,28 +1303,28 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
     ////////////////////// END Centrality Track Loop for 7p2 ///////////////////////////
 
     bool b_pileup   = (nGoodTracks >  270);
-    b_cent_01       = (nGoodTracks >= 200);// 0 - 10%
-    b_cent_02       = (nGoodTracks >= 150 && nGoodTracks < 200);// 10 - 20%
-    b_cent_03       = (nGoodTracks >= 124  && nGoodTracks < 150);// 20 - 30%
-    b_cent_04       = (nGoodTracks >= 100  && nGoodTracks < 124);// 30 - 40%
-    b_cent_05       = (nGoodTracks >= 72  && nGoodTracks < 100);// 40 - 50%
-    b_cent_06       = (nGoodTracks >= 50  && nGoodTracks < 72);// 50 - 60%
-    b_cent_07       = (nGoodTracks >= 40  && nGoodTracks < 50);// 60 - 70%
-    b_cent_08       = (nGoodTracks >= 30  && nGoodTracks < 40);// 70 - 80%
-    b_cent_09       = (nGoodTracks >= 20  && nGoodTracks < 30);// 80 - 90%
-    b_cent_10       = (nGoodTracks >= 10  && nGoodTracks < 20);// >90%
+    a_b_cent[0]       = (nGoodTracks >= 200);// 0 - 10%
+    a_b_cent[1]       = (nGoodTracks >= 150 && nGoodTracks < 200);// 10 - 20%
+    a_b_cent[2]       = (nGoodTracks >= 124  && nGoodTracks < 150);// 20 - 30%
+    a_b_cent[3]       = (nGoodTracks >= 100  && nGoodTracks < 124);// 30 - 40%
+    a_b_cent[4]       = (nGoodTracks >= 72  && nGoodTracks < 100);// 40 - 50%
+    a_b_cent[5]       = (nGoodTracks >= 50  && nGoodTracks < 72);// 50 - 60%
+    a_b_cent[6]       = (nGoodTracks >= 40  && nGoodTracks < 50);// 60 - 70%
+    a_b_cent[7]       = (nGoodTracks >= 30  && nGoodTracks < 40);// 70 - 80%
+    a_b_cent[8]       = (nGoodTracks >= 20  && nGoodTracks < 30);// 80 - 90%
+    a_b_cent[9]       = (nGoodTracks >= 10  && nGoodTracks < 20);// >90%
     bool b_low_mult = (nGoodTracks <= 10);
 
-    if(b_cent_01) centrality = 1;
-    if(b_cent_02) centrality = 2;
-    if(b_cent_03) centrality = 3;
-    if(b_cent_04) centrality = 4;
-    if(b_cent_05) centrality = 5;
-    if(b_cent_06) centrality = 6;
-    if(b_cent_07) centrality = 7;
-    if(b_cent_08) centrality = 8;
-    if(b_cent_09) centrality = 9;
-    if(b_cent_10) centrality = 10;
+    if(a_b_cent[0]) centrality = 1;
+    if(a_b_cent[1]) centrality = 2;
+    if(a_b_cent[2]) centrality = 3;
+    if(a_b_cent[3]) centrality = 4;
+    if(a_b_cent[4]) centrality = 5;
+    if(a_b_cent[5]) centrality = 6;
+    if(a_b_cent[6]) centrality = 7;
+    if(a_b_cent[7]) centrality = 8;
+    if(a_b_cent[8]) centrality = 9;
+    if(a_b_cent[9]) centrality = 10;
 
     hist_realTrackMult->Fill(nGoodTracks);
     hist_cent->Fill(centrality);
@@ -1466,8 +1485,6 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
                && mass2 < 0.15
               )
          && pt > 0.2
-         && pt < 1.6
-
          )
          {
            // Get particle track rapidity
@@ -2097,11 +2114,10 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
       // Kaons
       if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
          && ( Beta != -999.0
-             && mass2 > 0.19//0.17
-             && mass2 < 0.3//0.33
+             && mass2 > 0.19
+             && mass2 < 0.3
             )
          && pt > 0.2
-         // && pt < 1.6
       )
       {
         // Get particle track rapidity
@@ -2296,23 +2312,20 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
             // h_E_plus_mT_Diff -> Fill((d_mT_E - d_E_m));
           }
           // kaon PID
-                  if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-                     && ( d_tofBeta0 != -999.0
-                         && mass2 > 0.19//0.17
-                         && mass2 < 0.3//0.33
-                        )
-                     && d_pT0 > 0.2
-                     && d_pT0 < 1.6
-                  ){
-                       b_E = false; b_PI = false; b_PRO = false; b_K = true;
-                    // h_K_plus_pT -> Fill(d_pT0);
-                    // h_K_plus_y  -> Fill(d_y_K);
-                    // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
-                    // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
-                  }
-
-          if(
-            picoTrack->nSigmaPion() > -2.0 && picoTrack->nSigmaPion() < 2.0
+          if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
+             && ( d_tofBeta0 != -999.0
+                 && mass2 > 0.19
+                 && mass2 < 0.3
+                )
+             && d_pT0 > 0.2
+          ){
+               b_E = false; b_PI = false; b_PRO = false; b_K = true;
+            // h_K_plus_pT -> Fill(d_pT0);
+            // h_K_plus_y  -> Fill(d_y_K);
+            // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
+            // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
+          }
+          if( picoTrack->nSigmaPion() > -2.0 && picoTrack->nSigmaPion() < 2.0
             && ( d_tofBeta0 != -999.0
                 && ( (  picoTrack->nSigmaPion() > 2.0 && picoTrack->nSigmaPion() < 6.0
                       && ( mass2 < -0.005 || mass2 > 0.005 )
@@ -2322,7 +2335,6 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
                )
                 //&& ( ( trackP < 0.62 && TMath::Abs(mass2) > 0.005 ) || trackP > 0.62 )
             && d_pT0 > 0.2
-            && d_pT0 < 1.6
           ){
             b_E = false; b_PI = true; b_PRO = false; b_K = false;
             // h_PI_plus_pT -> Fill(d_pT0);
@@ -2334,8 +2346,8 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
             TMath::Abs(picoTrack->nSigmaProton()) <  2.0
             && (
                 d_tofBeta0 != -999.0
-                && mass2 > 0.5
-                && mass2 < 1.5
+                && mass2 > 0.7
+                && mass2 < 1.1
             )
             && d_pT0 > 0.4
             && d_pT0 < 2.0
@@ -2363,20 +2375,19 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
           }
 
           // kaon PID
-                  if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
-                     && ( d_tofBeta0 != -999.0
-                         && mass2 > 0.19//0.17
-                         && mass2 < 0.3//0.33
-                        )
-                     && d_pT0 > 0.2
-                     && d_pT0 < 1.6
-                  ){
-                       b_E = false; b_PI = false; b_PRO = false; b_K = true;
-                    // h_K_plus_pT -> Fill(d_pT0);
-                    // h_K_plus_y  -> Fill(d_y_K);
-                    // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
-                    // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
-                  }
+          if( picoTrack->nSigmaKaon() > -2.0 && picoTrack->nSigmaKaon() < 2.0
+             && ( d_tofBeta0 != -999.0
+                 && mass2 > 0.19
+                 && mass2 < 0.3
+                )
+             && d_pT0 > 0.2
+          ){
+               b_E = false; b_PI = false; b_PRO = false; b_K = true;
+            // h_K_plus_pT -> Fill(d_pT0);
+            // h_K_plus_y  -> Fill(d_y_K);
+            // h2_K_plus_pT_vs_y -> Fill(d_y_K,d_pT0);
+            // h_K_plus_mT_Diff -> Fill((d_mT_K - d_K_m));
+          }
 
           if(
             picoTrack->nSigmaPion() > -2.0 && picoTrack->nSigmaPion() < 2.0
@@ -2389,7 +2400,6 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
                )
                 //&& ( ( trackP < 0.62 && TMath::Abs(mass2) > 0.005 ) || trackP > 0.62 )
             && d_pT0 > 0.2
-            && d_pT0 < 1.6
           ){
             b_E = false; b_PI = true; b_PRO = false; b_K = false;
             // h_PI_minus_pT -> Fill(d_pT0);
@@ -2514,7 +2524,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
       double d_phi0     = picoTrack0->pMom().Phi();
       TVector3 v3D_obj_p0 = picoTrack0->pMom();
 
-      /*
+
       StPicoBTofPidTraits *trait = NULL;
       if(picoTrack0->isTofTrack()) trait = dst->btofPidTraits(picoTrack0->bTofPidTraitsIndex());
       double d_tofBeta0 = -999;
@@ -2533,9 +2543,11 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
       else if(b_K0)
         {
           d_M0 = d_K_m;
-        }*/
+        }
       d_M0 = d_K_m;//test
 
+      /************************ Negative Track Loop ****************************
+      */
       for(unsigned int j = 0; j < v_pri_tracks1.size(); j++)
       {
         StPicoTrack * picoTrack1 = v_pri_tracks1[j];
@@ -2584,16 +2596,16 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
         double d_eta1       = picoTrack1->pMom().Eta();
         double d_phi1       = picoTrack1->pMom().Phi();
         TVector3 v3D_obj_p1 = picoTrack1->pMom();
-        /*
+
         StPicoBTofPidTraits *trait = NULL;
         if(picoTrack1->isTofTrack()) trait = dst->btofPidTraits(picoTrack1->bTofPidTraitsIndex());
         double d_tofBeta1 = -999;
         if(trait) d_tofBeta1 = trait->btofBeta();
-        */
+
         if(d_charge0 == d_charge1) continue;
         bool b_PHI    = true;//test
 
-        /*
+
         bool b_PHI    = b_K0 && b_K1;
         bool b_RHO    = b_PI0 && b_PI1;
         bool b_K0S    = b_RHO;
@@ -2634,7 +2646,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
         if(d_mother_decay_length < d_cut_mother_decay_length_lam) b_LAMBDA = false;
         if(d_mother_decay_length < d_cut_mother_decay_length_k0s) b_K0S    = false;
         if(d_mother_decay_length > d_cut_mother_decay_length_RHO) b_RHO    = false;
-        */
+
         double d_E0 = sqrt(v3D_obj_p0.Mag2()+d_M0*d_M0);
         double d_E1 = sqrt(v3D_obj_p1.Mag2()+d_M1*d_M1);
 
@@ -2679,57 +2691,82 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
         // double d_mother_m = -9999;
 
         double d_pT_phi = sqrt(d_px0*d_px0 + d_py0*d_py0 +d_px1*d_px1 +d_py1+d_py1 + 2.*d_px0*d_px1 + 2.*d_py0*d_py1);
-    	  double m_phi = 1.019455;
-    	  double d_mT_phi = sqrt(d_pT_phi*d_pT_phi + m_phi*m_phi );
+        bool a_b_Phi_pT[12]={false};
+        a_b_Phi_pT[0]    = (d_pT_phi >= 0.0) && (d_pT_phi < 0.3);
+        a_b_Phi_pT[1]    = (d_pT_phi >= 0.3) && (d_pT_phi < 0.6);
+        a_b_Phi_pT[2]    = (d_pT_phi >= 0.6) && (d_pT_phi < 0.9);
+        a_b_Phi_pT[3]    = (d_pT_phi >= 0.9) && (d_pT_phi < 1.2);
+        a_b_Phi_pT[4]    = (d_pT_phi >= 1.2) && (d_pT_phi < 1.5);
+        a_b_Phi_pT[5]    = (d_pT_phi >= 1.5) && (d_pT_phi < 1.8);
+        a_b_Phi_pT[6]    = (d_pT_phi >= 1.8) && (d_pT_phi < 2.1);
+        a_b_Phi_pT[7]    = (d_pT_phi >= 2.1) && (d_pT_phi < 2.4);
+        a_b_Phi_pT[8]    = (d_pT_phi >= 2.4) && (d_pT_phi < 2.7);
+        a_b_Phi_pT[9]    = (d_pT_phi >= 2.7) && (d_pT_phi < 3.0);
+        a_b_Phi_pT[10]    = (d_pT_phi >= 3.0) && (d_pT_phi < 3.3);
+        a_b_Phi_pT[11]    = (d_pT_phi >= 3.3) && (d_pT_phi < 3.6);
 
+        double m_phi = 1.019461;
+    	  double d_mT_phi = sqrt(d_pT_phi*d_pT_phi + m_phi*m_phi );
     	  double d_phi_pz = d_pz0+d_pz1;
     	  double d_phi_E  = d_E0+d_E1;
     	  double d_phi_y  = ((d_phi_E - d_phi_pz) != 0.0) ?  0.5*TMath::Log( (d_phi_E + d_phi_pz) / (d_phi_E - d_phi_pz) ) : -9999;
+        double d_phi_azimuth = v3D_p_mother.Phi();
 
-        // double d_phi_azimuth = v3D_p_mother.Phi();
-        /*
         if(d_phi_azimuth < 0.0            ) d_phi_azimuth += 2.0*TMath::Pi();
         if(d_phi_azimuth > 2.0*TMath::Pi()) d_phi_azimuth -= 2.0*TMath::Pi();
-        */
+
         if(b_PHI) h_prim_inv_m_PHI    -> Fill(d_inv_m);
+        if((d_inv_m <= 0.9) || (d_inv_m >= 1.1)) continue;
+
         double d_v2_raw_phi = -999.0;
-        /*
-        if(  bbc_east_plane3 >= 0.0 && bbc_east_plane3 <= (1. / EpOrder) * 2.0*TMath::Pi() ) {
-           d_v2_raw_phi = TMath::Cos(EpOrder * (d_phi_azimuth - bbc_east_plane3 - TMath::Pi()));
+
+        if(  result.EastPhiWeightedAndShiftedPsi(EpOrder) >= 0.0 && result.EastPhiWeightedAndShiftedPsi(EpOrder) <= (1. / EpOrder) * 2.0*TMath::Pi() ) {
+           d_v2_raw_phi = TMath::Cos(EpOrder * (d_phi_azimuth - result.EastPhiWeightedAndShiftedPsi(EpOrder) - TMath::Pi()));
         }
-        */
-        if(/*b_cent_01||b_cent_02||*/b_cent_07) continue;
+
         if(d_v2_raw_phi == -999.0) continue;
+
         // std::cout<< d_v2_raw_phi <<std::endl;
-        // if(b_cent_03) d_v2_raw_phi /= 0.398419;
-        // if(b_cent_04) d_v2_raw_phi /= 0.454645;
-        // if(b_cent_05) d_v2_raw_phi /= 0.498949;
-        // if(b_cent_06) d_v2_raw_phi /= 0.596082;
+        // if(a_b_cent[2]) d_v2_raw_phi /= 0.398419;
 
         // Add EP resolution later
 
-        // if(b_cent_01) d_v2_raw_phi /= d_resolution[0];
-        // if(b_cent_02) d_v2_raw_phi /= d_resolution[1];
-        // if(b_cent_03) d_v2_raw_phi /= d_resolution[2];
-        // if(b_cent_04) d_v2_raw_phi /= d_resolution[3];
-        // if(b_cent_05) d_v2_raw_phi /= d_resolution[4];
-        // if(b_cent_06) d_v2_raw_phi /= d_resolution[5];
+        // if(a_b_cent[0]) d_v2_raw_phi /= d_resolution[0];
 
         // std::cout<< d_v2_raw_phi <<std::endl;
 
-        h2_phi_v2_vs_invM                                        -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
-        if(d_phi_y>=-1.5 && d_phi_y<-1.0) h2_phi_v2_vs_invM_bin2 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
-        if(d_phi_y>=-1.0 && d_phi_y<-0.5) h2_phi_v2_vs_invM_bin3 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
-        if(d_phi_y>=-0.5 && d_phi_y<=0.0) h2_phi_v2_vs_invM_bin4 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
+        // h2_phi_v2_vs_invM                                        -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
+        // if(d_phi_y>=-1.5 && d_phi_y<-1.0) h2_phi_v2_vs_invM_bin2 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
+        // if(d_phi_y>=-1.0 && d_phi_y<-0.5) h2_phi_v2_vs_invM_bin3 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
+        // if(d_phi_y>=-0.5 && d_phi_y<=0.0) h2_phi_v2_vs_invM_bin4 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
 
         // fill in pT bin
-        if(d_pT_phi>=0 && d_pT_phi<0.5) h2_phi_v2_vs_invM_pTbin1 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
-        if(d_pT_phi>=0.5 && d_pT_phi<1.0) h2_phi_v2_vs_invM_pTbin2 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
-        if(d_pT_phi>=1.0 && d_pT_phi<1.5) h2_phi_v2_vs_invM_pTbin3 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
-        if(d_pT_phi>=1.5 && d_pT_phi<2.0) h2_phi_v2_vs_invM_pTbin4 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
-        if(d_pT_phi>=2.0 && d_pT_phi<2.5) h2_phi_v2_vs_invM_pTbin5 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
-        if(d_pT_phi>=2.5 && d_pT_phi<3.0) h2_phi_v2_vs_invM_pTbin6 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
-        if(d_pT_phi>=3.0 && d_pT_phi<3.5) h2_phi_v2_vs_invM_pTbin7 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
+        // raw flow
+        for(int pt=0; pt<12; pt++)
+        {
+          if(a_b_Phi_pT[pt]==true) mHistPhiV2VsInvMpTRaw[pt] -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
+        }
+
+        // flow with resolution
+        double d_v2_phi = -999.;
+        for(int i=0;i<9;i++)
+        {
+          if(a_b_cent[i] == false) continue;
+          if(d_resolution[i] == 0) continue;
+          d_v2_phi = d_v2_raw_phi/d_resolution[i];
+          for(int pt=0; pt<12; pt++)
+          {
+            if(a_b_Phi_pT[pt]==true) mHistPhiV2VsInvMpT[pt] -> Fill(d_inv_m,d_v2_phi,d_eff_corr0*d_eff_corr1);
+          }
+        }
+
+        // if(d_pT_phi>=0 && d_pT_phi<0.5) h2_phi_v2_vs_invM_pTbin1 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
+        // if(d_pT_phi>=0.5 && d_pT_phi<1.0) h2_phi_v2_vs_invM_pTbin2 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
+        // if(d_pT_phi>=1.0 && d_pT_phi<1.5) h2_phi_v2_vs_invM_pTbin3 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
+        // if(d_pT_phi>=1.5 && d_pT_phi<2.0) h2_phi_v2_vs_invM_pTbin4 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
+        // if(d_pT_phi>=2.0 && d_pT_phi<2.5) h2_phi_v2_vs_invM_pTbin5 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
+        // if(d_pT_phi>=2.5 && d_pT_phi<3.0) h2_phi_v2_vs_invM_pTbin6 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
+        // if(d_pT_phi>=3.0 && d_pT_phi<3.5) h2_phi_v2_vs_invM_pTbin7 -> Fill(d_inv_m,d_v2_raw_phi,d_eff_corr0*d_eff_corr1);
 
 
         if(d_inv_m > (d_mean + 3*d_sigma) || d_inv_m < (d_mean - 3*d_sigma)) continue;
@@ -2975,44 +3012,58 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   hist_pt_y_Phi->Write();
   h_dip_angle->Write();
   h_prim_inv_m_PHI ->Write();
-  h2_phi_v2_vs_invM->Write();
-  h2_phi_v2_vs_invM_bin2->Write();
-  h2_phi_v2_vs_invM_bin3->Write();
-  h2_phi_v2_vs_invM_bin4->Write();
+  for(int pt=0; pt<12; pt++)
+  {
+    mProfilePhiV2VsInvMpTRaw[pt] = mHistPhiV2VsInvMpTRaw[pt] ->ProfileX();
+    mHistPhiV2VsInvMpTRaw[pt] -> Write();
+    mProfilePhiV2VsInvMpTRaw[pt] -> Write();
+  }
 
-  TP_phi_v2_vs_invM      = h2_phi_v2_vs_invM->ProfileX();
-  TP_phi_v2_vs_invM_bin2 = h2_phi_v2_vs_invM_bin2->ProfileX();
-  TP_phi_v2_vs_invM_bin3 = h2_phi_v2_vs_invM_bin3->ProfileX();
-  TP_phi_v2_vs_invM_bin4 = h2_phi_v2_vs_invM_bin4->ProfileX();
+  for(int pt=0; pt<12; pt++)
+  {
+    mProfilePhiV2VsInvMpT[pt] = mHistPhiV2VsInvMpT[pt] ->ProfileX();
+    mHistPhiV2VsInvMpT[pt]->Write();
+    mProfilePhiV2VsInvMpT[pt]->Write();
+  }
 
-  TP_phi_v2_vs_invM     ->Write();
-  TP_phi_v2_vs_invM_bin2->Write();
-  TP_phi_v2_vs_invM_bin3->Write();
-  TP_phi_v2_vs_invM_bin4->Write();
+  // h2_phi_v2_vs_invM->Write();
+  // h2_phi_v2_vs_invM_bin2->Write();
+  // h2_phi_v2_vs_invM_bin3->Write();
+  // h2_phi_v2_vs_invM_bin4->Write();
+  //
+  // TP_phi_v2_vs_invM      = h2_phi_v2_vs_invM->ProfileX();
+  // TP_phi_v2_vs_invM_bin2 = h2_phi_v2_vs_invM_bin2->ProfileX();
+  // TP_phi_v2_vs_invM_bin3 = h2_phi_v2_vs_invM_bin3->ProfileX();
+  // TP_phi_v2_vs_invM_bin4 = h2_phi_v2_vs_invM_bin4->ProfileX();
 
-  h2_phi_v2_vs_invM_pTbin1->Write();
-  h2_phi_v2_vs_invM_pTbin2->Write();
-  h2_phi_v2_vs_invM_pTbin3->Write();
-  h2_phi_v2_vs_invM_pTbin4->Write();
-  h2_phi_v2_vs_invM_pTbin5->Write();
-  h2_phi_v2_vs_invM_pTbin6->Write();
-  h2_phi_v2_vs_invM_pTbin7->Write();
+  // TP_phi_v2_vs_invM     ->Write();
+  // TP_phi_v2_vs_invM_bin2->Write();
+  // TP_phi_v2_vs_invM_bin3->Write();
+  // TP_phi_v2_vs_invM_bin4->Write();
+  //
+  // h2_phi_v2_vs_invM_pTbin1->Write();
+  // h2_phi_v2_vs_invM_pTbin2->Write();
+  // h2_phi_v2_vs_invM_pTbin3->Write();
+  // h2_phi_v2_vs_invM_pTbin4->Write();
+  // h2_phi_v2_vs_invM_pTbin5->Write();
+  // h2_phi_v2_vs_invM_pTbin6->Write();
+  // h2_phi_v2_vs_invM_pTbin7->Write();
 
-  TP_phi_v2_vs_invM_pTbin1 = h2_phi_v2_vs_invM_pTbin1->ProfileX();
-  TP_phi_v2_vs_invM_pTbin2 = h2_phi_v2_vs_invM_pTbin2->ProfileX();
-  TP_phi_v2_vs_invM_pTbin3 = h2_phi_v2_vs_invM_pTbin3->ProfileX();
-  TP_phi_v2_vs_invM_pTbin4 = h2_phi_v2_vs_invM_pTbin4->ProfileX();
-  TP_phi_v2_vs_invM_pTbin5 = h2_phi_v2_vs_invM_pTbin5->ProfileX();
-  TP_phi_v2_vs_invM_pTbin6 = h2_phi_v2_vs_invM_pTbin6->ProfileX();
-  TP_phi_v2_vs_invM_pTbin7 = h2_phi_v2_vs_invM_pTbin7->ProfileX();
-
-  TP_phi_v2_vs_invM_pTbin1->Write();
-  TP_phi_v2_vs_invM_pTbin2->Write();
-  TP_phi_v2_vs_invM_pTbin3->Write();
-  TP_phi_v2_vs_invM_pTbin4->Write();
-  TP_phi_v2_vs_invM_pTbin5->Write();
-  TP_phi_v2_vs_invM_pTbin6->Write();
-  TP_phi_v2_vs_invM_pTbin7->Write();
+  // TP_phi_v2_vs_invM_pTbin1 = h2_phi_v2_vs_invM_pTbin1->ProfileX();
+  // TP_phi_v2_vs_invM_pTbin2 = h2_phi_v2_vs_invM_pTbin2->ProfileX();
+  // TP_phi_v2_vs_invM_pTbin3 = h2_phi_v2_vs_invM_pTbin3->ProfileX();
+  // TP_phi_v2_vs_invM_pTbin4 = h2_phi_v2_vs_invM_pTbin4->ProfileX();
+  // TP_phi_v2_vs_invM_pTbin5 = h2_phi_v2_vs_invM_pTbin5->ProfileX();
+  // TP_phi_v2_vs_invM_pTbin6 = h2_phi_v2_vs_invM_pTbin6->ProfileX();
+  // TP_phi_v2_vs_invM_pTbin7 = h2_phi_v2_vs_invM_pTbin7->ProfileX();
+  //
+  // TP_phi_v2_vs_invM_pTbin1->Write();
+  // TP_phi_v2_vs_invM_pTbin2->Write();
+  // TP_phi_v2_vs_invM_pTbin3->Write();
+  // TP_phi_v2_vs_invM_pTbin4->Write();
+  // TP_phi_v2_vs_invM_pTbin5->Write();
+  // TP_phi_v2_vs_invM_pTbin6->Write();
+  // TP_phi_v2_vs_invM_pTbin7->Write();
 
   mEpFinder->Finish();
 
