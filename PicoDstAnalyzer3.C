@@ -2532,18 +2532,18 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
 
       StPicoPhysicalHelix    trackhelix0 = picoTrack0->helix(B);
 
-      if(b_PRO0)
-        {
-          d_M0 = d_PRO_m;
-        }
-      else if(b_PI0)
-        {
-          d_M0 = d_PI_m;
-        }
-      else if(b_K0)
-        {
-          d_M0 = d_K_m;
-        }
+      // if(b_PRO0)
+      //   {
+      //     d_M0 = d_PRO_m;
+      //   }
+      // else if(b_PI0)
+      //   {
+      //     d_M0 = d_PI_m;
+      //   }
+      // else if(b_K0)
+      //   {
+      //     d_M0 = d_K_m;
+      //   }
       d_M0 = d_K_m;//test
 
       /************************ Negative Track Loop ****************************
@@ -2606,14 +2606,14 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
         bool b_PHI    = true;//test
 
 
-        bool b_PHI    = b_K0 && b_K1;
-        bool b_RHO    = b_PI0 && b_PI1;
-        bool b_K0S    = b_RHO;
+        // bool b_PHI    = b_K0 && b_K1;
+        // bool b_RHO    = b_PI0 && b_PI1;
+        // bool b_K0S    = b_RHO;
 
 
-        bool b_LAMBDA = (b_PRO0 && b_PI1)||(b_PRO1 && b_PI0);
-        bool b_V0 = b_PHI || b_RHO || b_LAMBDA;
-        if(!b_V0) continue;
+        // bool b_LAMBDA = (b_PRO0 && b_PI1)||(b_PRO1 && b_PI0);
+        // bool b_V0 = b_PHI || b_RHO || b_LAMBDA;
+        // if(!b_V0) continue;
 
         StPicoPhysicalHelix    trackhelix1 = picoTrack1->helix(B);
 
@@ -2627,8 +2627,8 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
 
         double d_dca_products =(v3D_x_daughter0-v3D_x_daughter1).Mag();
 
-        if(d_dca_products > d_cut_dca_daughters_lam) b_LAMBDA = false;
-        if(d_dca_products > d_cut_dca_daughters_k0s) b_RHO    = false;
+        // if(d_dca_products > d_cut_dca_daughters_lam) b_LAMBDA = false;
+        // if(d_dca_products > d_cut_dca_daughters_k0s) b_RHO    = false;
 
         TVector3 v3D_x_mother    = (v3D_x_daughter0+v3D_x_daughter1)*0.5;
         TVector3 v3D_xvec_decayl = v3D_x_mother - v3D_vtx;
@@ -2638,14 +2638,14 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
 
         double d_dca_mother = sqrt(v3D_xvec_decayl.Mag2() - (d_pmom*d_pmom/v3D_p_mother.Mag2()) );
 
-        if(d_dca_mother > d_cut_dca_mother_lam) b_LAMBDA = false;
-        if(d_dca_mother > d_cut_dca_mother_k0s) b_RHO    = false;
+        // if(d_dca_mother > d_cut_dca_mother_lam) b_LAMBDA = false;
+        // if(d_dca_mother > d_cut_dca_mother_k0s) b_RHO    = false;
 
         double d_mother_decay_length =  v3D_xvec_decayl.Mag();
 
-        if(d_mother_decay_length < d_cut_mother_decay_length_lam) b_LAMBDA = false;
-        if(d_mother_decay_length < d_cut_mother_decay_length_k0s) b_K0S    = false;
-        if(d_mother_decay_length > d_cut_mother_decay_length_RHO) b_RHO    = false;
+        // if(d_mother_decay_length < d_cut_mother_decay_length_lam) b_LAMBDA = false;
+        // if(d_mother_decay_length < d_cut_mother_decay_length_k0s) b_K0S    = false;
+        // if(d_mother_decay_length > d_cut_mother_decay_length_RHO) b_RHO    = false;
 
         double d_E0 = sqrt(v3D_obj_p0.Mag2()+d_M0*d_M0);
         double d_E1 = sqrt(v3D_obj_p1.Mag2()+d_M1*d_M1);
