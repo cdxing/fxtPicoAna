@@ -734,49 +734,51 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
     mHistPhiV2VsInvMmT[pt]->GetYaxis()->SetTitle("v_{2}");
   }
 
-  TH2D  *h2_phi_v2_vs_invM = new TH2D("h2_phi_v2_vs_invM","h2_phi_v2_vs_invM",100,0.9,1.1,1000,-1.0,1.0);
-  h2_phi_v2_vs_invM->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
-  h2_phi_v2_vs_invM->GetYaxis()->SetTitle("v_{2}");
-
-  TH2D  *h2_phi_v2_vs_invM_bin2 = new TH2D("h2_phi_v2_vs_invM_bin2","h2_phi_v2_vs_invM_bin2, -1.5 <= y < -1.0",100,0.9,1.1,1000,-1.0,1.0);
-  h2_phi_v2_vs_invM_bin2->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
-  h2_phi_v2_vs_invM_bin2->GetYaxis()->SetTitle("v_{2}");
-
-  TH2D  *h2_phi_v2_vs_invM_bin3 = new TH2D("h2_phi_v2_vs_invM_bin3","h2_phi_v2_vs_invM_bin3, -1.0 <= y < -0.5",100,0.9,1.1,1000,-1.0,1.0);
-  h2_phi_v2_vs_invM_bin3->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
-  h2_phi_v2_vs_invM_bin3->GetYaxis()->SetTitle("v_{2}");
-
-  TH2D  *h2_phi_v2_vs_invM_bin4 = new TH2D("h2_phi_v2_vs_invM_bin4","h2_phi_v2_vs_invM_bin4, -0.5 <= y <= 0.0",100,0.9,1.1,1000,-1.0,1.0);
-  h2_phi_v2_vs_invM_bin4->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
-  h2_phi_v2_vs_invM_bin4->GetYaxis()->SetTitle("v_{2}");
-
-  TH2D  *h2_phi_v2_vs_invM_pTbin1 = new TH2D("h2_phi_v2_vs_invM_pTbin1","h2_phi_v2_vs_invM_pTbin1, 0 <= p_{T} < 0.5 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
-  h2_phi_v2_vs_invM_pTbin1->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
-  h2_phi_v2_vs_invM_pTbin1->GetYaxis()->SetTitle("v_{2}");
-
-  TH2D  *h2_phi_v2_vs_invM_pTbin2 = new TH2D("h2_phi_v2_vs_invM_pTbin2","h2_phi_v2_vs_invM_pTbin2, 0.5 <= p_{T} < 1.0 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
-  h2_phi_v2_vs_invM_pTbin2->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
-  h2_phi_v2_vs_invM_pTbin2->GetYaxis()->SetTitle("v_{2}");
-
-  TH2D  *h2_phi_v2_vs_invM_pTbin3 = new TH2D("h2_phi_v2_vs_invM_pTbin3","h2_phi_v2_vs_invM_pTbin3, 1.0 <= p_{T} < 1.5 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
-  h2_phi_v2_vs_invM_pTbin3->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
-  h2_phi_v2_vs_invM_pTbin3->GetYaxis()->SetTitle("v_{2}");
-
-  TH2D  *h2_phi_v2_vs_invM_pTbin4 = new TH2D("h2_phi_v2_vs_invM_pTbin4","h2_phi_v2_vs_invM_pTbin4, 1.5 <= p_{T} < 2.0 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
-  h2_phi_v2_vs_invM_pTbin4->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
-  h2_phi_v2_vs_invM_pTbin4->GetYaxis()->SetTitle("v_{2}");
-
-  TH2D  *h2_phi_v2_vs_invM_pTbin5 = new TH2D("h2_phi_v2_vs_invM_pTbin5","h2_phi_v2_vs_invM_pTbin5, 2.0 <= p_{T} < 2.5 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
-  h2_phi_v2_vs_invM_pTbin5->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
-  h2_phi_v2_vs_invM_pTbin5->GetYaxis()->SetTitle("v_{2}");
-
-  TH2D  *h2_phi_v2_vs_invM_pTbin6 = new TH2D("h2_phi_v2_vs_invM_pTbin6","h2_phi_v2_vs_invM_pTbin6, 2.5 <= p_{T} < 3.0 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
-  h2_phi_v2_vs_invM_pTbin6->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
-  h2_phi_v2_vs_invM_pTbin6->GetYaxis()->SetTitle("v_{2}");
-
-  TH2D  *h2_phi_v2_vs_invM_pTbin7 = new TH2D("h2_phi_v2_vs_invM_pTbin7","h2_phi_v2_vs_invM_pTbin7, 3.0 <= p_{T} < 3.5 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
-  h2_phi_v2_vs_invM_pTbin7->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
-  h2_phi_v2_vs_invM_pTbin7->GetYaxis()->SetTitle("v_{2}");
+  TH2D *HistPhiVsPsi = new TH2D("HistPhiVsPsi",Form("#phi Azimuthal angle Vs #Psi_{%d}",EpOrder),1000,-0.5*TMath::Pi(),2.5*TMath::Pi(),1000,-0.5*TMath::Pi(),2.5*TMath::Pi());
+  // old plots
+  // TH2D  *h2_phi_v2_vs_invM = new TH2D("h2_phi_v2_vs_invM","h2_phi_v2_vs_invM",100,0.9,1.1,1000,-1.0,1.0);
+  // h2_phi_v2_vs_invM->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+  // h2_phi_v2_vs_invM->GetYaxis()->SetTitle("v_{2}");
+  //
+  // TH2D  *h2_phi_v2_vs_invM_bin2 = new TH2D("h2_phi_v2_vs_invM_bin2","h2_phi_v2_vs_invM_bin2, -1.5 <= y < -1.0",100,0.9,1.1,1000,-1.0,1.0);
+  // h2_phi_v2_vs_invM_bin2->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+  // h2_phi_v2_vs_invM_bin2->GetYaxis()->SetTitle("v_{2}");
+  //
+  // TH2D  *h2_phi_v2_vs_invM_bin3 = new TH2D("h2_phi_v2_vs_invM_bin3","h2_phi_v2_vs_invM_bin3, -1.0 <= y < -0.5",100,0.9,1.1,1000,-1.0,1.0);
+  // h2_phi_v2_vs_invM_bin3->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+  // h2_phi_v2_vs_invM_bin3->GetYaxis()->SetTitle("v_{2}");
+  //
+  // TH2D  *h2_phi_v2_vs_invM_bin4 = new TH2D("h2_phi_v2_vs_invM_bin4","h2_phi_v2_vs_invM_bin4, -0.5 <= y <= 0.0",100,0.9,1.1,1000,-1.0,1.0);
+  // h2_phi_v2_vs_invM_bin4->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+  // h2_phi_v2_vs_invM_bin4->GetYaxis()->SetTitle("v_{2}");
+  //
+  // TH2D  *h2_phi_v2_vs_invM_pTbin1 = new TH2D("h2_phi_v2_vs_invM_pTbin1","h2_phi_v2_vs_invM_pTbin1, 0 <= p_{T} < 0.5 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
+  // h2_phi_v2_vs_invM_pTbin1->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+  // h2_phi_v2_vs_invM_pTbin1->GetYaxis()->SetTitle("v_{2}");
+  //
+  // TH2D  *h2_phi_v2_vs_invM_pTbin2 = new TH2D("h2_phi_v2_vs_invM_pTbin2","h2_phi_v2_vs_invM_pTbin2, 0.5 <= p_{T} < 1.0 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
+  // h2_phi_v2_vs_invM_pTbin2->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+  // h2_phi_v2_vs_invM_pTbin2->GetYaxis()->SetTitle("v_{2}");
+  //
+  // TH2D  *h2_phi_v2_vs_invM_pTbin3 = new TH2D("h2_phi_v2_vs_invM_pTbin3","h2_phi_v2_vs_invM_pTbin3, 1.0 <= p_{T} < 1.5 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
+  // h2_phi_v2_vs_invM_pTbin3->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+  // h2_phi_v2_vs_invM_pTbin3->GetYaxis()->SetTitle("v_{2}");
+  //
+  // TH2D  *h2_phi_v2_vs_invM_pTbin4 = new TH2D("h2_phi_v2_vs_invM_pTbin4","h2_phi_v2_vs_invM_pTbin4, 1.5 <= p_{T} < 2.0 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
+  // h2_phi_v2_vs_invM_pTbin4->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+  // h2_phi_v2_vs_invM_pTbin4->GetYaxis()->SetTitle("v_{2}");
+  //
+  // TH2D  *h2_phi_v2_vs_invM_pTbin5 = new TH2D("h2_phi_v2_vs_invM_pTbin5","h2_phi_v2_vs_invM_pTbin5, 2.0 <= p_{T} < 2.5 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
+  // h2_phi_v2_vs_invM_pTbin5->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+  // h2_phi_v2_vs_invM_pTbin5->GetYaxis()->SetTitle("v_{2}");
+  //
+  // TH2D  *h2_phi_v2_vs_invM_pTbin6 = new TH2D("h2_phi_v2_vs_invM_pTbin6","h2_phi_v2_vs_invM_pTbin6, 2.5 <= p_{T} < 3.0 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
+  // h2_phi_v2_vs_invM_pTbin6->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+  // h2_phi_v2_vs_invM_pTbin6->GetYaxis()->SetTitle("v_{2}");
+  //
+  // TH2D  *h2_phi_v2_vs_invM_pTbin7 = new TH2D("h2_phi_v2_vs_invM_pTbin7","h2_phi_v2_vs_invM_pTbin7, 3.0 <= p_{T} < 3.5 (GeV/c)",100,0.9,1.1,1000,-1.0,1.0);
+  // h2_phi_v2_vs_invM_pTbin7->GetXaxis()->SetTitle("K^{+}K^{-} Invariant Mass(GeV/c^{2})");
+  // h2_phi_v2_vs_invM_pTbin7->GetYaxis()->SetTitle("v_{2}");
 
   TProfile  *TP_phi_v2_vs_invM      = nullptr;
   TProfile  *TP_phi_v2_vs_invM_bin2 = nullptr;
@@ -2754,9 +2756,14 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
           if(a_b_cent[i] == false) continue;
           if(d_resolution[i] == 0) continue;
           d_v2_phi = d_v2_raw_phi/d_resolution[i];
+
+          HistPhiVsPsi -> Fill(result.EastPhiWeightedAndShiftedPsi(EpOrder),d_phi_azimuth);
+
           for(int pt=0; pt<12; pt++)
           {
-            if(a_b_Phi_pT[pt]==true) mHistPhiV2VsInvMpT[pt] -> Fill(d_inv_m,d_v2_phi,d_eff_corr0*d_eff_corr1);
+            if(a_b_Phi_pT[pt]==true) {
+              mHistPhiV2VsInvMpT[pt] -> Fill(d_inv_m,d_v2_phi,d_eff_corr0*d_eff_corr1);
+            }
           }
         }
 
@@ -3025,7 +3032,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
     mHistPhiV2VsInvMpT[pt]->Write();
     mProfilePhiV2VsInvMpT[pt]->Write();
   }
-
+  HistPhiVsPsi->Write();
   // h2_phi_v2_vs_invM->Write();
   // h2_phi_v2_vs_invM_bin2->Write();
   // h2_phi_v2_vs_invM_bin3->Write();
