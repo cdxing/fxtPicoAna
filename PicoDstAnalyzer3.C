@@ -189,7 +189,7 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
   int format = 2;
   mEpFinder->SetEpdHitFormat(format);    // format=0/1/2 for StEpdHit/StMuEpdHit/StPicoEpdHit
   mEpFinder->SetnMipThreshold(0.3);    // recommended by EPD group
-  mEpFinder->SetMaxTileWeight(1.0);     // recommended by EPD group
+  mEpFinder->SetMaxTileWeight(2.0);     // recommended by EPD group 1.0
   // mEpFinder->SetEtaWeights(2, TH2D EtaWeight);   // histogram is binned in |eta| and centrality
   // mEpFinder->SetRingWeights(2, double* RingWeights);    // RingWeights is a 1D array of 16 elements.
   TClonesArray * mEpdHits = new TClonesArray("StPicoEpdHit");
