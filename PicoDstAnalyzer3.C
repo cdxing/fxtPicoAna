@@ -55,7 +55,7 @@
 #include "StRoot/StPicoEvent/StPicoEmcTrigger.h"
 #include "StRoot/StPicoEvent/StPicoBTofPidTraits.h"
 #include "StRoot/StPicoEvent/StPicoTrackCovMatrix.h"
-//EPD 
+//EPD
 #include "StRoot/StEpdUtil/StEpdEpFinder.h"
 #include "StRoot/StEpdUtil/StEpdEpInfo.h"
 #include "StRoot/StPicoEvent/StPicoEpdHit.h"
@@ -1189,8 +1189,8 @@ void PicoDstAnalyzer3(const Char_t *inFile = "/star/data01/pwg/dchen/Ana/fxtPico
 
     Int_t nTracks = dst->numberOfTracks();
     Int_t runId = event->runId();
-    Int_t nEpdHits    = dst->numberOfEpdHits();
-    std::cout << "# of Epd hits in the event = " <<nEpdHits<< std::endl;
+    // Int_t nEpdHits    = dst->numberOfEpdHits();
+    // std::cout << "# of Epd hits in the event = " <<nEpdHits<< std::endl;
 
     // std::cout << "runId = " << runId << std::endl;
 
